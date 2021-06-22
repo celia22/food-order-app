@@ -1,0 +1,44 @@
+.container-calendar{
+    width: 80%;
+    margin: 2rem auto;
+    
+}
+
+.btn-view{
+    margin-right: 1rem;
+    background-color: transparent;
+    border: 1px solid #F5BC41;
+    padding: .5rem;
+    border-radius: 50px;
+}
+
+
+.btns-view, .btns-next{
+    background-color: transparent;
+    border: none;
+}
+.btns-view:hover{
+    color: #F5BC41;
+}
+
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-next{
+    margin-right: 1rem;
+    background-color: transparent;
+    border: 1px solid #FA676B;
+    padding: .5rem;
+    border-radius: 50px;
+}
+
+.btns-next:hover{
+    color: #FA676B;
+}
+
+.check-filters{
+    margin-bottom: 2rem;
+}
