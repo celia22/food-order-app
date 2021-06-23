@@ -14,7 +14,7 @@ import {
     import { RiScissors2Fill } from "react-icons/ri";
     import { ImUsers} from 'react-icons/im'
     import "react-pro-sidebar/dist/css/styles.css";
-    import {Link} from 'react-router-dom'
+    import {NavLink} from 'react-router-dom';
     
 
 const Sidebar = () => {
@@ -47,28 +47,28 @@ const Sidebar = () => {
             <Menu iconShape="square">
                 <MenuItem active={true} icon={<FaCalendar/>}>
                   Calendario
-                  <Link to='/calendar'/>
+                  <NavLink to='/calendar' activeClassName='active-nav'/>
                 </MenuItem>
               
                 <MenuItem icon={<RiScissors2Fill/>}>
                   Servicios 
-                  <Link to='/services'/>
+                  <NavLink to='/services' activeClassName='active-nav'/>
                 </MenuItem>
 
               
               <MenuItem icon={<ImUsers/>}>
                 Empleados
-                <Link to='/employees'/>
+                <NavLink to='/employees' activeClassName='active-nav'/>
               </MenuItem>
   
               <MenuItem icon={<FaImages/>}>
                 Imágenes
-                <Link to='/images'/>
+                <NavLink to='/images' activeClassName='active-nav'/>
               </MenuItem>
              
               <MenuItem icon={<FaUserCircle/>}>
                 Perfil
-                <Link to='/profile'/>
+                <NavLink to='/profile' activeClassName='active-nav'/>
               </MenuItem>
               
             </Menu>

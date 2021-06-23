@@ -30,7 +30,7 @@ const CalendarUi = () => {
     'common.backgroundColor': '#FFFFFF',
     'common.holiday.color': '#9d93d5',
     'common.saturday.color': '#9d93d5',
-    'common.dayname.color': '#FA676B',
+    'common.dayname.color': 'black',
 
     //Month header 'dayname'
     'month.dayname.height': '42px',
@@ -190,19 +190,19 @@ const CalendarUi = () => {
   const calendarCat = [
     {
       id: '0',
-      name: 'Providers',
+      name: 'Empleado1',
       bgColor: '#9e5fff',
       borderColor: '#9e5fff'
     },
     {
       id: '1',
-      name: 'Location',
+      name: 'Empleado2',
       bgColor: '#00a9ff',
       borderColor: '#00a9ff'
     },
     {
       id: '2',
-      name: 'Rooms',
+      name: 'Empleado3',
       bgColor: '#03bd9e',
       borderColor: '#03bd9e'
     }
@@ -278,15 +278,15 @@ const CalendarUi = () => {
   //Filter schedule category
   const [filterCat, setFilterCat] = useState([
     {
-      name: 'Providers',
+      name: 'Empleado1',
       check: true
     },
     {
-      name: 'Location',
+      name: 'Empleado2',
       check: true
     },
     {
-      name: 'Rooms',
+      name: 'Empleado3',
       check: true
     },
   ])  
@@ -371,7 +371,7 @@ const CalendarUi = () => {
     </div>
   <div className='check-filters'>
     {filterCat.map((item,index) => (
-      <label key={index}><input type="checkbox" checked={item.check} onChange={() => handleFilterCat(index)}/>{item.name}</label>
+      <label key={index}><input className='checks' type="checkbox" checked={item.check} onChange={() => handleFilterCat(index)}/>{item.name}</label>
     ))}
   </div>
   <Calendar
