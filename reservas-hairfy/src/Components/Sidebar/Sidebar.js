@@ -15,6 +15,7 @@ import {
     import { ImUsers} from 'react-icons/im'
     import "react-pro-sidebar/dist/css/styles.css";
     import {NavLink} from 'react-router-dom';
+import Logo from '../../Logo.png'   
     
 
 const Sidebar = () => {
@@ -32,7 +33,10 @@ const Sidebar = () => {
           {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
-          <div className="logotext">
+            <div className="img-logo">
+          {menuCollapse &&
+            <img src={Logo} alt='logo Hairfy'/> 
+              }
             </div>
             <div className="closemenu" onClick={menuIconClick}>
                 {/* changing menu collapse icon on click */}

@@ -40,9 +40,25 @@
 }
 
 .check-filters{
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 }
 
 .checks{
     margin-left: 1rem;
+}
+
+.container-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.btn-agregar{
+    margin-right: 1rem;
+    background-color: #FA676B;
+    border: none;
+    padding: .5rem;
+    border-radius: 50px;
+    color: white;
 }

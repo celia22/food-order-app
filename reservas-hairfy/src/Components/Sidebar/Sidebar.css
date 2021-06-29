@@ -72,10 +72,19 @@
     font-weight: bold;
   }
   
-  #header .logo {
-    padding: 20px;
-  }
+  /* #header .logo {
+    padding: 30px;
+  } */
 
   .active-nav{
     color: #F5BC41 !important
+  }
+
+  .img-logo img{
+    width: 80%;
+    padding: 8px
+  }
+
+  #header .pro-sidebar .collapsed .img-logo{
+    width: 50%;
   }

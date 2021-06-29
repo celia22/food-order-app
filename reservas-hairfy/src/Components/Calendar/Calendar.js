@@ -11,17 +11,6 @@ import './Calendar.css'
 
 
 const CalendarUi = () => {
-    
-    // let calendar = new Calendar('#calendar', {
-    //     defaultView: 'month',
-    //     taskView: true,
-    //     template: {
-    //       monthDayname: function(dayname) {
-    //         return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
-    //       }
-    //     }
-    //   });
-
 
           //Custom theme for the calendar
   const customTheme = {
@@ -352,32 +341,34 @@ const CalendarUi = () => {
   return(
       <React.Fragment>
     <div className='container-calendar'>
-    <div className='btn-container'>
-            <div className='btn-view'>
-            {view.map(item => (
-            <button key={item} className='btns-view' onClick={() => handleCurrView(item)}>{item}</button>
-            ))}
+      <div className='container-btns'>
+        <div className='btn-container'>
+                <div className='btn-view'>
+                {view.map(item => (
+                <button key={item} className='btns-view' onClick={() => handleCurrView(item)}>{item}</button>
+                ))}
+                
+            </div>
+            <div className='btn-next'>
+                <button className='btns-next' onClick={handlePrevButton}>Prev</button>
+                <button className='btns-next' onClick={handleTodayButton}>Hoy</button>
+                <button className='btns-next' onClick={handleNextButton}>Prox</button>
             
+            </div>
         </div>
-        <div className='btn-next'>
-            <button className='btns-next' onClick={handlePrevButton}>Prev</button>
-            <button className='btns-next' onClick={handleTodayButton}>Hoy</button>
-            <button className='btns-next' onClick={handleNextButton}>Prox</button>
-        
+        <div className='check-filters'>
+          {filterCat.map((item,index) => (
+            <label key={index}><input className='checks' type="checkbox" checked={item.check} onChange={() => handleFilterCat(index)}/>{item.name}</label>
+          ))}
         </div>
-        {/* <div>
-            <button onClick={handleNewSchedule}>Agregar</button>
-        </div> */}
-    </div>
-  <div className='check-filters'>
-    {filterCat.map((item,index) => (
-      <label key={index}><input className='checks' type="checkbox" checked={item.check} onChange={() => handleFilterCat(index)}/>{item.name}</label>
-    ))}
-  </div>
-  <Calendar
-    ref={calendarRef}
-    {...calendarOptions}
-  />
+        <div>
+            <button className='btn-agregar' onClick={handleNewSchedule}>Agregar cita</button>
+        </div>
+      </div>
+      <Calendar
+        ref={calendarRef}
+        {...calendarOptions}
+      />
   </div>
   </React.Fragment>
   )
