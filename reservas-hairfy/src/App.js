@@ -4,10 +4,10 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Sidebar from './Components/Sidebar/Sidebar'
 import CalendarUi from './Components/Calendar/Calendar';
 import './App.css';
-import Calendar from '@toast-ui/react-calendar'
 import 'tui-calendar/dist/tui-calendar.css'
 import 'tui-date-picker/dist/tui-date-picker.css'
 import 'tui-time-picker/dist/tui-time-picker.css'
+import Servicios from './Components/Servicios/Servicios'
 
 function App() {
 
@@ -19,6 +19,9 @@ function App() {
       <Switch>
         <Route path='/calendar'>
       <CalendarUi/>
+        </Route>
+        <Route path='/services'>
+      <Servicios/>
         </Route>
       </Switch>
       </BrowserRouter>

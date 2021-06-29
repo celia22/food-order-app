@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 
-export const Servicios = () => {
+const Servicios = () => {
     return (
         <React.Fragment>
     <Form>
@@ -61,3 +61,5 @@ export const Servicios = () => {
         </React.Fragment>
     )
 }
+
+export default Servicios
