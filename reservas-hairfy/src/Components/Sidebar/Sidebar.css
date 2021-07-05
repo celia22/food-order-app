@@ -82,9 +82,10 @@
 
   .img-logo img{
     width: 80%;
-    padding: 8px
+    padding: 8px;
+    margin-left: 10px;
   }
 
   #header .pro-sidebar .collapsed .img-logo{
-    width: 50%;
+    /* width: 50%; */
   }

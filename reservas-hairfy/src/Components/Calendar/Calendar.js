@@ -6,12 +6,15 @@ import 'tui-date-picker/dist/tui-date-picker.css'
 import 'tui-time-picker/dist/tui-time-picker.css'
 import TuiCalendar from 'tui-calendar';
 import './Calendar.css'
-
-
+import ModalSchedule from '../ModalSchedule/ModalSchedule'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const CalendarUi = () => {
 
+  const servicios = ['corte', 'color', 'cejas' , 'bla']
           //Custom theme for the calendar
   const customTheme = {
     //Common style
@@ -32,7 +35,6 @@ const CalendarUi = () => {
     'month.dayname.textAlign': 'center',
 
     // month day grid cell 'day'
-    // 'month.holidayExceptThisMonth.color': '#f3acac',
     'month.dayExceptThisMonth.color': '#ffffff42',
     // 'month.weekend.backgroundColor': '#fafafa',
     'month.day.fontSize': '16px',
@@ -40,100 +42,22 @@ const CalendarUi = () => {
     // month schedule style
     'month.schedule.borderRadius': '5px',
     'month.schedule.height': '18px',
-    // 'month.schedule.marginTop': '2px',
     'month.schedule.marginLeft': '10px',
     'month.schedule.marginRight': '10px',
-
-    // month more view
-    // 'month.moreView.boxShadow': 'none',
-    // 'month.moreView.paddingBottom': '0',
-    // 'month.moreView.border': '1px solid #9384e1',
-    // 'month.moreView.backgroundColor': 'rgba(38,34,74,.49)',
-    // 'month.moreViewTitle.height': '28px',
-    // 'month.moreViewTitle.marginBottom': '0',
-    // 'month.moreViewTitle.backgroundColor': '#1b1539',
-    // 'month.moreViewTitle.borderBottom': '1px solid #9384e1',
-    // 'month.moreViewTitle.padding': '0 10px',
-    // 'month.moreViewList.padding': '10px',
-    // 'month.moreViewTitle.color': '#ffffff',
-
-    //  // week header 'dayname'
-    //  'week.dayname.height': '41px',
-    //  'week.dayname.borderTop': '1px solid #ddd',
-    //  'week.dayname.borderBottom': '1px solid #ddd',
-    //  'week.dayname.borderLeft': '1px solid #ddd',
-    //  'week.dayname.paddingLeft': '5px',
-    //  'week.dayname.backgroundColor': 'inherit',
-        'week.dayname.textAlign': 'center',
-        'week.today.color': '#F5BC41',
-    //  'week.pastDay.color': '#999',
-
-    //  // week vertical panel 'vpanel'
-    //  'week.vpanelSplitter.border': '1px solid #ddd',
-    //  'week.vpanelSplitter.height': '3px',
-
-    //  // week daygrid 'daygrid'
-    //  'week.daygrid.borderRight': '1px solid #ddd',
-    //  'week.daygrid.backgroundColor': 'inherit',
-
-    //  'week.daygridLeft.width': '77px',
-    //  'week.daygridLeft.backgroundColor': '#a8def74d',
-    //  'week.daygridLeft.paddingRight': '5px',
-    //  'week.daygridLeft.borderRight': '1px solid #ddd',
-
-    //  'week.today.backgroundColor': '#b857d81f',
-    //  'week.weekend.backgroundColor': 'inherit',
-
-    //  // week timegrid 'timegrid'
-    //  'week.timegridLeft.width': '77px',
+    'week.dayname.textAlign': 'center',
+    'week.today.color': '#F5BC41',
     'week.timegridLeft.backgroundColor': '#FFFFFF',
-    //  'week.timegridLeft.borderRight': '1px solid #ddd',
-    //  'week.timegridLeft.fontSize': '12px',
-    //  'week.timegridLeftTimezoneLabel.height': '51px',
-    //  'week.timegridLeftAdditionalTimezone.backgroundColor': '#fdfdfd',
-
-    //  'week.timegridOneHour.height': '48px',
-    //  'week.timegridHalfHour.height': '24px',
-    //  'week.timegridHalfHour.borderBottom': '1px dotted #f9f9f9',
-    //  'week.timegridHorizontalLine.borderBottom': '1px solid #eee',
-
-    //  'week.timegrid.paddingRight': '10px',
-    //  'week.timegrid.borderRight': '1px solid #ddd',
-    //  'week.timegridSchedule.borderRadius': '0',
-    //  'week.timegridSchedule.paddingLeft': '0',
-
-    //  'week.currentTime.color': '#135de6',
-    //  'week.currentTime.fontSize': '12px',
-    //  'week.currentTime.fontWeight': 'bold',
-
-    //  'week.pastTime.color': '#808080',
-    //  'week.pastTime.fontWeight': 'normal',
-
-    // 'week.futureTime.color': '#333',
-    //  'week.futureTime.fontWeight': 'normal',
-
-    //  'week.currentTimeLinePast.border': '1px solid rgba(19, 93, 230, 0.3)',
-    //  'week.currentTimeLineBullet.backgroundColor': '#135de6',
-    //  'week.currentTimeLineToday.border': '1px solid #135de6',
-    //  'week.currentTimeLineFuture.border': '1px solid #135de6',
-
-    //  // week creation guide style
-    //  'week.creationGuide.color': '#135de6',
-    //  'week.creationGuide.fontSize': '12px',
-    //  'week.creationGuide.fontWeight': 'bold',
-
-    //  // week daygrid schedule style
-    //  'week.dayGridSchedule.borderRadius': '0',
-    //  'week.dayGridSchedule.height': '18px',
-    //  'week.dayGridSchedule.marginTop': '2px',
-    //  'week.dayGridSchedule.marginLeft': '10px',
-    //  'week.dayGridSchedule.marginRight': '10px'
+    
   }
 
   const calendarRef = createRef()
 
   //Set view of the calendar
   const [currView, setCurrView] = useState('month')
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleCurrView = view => {
       if(view === 'Dia'){
@@ -197,31 +121,37 @@ const CalendarUi = () => {
     }
   ]
 
-  //New schedule popup
+    /******///NUEVO SCHEDULE/******/
   const handleNewSchedule = event => {
     const calendarInstance = calendarRef.current.getInstance()
     calendarInstance.openCreationPopup(event.schedule)
+    
+    
   }
 
-  //Create new schedule
+  /******///CREAR/******/
   const handleCreateSchedule = event => {
     let copySchedule = newScheduleList
+    
+    console.log('beforeCreateSchedule', event)
 
-    let newSchedule = {
-      id: Date.now(),
-      calendarId: event.calendarId,
-      title: event.title,
-      category: 'time',
-      start: event.start,
-      end: event.end
-    }
+    handleShow()
 
-    copySchedule.push(newSchedule)
+    // let newSchedule = {
+    //   id: Date.now(),
+    //   calendarId: event.calendarId,
+    //   title: event.title,
+    //   category: 'time',
+    //   start: event.start,
+    //   end: event.end
+    // }
+
+    // copySchedule.push(newSchedule)
 
     setNewScheduleList([...copySchedule])
   }
 
-  //Edit schedule
+  /******///EDITAR/******/
   const handleUpdateSchedule = event => {
     const updatedId = event.schedule.id
     let copySchedule = newScheduleList
@@ -245,7 +175,7 @@ const CalendarUi = () => {
     setNewScheduleList([...copySchedule])
   }
 
-  //Delete schedule
+  /******///ELIMINAR/******/
   const handleDeleteSchedule = event => {
     const deleteId = event.schedule.id
     let copySchedule = newScheduleList
@@ -315,7 +245,9 @@ const CalendarUi = () => {
     theme: customTheme,
     week: {
         startDayOfWeek: 1,
-        daynames: ['Dom','Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab']
+        daynames: ['Dom','Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'],
+        hourStart: 7,
+        hourEnd: 20
     },
     month: {
         startDayOfWeek: 1,
@@ -326,8 +258,8 @@ const CalendarUi = () => {
     view: currView,
     disableDblClick: true,
     disableClick: false,
-    useDetailPopup: true,
-    useCreationPopup: true,
+    useDetailPopup: false,
+    useCreationPopup: false,
     schedules: scheduleList,
     template: schedPopupTemplate,
     calendars: calendarCat,
@@ -369,6 +301,42 @@ const CalendarUi = () => {
         ref={calendarRef}
         {...calendarOptions}
       />
+      
+      <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Nueva reserva</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <form>
+      <label>Servicio</label>
+      <select>
+          {
+              servicios.map((item, idx)=> <option key={idx}>{item}</option>)
+          }
+      </select>
+      <br/>
+      <label>Empleado</label>
+      <select>
+          {
+              servicios.map((item, idx)=> <option key={idx}>{item}</option>)
+          }
+      </select>
+      <br/>
+      <label>Día y hora</label>
+          <input type='date'/>
+          <input type='time'/>
+      </form>
+      
+      </Modal.Body>
+      <Modal.Footer>
+        {/* <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button> */}
+        <Button variant="primary" onClick={handleClose}>
+          Guardar reserva
+        </Button>
+      </Modal.Footer>
+    </Modal>
   </div>
   </React.Fragment>
   )

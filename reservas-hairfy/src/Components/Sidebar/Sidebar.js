@@ -51,28 +51,28 @@ const Sidebar = () => {
             <Menu iconShape="square">
                 <MenuItem active={true} icon={<FaCalendar/>}>
                   Calendario
-                  <NavLink to='/calendar' activeClassName='active-nav'/>
+                  <NavLink to='/calendario' activeClassName='active-nav'/>
                 </MenuItem>
               
                 <MenuItem icon={<RiScissors2Fill/>}>
                   Servicios 
-                  <NavLink to='/services' activeClassName='active-nav'/>
+                  <NavLink to='/servicios' activeClassName='active-nav'/>
                 </MenuItem>
 
               
               <MenuItem icon={<ImUsers/>}>
                 Empleados
-                <NavLink to='/employees' activeClassName='active-nav'/>
+                <NavLink to='/empleados' activeClassName='active-nav'/>
               </MenuItem>
   
               <MenuItem icon={<FaImages/>}>
                 Imágenes
-                <NavLink to='/images' activeClassName='active-nav'/>
+                <NavLink to='/imagenes' activeClassName='active-nav'/>
               </MenuItem>
              
               <MenuItem icon={<FaUserCircle/>}>
                 Perfil
-                <NavLink to='/profile' activeClassName='active-nav'/>
+                <NavLink to='/perfil' activeClassName='active-nav'/>
               </MenuItem>
               
             </Menu>

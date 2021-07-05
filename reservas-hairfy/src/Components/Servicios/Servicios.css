@@ -1,0 +1,19 @@
+
+.titulo-servicio{
+    margin-left: 8rem;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.select-form{
+    margin-right: 1.5rem;
+}
+
+.btn-submit{
+    margin-right: 1rem;
+    background-color: #FA676B;
+    border: 1px solid #FA676B;
+    padding: .5rem;
+    border-radius: 50px;
+    color: white;
+}

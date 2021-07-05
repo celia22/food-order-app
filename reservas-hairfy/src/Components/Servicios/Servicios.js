@@ -1,64 +1,92 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
+import './Servicios.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ListGroup from 'react-bootstrap/ListGroup'
+
 
 const Servicios = () => {
+
+    const [empleados, setEmpleados] = useState([])
+    const [servicio, setServicio] = useState('')
+    const [duracion, setDuracion] = useState('')
+    const [precio, setPrecio] = useState(0)
+    const [checked, setChecked] = useState(false)
+
+    useEffect(() => { 
+       
+        const emple = [ 'empleado1', 'empleado2', 'empleado3', 'empleado4']
+        setEmpleados(emple)
+    
+    }, [])
+
+    const handleService = (event) => {
+        setServicio({servicio: event.target.value})
+        console.log(servicio)
+    }
+
     return (
         <React.Fragment>
-    <Form>
-        <Form.Row>
-            <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
+                <h2 className='titulo-servicio'>Nuevo Servicio</h2>
+                <div className='d-flex justify-content-around mt-3'>
+                <Form className='form-services'>
+                    <Form.Group controlId="">
+                    <Form.Label>Nombre del Servicio</Form.Label>
+                    <Form.Control type="text" placeholder="¿Cuál es el nombre de su servicio?" onChange={handleService} />
+                    </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-        </Form.Row>
+                    <hr className='my-4'/>
 
-        <Form.Group controlId="formGridAddress1">
-            <Form.Label>Address</Form.Label>
-            <Form.Control placeholder="1234 Main St" />
-        </Form.Group>
+                    <Form.Group  controlId="">
+                    <Form.Label>Duración del servicio</Form.Label>
+                    <div className='d-flex justify-content-center'>
+                    <Form.Control className='select-form' as="select" defaultValue="0 hrs">
+                        <option>0 hrs</option>
+                        <option>1 hrs</option>
+                        <option>2 hrs</option>
+                    </Form.Control>
+                    <Form.Control as="select" defaultValue="0 mins">
+                        <option>0 mins</option>
+                        <option>15 mins</option>
+                        <option>30 mins</option>
+                        <option>45 mins</option>
+                    </Form.Control>
+                    </div>
+                    </Form.Group>
 
-        <Form.Group controlId="formGridAddress2">
-            <Form.Label>Address 2</Form.Label>
-            <Form.Control placeholder="Apartment, studio, or floor" />
-        </Form.Group>
+                    <hr className='my-4'/>
 
-        <Form.Row>
-            <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>City</Form.Label>
-            <Form.Control />
-            </Form.Group>
+                    <Form.Group  controlId="">
+                    <Form.Label>Precio y tipo de precio</Form.Label>
+                    <div className='d-flex justify-content-center'>
+                        <Form.Control className='select-form' as="select" defaultValue="">
+                            <option>Fijo</option>
+                            <option>Varios</option>
+                            <option>No mostrar</option>
+                            <option>Gratis</option>
+                            <option>Precio empieza en...</option>
 
-            <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>State</Form.Label>
-            <Form.Control as="select" defaultValue="Choose...">
-                <option>Choose...</option>
-                <option>...</option>
-            </Form.Control>
-            </Form.Group>
+                        </Form.Control>
+                        <Form.Control type="number" placeholder="0€"/>
+                    </div>
+                    </Form.Group>
+                
 
-            <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Zip</Form.Label>
-            <Form.Control />
-            </Form.Group>
-        </Form.Row>
+                <button className='btn-submit mt-3' type="submit">
+                    Guardar
+                </button>
+            </Form> 
+        <div>
+           <p>¿A qué empleado quieres asociar este servicio? </p> 
+        <ListGroup>
+            {empleados ? 
+            empleados.map((empleado, idx) => <ListGroup.Item key={idx}><input type='checkbox' value={empleado}/><label className='mx-2'>{empleado}</label></ListGroup.Item>) 
+            : 'No existen empleados asociados'}
+        </ListGroup>
 
-        <Form.Group id="formGridCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-            Submit
-        </Button>
-    </Form> 
-
-        </React.Fragment>
+        </div>
+    </div>
+    </React.Fragment>
     )
 }
 

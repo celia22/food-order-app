@@ -8,6 +8,7 @@ import 'tui-calendar/dist/tui-calendar.css'
 import 'tui-date-picker/dist/tui-date-picker.css'
 import 'tui-time-picker/dist/tui-time-picker.css'
 import Servicios from './Components/Servicios/Servicios'
+import FotosCentro from './Components/FotosCentro/FotosCentro'
 
 function App() {
 
@@ -17,11 +18,14 @@ function App() {
       <BrowserRouter>
        <Sidebar/> 
       <Switch>
-        <Route path='/calendar'>
+        <Route path='/calendario'>
       <CalendarUi/>
         </Route>
-        <Route path='/services'>
+        <Route path='/servicios'>
       <Servicios/>
+        </Route>
+        <Route path='/fotos'>
+          <FotosCentro/>
         </Route>
       </Switch>
       </BrowserRouter>
