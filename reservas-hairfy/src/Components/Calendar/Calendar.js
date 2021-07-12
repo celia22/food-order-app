@@ -7,14 +7,14 @@ import 'tui-time-picker/dist/tui-time-picker.css'
 import TuiCalendar from 'tui-calendar';
 import './Calendar.css'
 import ModalSchedule from '../ModalSchedule/ModalSchedule'
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ModalContainer from '../../Container/Modal/ModalContainer'
 
 
 const CalendarUi = () => {
 
-  const servicios = ['corte', 'color', 'cejas' , 'bla']
+
           //Custom theme for the calendar
   const customTheme = {
     //Common style
@@ -52,8 +52,9 @@ const CalendarUi = () => {
 
   const calendarRef = createRef()
 
+
   //Set view of the calendar
-  const [currView, setCurrView] = useState('month')
+  const [currView, setCurrView] = useState('week')
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -294,49 +295,16 @@ const CalendarUi = () => {
           ))}
         </div>
         <div>
-            <button className='btn-agregar' onClick={handleNewSchedule}>Agregar cita</button>
+            <button className='btn-agregar' onClick={handleShow}>Agregar cita</button>
         </div>
       </div>
       <Calendar
         ref={calendarRef}
         {...calendarOptions}
+        onClick={handleShow}
       />
+      {show && <ModalContainer show={show} handleClose={handleClose} handleCreateSchedule={handleCreateSchedule} />} 
       
-      <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Nueva reserva</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <form>
-      <label>Servicio</label>
-      <select>
-          {
-              servicios.map((item, idx)=> <option key={idx}>{item}</option>)
-          }
-      </select>
-      <br/>
-      <label>Empleado</label>
-      <select>
-          {
-              servicios.map((item, idx)=> <option key={idx}>{item}</option>)
-          }
-      </select>
-      <br/>
-      <label>Día y hora</label>
-          <input type='date'/>
-          <input type='time'/>
-      </form>
-      
-      </Modal.Body>
-      <Modal.Footer>
-        {/* <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button> */}
-        <Button variant="primary" onClick={handleClose}>
-          Guardar reserva
-        </Button>
-      </Modal.Footer>
-    </Modal>
   </div>
   </React.Fragment>
   )

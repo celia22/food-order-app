@@ -18,13 +18,13 @@ function App() {
       <BrowserRouter>
        <Sidebar/> 
       <Switch>
-        <Route path='/calendario'>
+        <Route path='/'>
       <CalendarUi/>
         </Route>
         <Route path='/servicios'>
       <Servicios/>
         </Route>
-        <Route path='/fotos'>
+        <Route path='/imagenes'>
           <FotosCentro/>
         </Route>
       </Switch>

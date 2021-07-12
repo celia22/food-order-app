@@ -10,7 +10,10 @@ const Servicios = () => {
     const [empleados, setEmpleados] = useState([])
     const [servicio, setServicio] = useState('')
     const [duracion, setDuracion] = useState('')
+    const [mins, setMins] = useState('')
+    const [hrs, setHrs] = useState('')
     const [precio, setPrecio] = useState(0)
+    const [tipoPrecio, setTipoPrecio] = useState('')
     const [checked, setChecked] = useState(false)
 
     useEffect(() => { 
@@ -21,8 +24,28 @@ const Servicios = () => {
     }, [])
 
     const handleService = (event) => {
-        setServicio({servicio: event.target.value})
+        setServicio(event.target.value)
         console.log(servicio)
+    }
+
+    const handleHora = (event) => {
+        setHrs(event.target.value)
+        console.log(hrs)
+    }
+
+    const handleMins = (event) => {
+        setMins(event.target.value)
+        console.log(mins)
+    }
+
+    const handleTipoPrecio = (event) => {
+        setTipoPrecio(event.target.value)
+        console.log(tipoPrecio)
+    }
+
+    const handlePrecio = (event) => {
+        setPrecio(event.target.value)
+        console.log(precio)
     }
 
     return (
@@ -30,27 +53,32 @@ const Servicios = () => {
                 <h2 className='titulo-servicio'>Nuevo Servicio</h2>
                 <div className='d-flex justify-content-around mt-3'>
                 <Form className='form-services'>
-                    <Form.Group controlId="">
+                    {/* <Form.Group controlId=""> */}
                     <Form.Label>Nombre del Servicio</Form.Label>
-                    <Form.Control type="text" placeholder="¿Cuál es el nombre de su servicio?" onChange={handleService} />
-                    </Form.Group>
+                    <input type='text' placeholder="¿Cuál es el nombre de su servicio?" value={servicio} onChange={handleService} />
+                    {/* <Form.Control type="text" placeholder="¿Cuál es el nombre de su servicio?" onChange={handleService} /> */}
+                    {/* </Form.Group> */}
 
                     <hr className='my-4'/>
 
                     <Form.Group  controlId="">
                     <Form.Label>Duración del servicio</Form.Label>
                     <div className='d-flex justify-content-center'>
-                    <Form.Control className='select-form' as="select" defaultValue="0 hrs">
-                        <option>0 hrs</option>
-                        <option>1 hrs</option>
-                        <option>2 hrs</option>
-                    </Form.Control>
-                    <Form.Control as="select" defaultValue="0 mins">
-                        <option>0 mins</option>
-                        <option>15 mins</option>
-                        <option>30 mins</option>
-                        <option>45 mins</option>
-                    </Form.Control>
+                    {/* <Form.Control className='' as="select" defaultValue="0 hrs"> */}
+                        <select className='selectHrs' value={hrs} onChange={handleHora}>
+                            <option value='0hrs'>0 hrs</option>
+                            <option value='1hrs'>1 hrs</option>
+                            <option value='2hrs'>2 hrs</option>
+                        </select>
+                    {/* </Form.Control> */}
+                    {/* <Form.Control as="select" className='selectMins' defaultValue="0 mins"> */}
+                        <select className='selectMins' value={mins} onChange={handleMins}>
+                            <option value='0mins'>0 mins</option>
+                            <option value='15mins'>15 mins</option>
+                            <option value='30mins'>30 mins</option>
+                            <option value='45mins'>45 mins</option>
+                        </select>  
+                    {/* </Form.Control> */}
                     </div>
                     </Form.Group>
 
@@ -59,15 +87,17 @@ const Servicios = () => {
                     <Form.Group  controlId="">
                     <Form.Label>Precio y tipo de precio</Form.Label>
                     <div className='d-flex justify-content-center'>
-                        <Form.Control className='select-form' as="select" defaultValue="">
-                            <option>Fijo</option>
-                            <option>Varios</option>
-                            <option>No mostrar</option>
-                            <option>Gratis</option>
-                            <option>Precio empieza en...</option>
-
-                        </Form.Control>
-                        <Form.Control type="number" placeholder="0€"/>
+                        {/* <Form.Control className='select-form' as="select" defaultValue=""> */}
+                        <select value={tipoPrecio} onchange={handleTipoPrecio}>
+                            <option value='fijo'>Fijo</option>
+                            <option value='varios'>Varios</option>
+                            <option value='no mostrar'>No mostrar</option>
+                            <option value='gratis'>Gratis</option>
+                            <option value='empieza en'>Precio empieza en...</option>
+                        </select>
+                        {/* </Form.Control> */}
+                        <input type='number'  value={precio} onChange={handlePrecio} />
+                        {/* <Form.Control type="number" placeholder="0€"/> */}
                     </div>
                     </Form.Group>
                 

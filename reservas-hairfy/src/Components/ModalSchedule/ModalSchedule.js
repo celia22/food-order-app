@@ -3,7 +3,6 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 const ModalSchedule = () => {
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
