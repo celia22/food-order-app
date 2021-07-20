@@ -16,20 +16,22 @@ const FotosCentro = () => {
         const handleChangeStatus = ({ meta, file }, status) => { console.log(status, meta, file) }
         
         // receives array of files that are done uploading when submit button is clicked
-        const handleSubmit = (files, allFiles) => {
+        const handleSubmit = ( allFiles) => {
             //console.log(files.map(f => f.meta))
             // allFiles.forEach(f => f.remove())
             setFotos(allFiles)
-            setFotos(files)
+            console.log(allFiles)
             console.log(fotos)
         }
+
+          
 
     return (
         <div style={{marginLeft: '8rem'}}>
             <h2 className='titulo-fotos'>Fotos Centro</h2>
             <div className='d-flex justify-content-between'>
                 <div className='w-50'>
-                    {fotos.length ? 
+                    {fotos.length >= 1 ? 
                     fotos.map((f) => <div>{f.name}</div>)
                     :
                     <Dropzone
@@ -46,8 +48,11 @@ const FotosCentro = () => {
                     }
                 </div>
                 <div>
+                {/* <aside style={thumbsContainer}>{thumbs}</aside> */}
                 {/* {(fotos.length >= 0) && fotos.map((i)=> <Image src={i.file} rounded />)
                 } */}
+                {(fotos.length >= 0) && fotos.map((i)=><Image src={i.freview} rounded /> )
+                }
                 </div>
             </div>
 

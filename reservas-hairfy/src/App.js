@@ -9,6 +9,8 @@ import 'tui-date-picker/dist/tui-date-picker.css'
 import 'tui-time-picker/dist/tui-time-picker.css'
 import Servicios from './Components/Servicios/Servicios'
 import FotosCentro from './Components/FotosCentro/FotosCentro'
+import EmpleadosContainer from './Container/Empleados/EmpleadosContainer';
+import InfoEmpleados from './Components/Empleados/InfoEmpleados'
 
 function App() {
 
@@ -18,14 +20,20 @@ function App() {
       <BrowserRouter>
        <Sidebar/> 
       <Switch>
-        <Route path='/'>
-      <CalendarUi/>
-        </Route>
         <Route path='/servicios'>
       <Servicios/>
         </Route>
         <Route path='/imagenes'>
           <FotosCentro/>
+        </Route>
+        <Route path='/empleados'>
+          <EmpleadosContainer/>
+          {/* <Route path='/empleados:id'>
+            <InfoEmpleados/>
+          </Route> */}
+        </Route>
+        <Route path='/'>
+      <CalendarUi/>
         </Route>
       </Switch>
       </BrowserRouter>

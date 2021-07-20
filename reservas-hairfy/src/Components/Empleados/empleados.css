@@ -1,0 +1,65 @@
+.titulo-empleados{
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important; 
+    /* margin-left: 6rem;*/
+}
+
+.empleados-list{
+    width: 30%;
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.container-empleados{
+    margin-left: 8rem
+}
+
+.btn-add-empleado{
+    margin-right: 3rem;
+    background-color: transparent;
+    border: 1px solid #FA676B;
+    padding: 8px 10px;
+    border-radius: 50px;
+    color: #FA676B;
+}
+
+.container-info{
+    width: 50vw;
+    margin-right: 3rem;
+}
+
+.btn-edit{
+    margin-right: 1rem;
+    background-color: transparent;
+    border: 1px solid #F5BC41;
+    padding: 8px 10px;
+    border-radius: 30px;
+    color: #F5BC41;
+    font-size: 14px;
+}
+
+.nombre-profile{
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.img-profile{
+    width: 80px;
+    height: 80px;
+}
+
+.lista-servicios li{
+    list-style: none;
+}
+
+.lista-servicios{
+    display: flex;
+    justify-content: space-around;
+}
+
+.lista-servicios li:hover{
+    border-bottom: 2px solid #FA676B;
+    transition: width 0.6s ease ;
+}
