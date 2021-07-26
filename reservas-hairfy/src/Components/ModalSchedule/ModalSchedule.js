@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import { CloseButton } from 'react-bootstrap'
+
 
 const ModalSchedule = () => {
   const [show, setShow] = useState(false);
@@ -13,7 +15,8 @@ const ModalSchedule = () => {
     return (
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Nueva reserva</Modal.Title>
+          <Modal.Title>Nueva reserva</Modal.Title> 
+          <CloseButton />
         </Modal.Header>
         <Modal.Body>
         <form>

@@ -4,13 +4,13 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Sidebar from './Components/Sidebar/Sidebar'
 import CalendarUi from './Components/Calendar/Calendar';
 import './App.css';
-import 'tui-calendar/dist/tui-calendar.css'
-import 'tui-date-picker/dist/tui-date-picker.css'
-import 'tui-time-picker/dist/tui-time-picker.css'
-import Servicios from './Components/Servicios/Servicios'
-import FotosCentro from './Components/FotosCentro/FotosCentro'
+// import 'tui-calendar/dist/tui-calendar.css'
+// import 'tui-date-picker/dist/tui-date-picker.css'
+// import 'tui-time-picker/dist/tui-time-picker.css'
 import EmpleadosContainer from './Container/Empleados/EmpleadosContainer';
 import InfoEmpleados from './Components/Empleados/InfoEmpleados'
+import FotosCentroContainer from './Container/FotosCentro/FotosCentroContainer';
+import ServiciosContainer from './Container/Servicios/ServiciosContainer';
 
 function App() {
 
@@ -21,10 +21,10 @@ function App() {
        <Sidebar/> 
       <Switch>
         <Route path='/servicios'>
-      <Servicios/>
+      <ServiciosContainer/>
         </Route>
         <Route path='/imagenes'>
-          <FotosCentro/>
+          <FotosCentroContainer/>
         </Route>
         <Route path='/empleados'>
           <EmpleadosContainer/>

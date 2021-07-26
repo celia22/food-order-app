@@ -1,12 +1,11 @@
 import React, { useState, useEffect, createRef } from 'react'
-// import moment from 'moment'
 import Calendar from '@toast-ui/react-calendar'
 import 'tui-calendar/dist/tui-calendar.css'
 import 'tui-date-picker/dist/tui-date-picker.css'
 import 'tui-time-picker/dist/tui-time-picker.css'
-import TuiCalendar from 'tui-calendar';
+// import TuiCalendar from 'tui-calendar';
 import './Calendar.css'
-import ModalSchedule from '../ModalSchedule/ModalSchedule'
+// import ModalSchedule from '../ModalSchedule/ModalSchedule'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalContainer from '../../Container/Modal/ModalContainer'
@@ -15,7 +14,7 @@ import ModalContainer from '../../Container/Modal/ModalContainer'
 const CalendarUi = () => {
 
 
-          //Custom theme for the calendar
+   //Custom theme for the calendar
   const customTheme = {
     //Common style
     'common.border': 'thin solid #C1C1C1',
@@ -126,30 +125,32 @@ const CalendarUi = () => {
   const handleNewSchedule = event => {
     const calendarInstance = calendarRef.current.getInstance()
     calendarInstance.openCreationPopup(event.schedule)
-    
-    
+  
   }
 
+
   /******///CREAR/******/
-  const handleCreateSchedule = event => {
-    let copySchedule = newScheduleList
+  const handleCreateSchedule = (event, nombre, servicioSeleccionado, empleadoSeleccionado ) => {
     
     console.log('beforeCreateSchedule', event)
 
     handleShow()
 
-    // let newSchedule = {
-    //   id: Date.now(),
-    //   calendarId: event.calendarId,
-    //   title: event.title,
-    //   category: 'time',
-    //   start: event.start,
-    //   end: event.end
-    // }
+    let newSchedule = {
+      id: Date.now(),
+      calendarId: event.calendarId,
+      title: nombre,
+      service: servicioSeleccionado,
+      category: 'time',
+      // start: getDate('date', today, 1, '+').toISOString(),
+      // end: getDate('date', today, 1, '+').toISOString(),
+      start: event.start,
+      end: event.end
+    }
+    
+   const newSch = newScheduleList.push(newSchedule)
 
-    // copySchedule.push(newSchedule)
-
-    setNewScheduleList([...copySchedule])
+    setNewScheduleList(newSch)
   }
 
   /******///EDITAR/******/

@@ -1,7 +1,6 @@
 
 .titulo-servicio{
     margin-left: 8rem;
-    margin-top: 2rem !important;
     margin-bottom: 2rem !important;
 }
 
@@ -16,4 +15,12 @@
     padding: .5rem;
     border-radius: 50px;
     color: white;
+}
+
+.listaServicios{
+    width: 500px;
+}
+
+.itemList:hover {
+ border-bottom: 2px solid #FA676B;
 }

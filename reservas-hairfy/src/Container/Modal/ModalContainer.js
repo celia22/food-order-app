@@ -11,6 +11,8 @@ const ModalContainer = ({show, handleClose, handleCreateSchedule}) => {
         const [servicioSeleccionado, setServicioSeleccionado] = useState('')
         const [nombre, setNombre] = useState('')
         const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState('')
+        const [horario, setHorario] = useState()
+        const [fecha, setFecha] = useState()
 
         // const [show, setShow] = useState(false);
 
@@ -59,20 +61,6 @@ const ModalContainer = ({show, handleClose, handleCreateSchedule}) => {
         
       }, [])
       
-      //  const serv = new Set(servicios)
-
-
-      // const buscoServicio = () => {
-        
-      //   const losServicios = empleados.map((i =>  i.servicio))
-      //   const leng = losServicios.length
-        
-      //     for (let index = 0 ; index === leng; index++){
-      //         console.log(losServicios[index])
-      //         };            
-
-      //   }
-      
       
     return (
         <div>
@@ -111,12 +99,18 @@ const ModalContainer = ({show, handleClose, handleCreateSchedule}) => {
             
             <label>Día y hora</label>
             <br/>
-                <input type='date'/>
-                <select></select>
+                <input type='date' value={fecha} onChange={(e)=> setFecha(e.target.value) }/>
+                <select value={horario} onChange={(e)=> setHorario(e.target.value)}>
+                    <option value='10:30'>10:30</option>
+                    <option value='11:00'>11:00</option>
+                    <option value='11:30'>11:30</option>
+                    <option value='12:00'>12:00</option>
+                    <option value='12:30'>12:30</option>
+                </select>
             </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleCreateSchedule}>
+                <Button variant="primary" onClick={handleCreateSchedule(nombre, servicioSeleccionado, empleadoSeleccionado)}>
                 Guardar reserva
                 </Button>
             </Modal.Footer>
