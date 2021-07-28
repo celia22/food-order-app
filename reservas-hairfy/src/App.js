@@ -28,9 +28,6 @@ function App() {
         </Route>
         <Route path='/empleados'>
           <EmpleadosContainer/>
-          {/* <Route path='/empleados:id'>
-            <InfoEmpleados/>
-          </Route> */}
         </Route>
         <Route path='/'>
       <CalendarUi/>

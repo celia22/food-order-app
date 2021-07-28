@@ -57,9 +57,15 @@
 .lista-servicios{
     display: flex;
     justify-content: space-around;
+    padding: 20px;
 }
 
 .lista-servicios li:hover{
     border-bottom: 2px solid #FA676B;
-    transition: width 0.6s ease ;
+    transition: width 0.8s ease-in ;
+    cursor: pointer;
+}
+
+.lista-servicios li.active {
+    border-bottom: 2px solid #FA676B;
 }

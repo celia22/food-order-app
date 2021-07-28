@@ -1,5 +1,6 @@
 import React from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { Route } from 'react-router-dom'
 
 const Empleados = ({empleados}) => {
     return (

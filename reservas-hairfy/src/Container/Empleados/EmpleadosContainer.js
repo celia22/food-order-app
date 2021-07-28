@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Empleados from '../../Components/Empleados/Empleados'
 import InfoEmpleados from '../../Components/Empleados/InfoEmpleados'
 import '../../Components/Empleados/empleados.css'
-import { Route } from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
 
 
 const EmpleadosContainer = () => {
 
     const [empleados, setEmpleados] = useState([])
+
+    const {id} = useParams()
+
+    console.log(id)
 
     useEffect(() => {
         
@@ -48,8 +52,9 @@ const EmpleadosContainer = () => {
               horario: 10-18
             }
         ] 
-
-            setEmpleados(empleados)
+        setEmpleados(empleados)
+        
+        const filtroId = id ? empleados.filter((item) => item.id === id) : empleados
             console.log(empleados)
     }, [])
 
