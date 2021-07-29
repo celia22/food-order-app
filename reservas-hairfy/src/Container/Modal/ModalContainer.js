@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ModalHeader from 'react-bootstrap/ModalHeader'
-import Servicios from '../../Components/Servicios/Servicios'
+import NuevoServicio from '../../Components/Servicios/NuevoServicio'
 
 const ModalContainer = ({show, handleClose, handleCreateSchedule}) => {
 

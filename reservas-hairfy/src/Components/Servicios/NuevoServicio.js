@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup'
 
 
-const Servicios = ({empleados}) => {
+const NuevoServicio = ({empleados}) => {
 
     
     const [servicio, setServicio] = useState('')
@@ -20,7 +20,7 @@ const Servicios = ({empleados}) => {
     return (
         <React.Fragment>
                 <h4 className='titulo-servicio'>Nuevo Servicio</h4>
-                <div className='d-flex justify-content-around mt-3'>
+                <div className='d-flex mt-3'>
                 <Form className='form-services'>
                     <Form.Group controlId="">
                     <Form.Label>Nombre del Servicio</Form.Label>
@@ -71,6 +71,7 @@ const Servicios = ({empleados}) => {
                     Guardar
                 </button>
             </Form>
+            <div className='div-medio'></div>
         <div>
            <p>¿A qué empleado quieres asociar este servicio? </p>
         <ListGroup>
@@ -85,4 +86,4 @@ const Servicios = ({empleados}) => {
     )
 }
 
-export default Servicios
+export default NuevoServicio

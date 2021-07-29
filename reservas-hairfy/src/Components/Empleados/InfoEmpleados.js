@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const InfoEmpleados = ({empleados}) => {
+const InfoEmpleados = ({empleado}) => {
 
     const classes = useStyles()
 
@@ -60,21 +60,16 @@ const InfoEmpleados = ({empleados}) => {
     }
 
 
-    const editProfile = () => {
-
-    }
-
-
     return (
         <React.Fragment>
         <div className='container-info'>
             <div className='d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
                     {/* <Image className='shadow img-profile' src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=100" roundedCircle /> */}
-                    <Avatar alt="Juan"  src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=100"  className={classes.large}/>
-                    <p className='nombre-profile'>juan</p>
+                    <Avatar alt={empleado.nombre}  src={empleado.img}  className={classes.large}/>
+                    <p className='nombre-profile'>{empleado.nombre}</p>
                 </div>
-                <button className='btn-edit' onClick={editProfile}>Editar perfil</button>
+                <button className='btn-edit' onClick={ () => setEdit(true)}>Editar perfil</button>
             </div>
             <hr/>
             <div>
@@ -85,7 +80,7 @@ const InfoEmpleados = ({empleados}) => {
                 </ul>
             </div>
             <div>
-                {clickHorario?'hola' : clickServicio?'servicio' : clickInfo?'info': ''}
+                {/* {clickHorario?empleado.horario : clickServicio?empleado.servicio : clickInfo?empleado.nombre: ''} */}
                 
             </div>
         </div>

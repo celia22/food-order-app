@@ -1,6 +1,6 @@
 
 .titulo-servicio{
-    margin-left: 8rem;
+    /* margin-left: 8rem; */
     margin-bottom: 2rem !important;
 }
 
@@ -23,4 +23,8 @@
 
 .itemList:hover {
  border-bottom: 2px solid #FA676B;
+}
+
+.div-medio{
+    width: 250px !important;
 }
