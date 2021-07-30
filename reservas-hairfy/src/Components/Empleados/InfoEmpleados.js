@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Image } from 'react-bootstrap'
+import { Form, Image, InputGroup } from 'react-bootstrap'
 import {useParams} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import './empleados.css'
+import { CgEditFlipV } from 'react-icons/cg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,16 +31,12 @@ const InfoEmpleados = ({empleado}) => {
     const [clickServicio, setClickServicio] = useState(false)
     const [clickHorario, setClickHorario] = useState(false)
     const [clickInfo, setClickInfo] = useState(false)
+    const [nombre, setNombre] = useState(empleado.nombre)
+    const [horario, setHorario] = useState(empleado.horario)
+    const [servicio, setServicio] = useState(empleado.servicio)
+    const [info, setInfo] = useState(empleado.info)
 
 
-
-    // const [empleado, setEmpleado] = useState([])
-
-    // const {id} = useParams()
-
-    // const filtroId = id ? empleados.filter((item) => item.id === id) : empleados
-          
-    // setEmpleado(empleados[0])
 
     const handleClickServicio = () => {
         setClickServicio(true)
@@ -60,6 +57,8 @@ const InfoEmpleados = ({empleado}) => {
     }
 
 
+
+
     return (
         <React.Fragment>
         <div className='container-info'>
@@ -67,11 +66,17 @@ const InfoEmpleados = ({empleado}) => {
                 <div className='d-flex align-items-center'>
                     {/* <Image className='shadow img-profile' src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=100" roundedCircle /> */}
                     <Avatar alt={empleado.nombre}  src={empleado.img}  className={classes.large}/>
+                { !edit ? 
                     <p className='nombre-profile'>{empleado.nombre}</p>
+                    :
+                    <Form.Control className='edit-name' type='text' value={empleado.nombre} onChange={(e)=> setNombre(e.target.value)}/>
+
+                   }  
                 </div>
-                <button className='btn-edit' onClick={ () => setEdit(true)}>Editar perfil</button>
+                <button className='btn-edit' onClick={ () => setEdit(!edit)}>Editar perfil</button>
             </div>
             <hr/>
+            
             <div>
                 <ul className='lista-servicios'>
                     <li className={clickServicio && 'active'} onClick={handleClickServicio}>Servicios</li>
@@ -80,8 +85,19 @@ const InfoEmpleados = ({empleado}) => {
                 </ul>
             </div>
             <div>
-                {/* {clickHorario?empleado.horario : clickServicio?empleado.servicio : clickInfo?empleado.nombre: ''} */}
-                
+                {
+                !edit ? (clickHorario?empleado.horario : clickServicio?empleado.servicio : clickInfo?empleado.nombre: '')
+                    :
+                   (clickHorario? <Form.Control className='edit-name' type='text' value={empleado.horario} onChange={(e)=> setHorario(e.target.value)}/>
+                   
+                   : clickServicio ? <Form.Control className='edit-name' type='text' value={empleado.servicio} onChange={(e)=> setServicio(e.target.value)}/>
+                   
+                   : clickInfo ? <Form.Control className='edit-name' type='text' value={empleado.info} onChange={(e)=> setInfo(e.target.value)}/>
+                   
+                   :''
+                   )
+            }
+            
             </div>
         </div>
         </React.Fragment>

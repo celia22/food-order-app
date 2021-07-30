@@ -23,10 +23,10 @@
     color: #FA676B;
 }
 
-.container-info{
-    width: 50vw;
-    margin-right: 3rem;
-}
+ .container-info{
+     width: 40vw; 
+    margin-right: 5rem;
+} 
 
 .btn-edit{
     margin-right: 1rem;
@@ -68,4 +68,8 @@
 
 .lista-servicios li.active {
     border-bottom: 2px solid #FA676B;
+}
+
+.edit-name{
+    margin-left: 14px;
 }

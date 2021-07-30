@@ -30,7 +30,7 @@ function App() {
         <Route exact path='/perfil'>
       <PerfilContainer/>
         </Route>
-        <Route exact path='/'>
+        <Route path='/'>
       <CalendarUi/>
         </Route>
       </Switch>

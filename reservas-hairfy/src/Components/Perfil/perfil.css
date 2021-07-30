@@ -1,4 +1,14 @@
 .container{
     margin-left: 8rem;
+    /* margin-right: 4rem;  */
     /* border-bottom: 1px solid lightgray; */
+}
+
+.form-profile{
+    margin-right: 4rem;
+}
+
+.avatar{
+    width: 100px !important;
+    height: 100px !important;
 }
