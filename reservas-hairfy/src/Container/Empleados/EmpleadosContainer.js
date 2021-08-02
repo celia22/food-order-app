@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ListGroup } from 'react-bootstrap'
+import { RiFilterOffFill } from 'react-icons/ri'
+import AgregarEmpleado from '../../Components/Empleados/AgregarEmpleado'
 import Empleados from '../../Components/Empleados/Empleados'
 import '../../Components/Empleados/empleados.css'
 
@@ -8,7 +10,8 @@ const EmpleadosContainer = () => {
 
     const [empleados, setEmpleados] = useState([])
     const [empleadoInfo, setEmpleadoInfo] = useState({})
-
+    const [addEmpleado, setAddEmpleado] = useState(false)
+    const [servicios, setServicios] = useState([])
 
     useEffect(() => {
         
@@ -61,22 +64,35 @@ const EmpleadosContainer = () => {
             }
         ] 
         setEmpleados(empleados)
+        setServicios(['cejas', 'corte', 'color'])
         
     }, [])
-
-
-    console.log(empleados)
     
+    const nuevoEmpleado = () => {
+
+    }
+
+
 
     return (
         <div className='container-empleados'>
             <div className='d-flex justify-content-between align-items-center'>
               <h2 className='titulo-empleados'>Empleados</h2>
-              <button className='btn-add-empleado'>Agregar empleado</button>
+              {
+                !addEmpleado ? 
+                <button className='btn-add-empleado' onClick={()=> setAddEmpleado(true)}>Agregar nuevo empleado</button>
+                : 
+                <button className='btn-edit' onClick={nuevoEmpleado}>Guardar cambios</button>
+              }
             </div>
 
                <div className=''>
-                  <Empleados empleados={empleados} />
+                { addEmpleado ?
+                <AgregarEmpleado servicios={servicios} />
+                :
+                <Empleados empleados={empleados} />
+              }
+                  
                 </div> 
         </div>
     )

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { useParams } from 'react-router-dom'
 import InfoEmpleados from './InfoEmpleados'
 
 const Empleados = ({empleados}) => {
 
-    const [empleadoInfo, setEmpleadoInfo] = useState({})
+    const [empleadoInfo, setEmpleadoInfo] = useState(empleados?[0] : '' )
 
     const handleInfo = (id) => {
        const filtro = empleados.filter((empleado) => empleado.id === id)
@@ -12,8 +13,6 @@ const Empleados = ({empleados}) => {
         console.log(filtro)
         console.log(id)
     }
-
-    console.log(empleadoInfo)
     
 
     return (

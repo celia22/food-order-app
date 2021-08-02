@@ -38,7 +38,8 @@ const PerfilContainer = ({centro}) => {
                 <Col xs={2}>
                     <Form.Group controlId="">
                     <Avatar className='avatar' />
-                        <Form.Control hidden type="file" />
+                    <input type="file" id="fileElem" multiple accept="image/*" style={{display: 'none'}}/>
+                    <Form.Label for="fileElem" className='my-2 edit-ph'>Editar</Form.Label>
                     </Form.Group>
                 </Col>
             

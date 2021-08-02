@@ -148,9 +148,9 @@ const CalendarUi = () => {
       end: event.end
     }
     
-   const newSch = newScheduleList.push(newSchedule)
+    // const newSch = newScheduleList.push(newSchedule)
 
-    setNewScheduleList(newSch)
+    setNewScheduleList()
   }
 
   /******///EDITAR/******/

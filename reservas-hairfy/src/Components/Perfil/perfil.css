@@ -12,3 +12,9 @@
     width: 100px !important;
     height: 100px !important;
 }
+
+.edit-ph{
+    padding-right: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}

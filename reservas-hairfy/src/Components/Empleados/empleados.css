@@ -73,3 +73,9 @@
 .edit-name{
     margin-left: 14px;
 }
+
+.edit-ph{
+    padding-right: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}

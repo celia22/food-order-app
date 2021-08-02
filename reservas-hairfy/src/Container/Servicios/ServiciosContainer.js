@@ -36,30 +36,6 @@ const ServiciosContainer = () => {
         const emple = [ 'empleado1', 'empleado2', 'empleado3', 'empleado4']
         setEmpleados(emple)
 
-    //     const servi = [
-    //         {
-    //         servicio: 'corte',
-    //         precio: 40,
-    //         duracion: '30 min'
-    //     }, 
-    //     {
-    //         servicio: 'color',
-    //         precio: 70,
-    //         duracion: '45 min'
-    //     },
-    //     {
-    //         servicio: 'cejas',
-    //         precio: 20,
-    //         duracion: '20 min'
-    //     },
-    //     {
-    //         servicio: 'manos',
-    //         precio: 30,
-    //         duracion: '30 min'
-    //     }
-    // ]
-      //  setServicios(servi)
-
     }, [])
 
 

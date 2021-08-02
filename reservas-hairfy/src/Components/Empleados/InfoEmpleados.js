@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+
 const InfoEmpleados = ({empleado}) => {
 
     const classes = useStyles()
@@ -64,7 +65,6 @@ const InfoEmpleados = ({empleado}) => {
         <div className='container-info'>
             <div className='d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
-                    {/* <Image className='shadow img-profile' src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=100" roundedCircle /> */}
                     <Avatar alt={empleado.nombre}  src={empleado.img}  className={classes.large}/>
                 { !edit ? 
                     <p className='nombre-profile'>{empleado.nombre}</p>
@@ -92,9 +92,8 @@ const InfoEmpleados = ({empleado}) => {
                    
                    : clickServicio ? <Form.Control className='edit-name' type='text' value={empleado.servicio} onChange={(e)=> setServicio(e.target.value)}/>
                    
-                   : clickInfo ? <Form.Control className='edit-name' type='text' value={empleado.info} onChange={(e)=> setInfo(e.target.value)}/>
+                   : clickInfo && <Form.Control className='edit-name' type='text' value={empleado.info} onChange={(e)=> setInfo(e.target.value)}/>
                    
-                   :''
                    )
             }
             
