@@ -5,27 +5,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup'
 
 
-const NuevoServicio = ({empleados}) => {
+const NuevoServicio = ({titulo, servicioEdit, empleados}) => {
 
     
-    const [servicio, setServicio] = useState('')
-    const [mins, setMins] = useState('')
+    const [servicio, setServicio] = useState(servicioEdit ? servicioEdit.servicio :'')
+    const [mins, setMins] = useState(servicioEdit ? servicioEdit.duracion : '')
     const [hrs, setHrs] = useState('')
-    const [precio, setPrecio] = useState(0)
-    const [tipoPrecio, setTipoPrecio] = useState('')
+    const [precio, setPrecio] = useState(servicioEdit ? servicioEdit.precio : 0)
+    const [tipoPrecio, setTipoPrecio] = useState(servicioEdit ? servicioEdit.tipoPrecio :'')
     const [checked, setChecked] = useState(false)
 
 
 
     return (
         <React.Fragment>
-                <h4 className='titulo-servicio'>Nuevo Servicio</h4>
+                <h4 className='titulo-servicio'>{titulo}</h4>
                 <div className='d-flex mt-3'>
                 <Form className='form-services'>
                     <Form.Group controlId="">
                     <Form.Label>Nombre del Servicio</Form.Label>
-                    {/* <input type='text' placeholder="¿Cuál es el nombre de su servicio?" value={servicio} onChange={(e)=> setServicio(e.target.value)} /> */}
-                    <Form.Control type="text" placeholder="¿Cuál es el nombre de su servicio?" onChange={(e)=> setServicio(e.target.value)} />
+                    <Form.Control type="text" value={servicio} placeholder="¿Cuál es el nombre de su servicio?" onChange={(e)=> setServicio(e.target.value)} />
                      </Form.Group>
 
                     <hr className='my-4'/>
@@ -34,20 +33,18 @@ const NuevoServicio = ({empleados}) => {
                     <Form.Label>Duración del servicio</Form.Label>
                     <div className='d-flex justify-content-center'>
                     <Form.Control className='select-form' as="select" value={hrs} onChange={(e) => setHrs(e.target.value)}>
-                        {/* <select className='selectHrs' value={hrs} onChange={handleHora}> */}
                             <option value='0hrs'>0 hrs</option>
                             <option value='1hrs'>1 hrs</option>
                             <option value='2hrs'>2 hrs</option>
-                        {/* </select> */}
                     </Form.Control>
+
                     <Form.Control as="select" className='selectMins' value={mins} onChange={(e)=> setMins(e.target.value)}>
-                        {/* <select className='selectMins' > */}
-                            <option value='0mins'>0 mins</option>
-                            <option value='15mins'>15 mins</option>
-                            <option value='30mins'>30 mins</option>
-                            <option value='45mins'>45 mins</option>
-                        {/* </select>   */}
+                            <option value='0 min'>0 mins</option>
+                            <option value='15 min'>15 mins</option>
+                            <option value='30 min'>30 mins</option>
+                            <option value='45 min'>45 mins</option>
                     </Form.Control>
+
                     </div>
                     </Form.Group>
 
@@ -62,7 +59,7 @@ const NuevoServicio = ({empleados}) => {
                             <option value='gratis'>Gratis</option>
                             <option value='empieza en'>Precio empieza en...</option>
                         </Form.Control>
-                        {/* <input type='number'   /> */}
+
                         <Form.Control type="number" value={precio} onChange={(e)=> setPrecio(e.target.value)} placeholder="0€"/>
                     </div>
                     </Form.Group>

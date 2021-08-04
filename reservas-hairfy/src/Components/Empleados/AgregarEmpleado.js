@@ -20,7 +20,7 @@ const AgregarEmpleado = ({servicios}) => {
                     <Form.Group controlId="" >
                     <Avatar className='avatar'/ >
                     <input type="file" id="fileElem" multiple accept="image/*" style={{display: 'none'}}/>
-                    <Form.Label for="fileElem" className='my-2 edit-ph'>Editar</Form.Label>
+                    <Form.Label for="fileElem" className='my-3 edit-ph'>Editar</Form.Label>
                     </Form.Group>
                 </Col>
             

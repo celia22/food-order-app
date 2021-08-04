@@ -18,7 +18,11 @@
 }
 
 .listaServicios{
-    width: 500px;
+    width: 700px;
+}
+
+.itemList span{
+    margin-left: 60px;
 }
 
 .itemList:hover {
@@ -27,4 +31,18 @@
 
 .div-medio{
     width: 250px !important;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.span-icons{
+display: flex;
+align-items: flex-end;
+}
+
+.nombreServicio{
+    font-size: 20px;
+    font-weight: bold;
 }

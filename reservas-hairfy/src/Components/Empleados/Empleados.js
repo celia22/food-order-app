@@ -5,13 +5,13 @@ import InfoEmpleados from './InfoEmpleados'
 
 const Empleados = ({empleados}) => {
 
-    const [empleadoInfo, setEmpleadoInfo] = useState(empleados?[0] : '' )
+    const [empleadoInfo, setEmpleadoInfo] = useState('')
+    // const [empleadoInfo, setEmpleadoInfo] = useState(empleados[0])
+
 
     const handleInfo = (id) => {
        const filtro = empleados.filter((empleado) => empleado.id === id)
         setEmpleadoInfo(filtro[0])
-        console.log(filtro)
-        console.log(id)
     }
     
 

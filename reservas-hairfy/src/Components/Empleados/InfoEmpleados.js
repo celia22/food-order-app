@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Form, Image, InputGroup } from 'react-bootstrap'
-import {useParams} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import './empleados.css'
-import { CgEditFlipV } from 'react-icons/cg';
+// import {useParams} from 'react-router-dom'
+// import { CgEditFlipV } from 'react-icons/cg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,10 +32,10 @@ const InfoEmpleados = ({empleado}) => {
     const [clickServicio, setClickServicio] = useState(false)
     const [clickHorario, setClickHorario] = useState(false)
     const [clickInfo, setClickInfo] = useState(false)
-    const [nombre, setNombre] = useState(empleado.nombre)
-    const [horario, setHorario] = useState(empleado.horario)
-    const [servicio, setServicio] = useState(empleado.servicio)
-    const [info, setInfo] = useState(empleado.info)
+    const [nombre, setNombre] = useState(empleado.nombre ? empleado.nombre : '' )
+    const [horario, setHorario] = useState(empleado.horario ? empleado.horario : '')
+    const [servicio, setServicio] = useState(empleado.servicio ? empleado.servicio : '')
+    const [info, setInfo] = useState(empleado.info ? empleado.info : '')
 
 
 

@@ -1,7 +1,6 @@
 .titulo-empleados{
     margin-top: 2rem !important;
     margin-bottom: 2rem !important; 
-    /* margin-left: 6rem;*/
 }
 
 .empleados-list{
@@ -29,7 +28,7 @@
 } 
 
 .btn-edit{
-    margin-right: 1rem;
+    margin-right: 3rem;
     background-color: transparent;
     border: 1px solid #F5BC41;
     padding: 8px 10px;
@@ -56,7 +55,7 @@
 
 .lista-servicios{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 20px;
 }
 
@@ -75,7 +74,7 @@
 }
 
 .edit-ph{
-    padding-right: 20px;
+    margin-right: 50px;
     cursor: pointer;
     font-size: 14px;
 }
