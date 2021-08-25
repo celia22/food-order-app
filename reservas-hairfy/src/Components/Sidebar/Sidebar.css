@@ -41,7 +41,7 @@
   #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
     color: #6c757d;
     /* color: #F5BC41; */
-    margin: 10px 0px;
+    margin: 5px 0px;
   }
 
   
@@ -72,10 +72,6 @@
     font-weight: bold;
   }
   
-  /* #header .logo {
-    padding: 30px;
-  } */
-
   .active-nav{
     color: #F5BC41 !important
   }
@@ -88,4 +84,8 @@
 
   #header .pro-sidebar .collapsed .img-logo{
     /* width: 50%; */
+  }
+
+  .hide{
+    display: none;
   }

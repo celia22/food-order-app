@@ -16,11 +16,13 @@ const AgregarEmpleado = ({servicios}) => {
         <div>
         <Form className='form-profile'>
             <Row className="my-4">
-                <Col xs={2} className='text-center'>
-                    <Form.Group controlId="" >
+                <Col xs={2} >
+                    <Form.Group controlId="" className='d-flex flex-column justify-content-center' >
                     <Avatar className='avatar'/ >
-                    <input type="file" id="fileElem" multiple accept="image/*" style={{display: 'none'}}/>
-                    <Form.Label for="fileElem" className='my-3 edit-ph'>Editar</Form.Label>
+                    <div className='mx-2 my-1'>
+                        <input type="file" id="fileElem" multiple accept="image/*" style={{display: 'none'}}/>
+                        <Form.Label for="fileElem" className='my-2 edit-ph'>Editar</Form.Label>
+                    </div>
                     </Form.Group>
                 </Col>
             

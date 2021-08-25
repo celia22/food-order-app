@@ -96,7 +96,6 @@ const InfoEmpleados = ({empleado}) => {
                    
                    )
             }
-            
             </div>
         </div>
         </React.Fragment>

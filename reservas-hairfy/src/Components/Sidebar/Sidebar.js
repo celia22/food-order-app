@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Sidebar.css'
 import {
     ProSidebar,
@@ -12,24 +12,28 @@ import {
     import { FaBars, FaImages, FaUserCircle } from "react-icons/fa";
     import { CgClose } from "react-icons/cg";
     import { RiScissors2Fill } from "react-icons/ri";
-    import { ImUsers} from 'react-icons/im'
+    import { ImExit, ImUsers} from 'react-icons/im';
     import "react-pro-sidebar/dist/css/styles.css";
     import {NavLink} from 'react-router-dom';
-import Logo from '../../Logo.png'   
+import Logo from '../../Logo.png';  
+import auth from '../../firebase';
+import { AuthContext, useAuthContext } from '../../Context/UserAuthContext';
     
 
 const Sidebar = () => {
 
     const [menuCollapse, setMenuCollapse] = useState(true)
 
+    const {hideSidebar, logOut} = useContext(AuthContext)
+
+
   const menuIconClick = () => {
-    //condition checking to change state from true to false and vice versa
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   };
 
   return (
     <>
-      <div id="header">
+      <div id="header" className={ hideSidebar && 'hide'}>
           {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
@@ -77,11 +81,11 @@ const Sidebar = () => {
               
             </Menu>
           </SidebarContent>
-          {/* <SidebarFooter>
+          <SidebarFooter className=''>
             <Menu iconShape="square">
-              <MenuItem icon={<FaUserCircle/>}>Logout</MenuItem>
+              <MenuItem icon={<ImExit/>} onClick={logOut} >Logout</MenuItem>
             </Menu>
-          </SidebarFooter> */}
+          </SidebarFooter>
         </ProSidebar>
       </div>
     </>

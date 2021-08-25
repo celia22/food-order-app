@@ -44,7 +44,7 @@ const ServiciosContainer = () => {
 
     useEffect(() => {
 
-        const emple = [ 'empleado1', 'empleado2', 'empleado3', 'empleado4']
+        const emple = [ 'empleado1', 'empleado2', 'empleado3', 'empleado4', 'empleado5', 'empleado6', 'empleado7', 'empleado8', 'empleado9', 'empleado10']
         setEmpleados(emple)
 
     }, [])
@@ -58,7 +58,7 @@ const ServiciosContainer = () => {
 
 
     const editServicio = (id) => {
-        const filter = servicios.filter(i => i.id == id)
+        const filter = servicios.filter(i => i.id === id)
         
         setServEdit(filter[0])
         setEdit(true)
@@ -93,6 +93,8 @@ const ServiciosContainer = () => {
                                 <p className='nombreServicio'>{servicio.servicio}</p>
                         
                                 <div>
+                                    Descripción: {servicio.descripcion}
+                                    <br/>
                                     Duración: {servicio.duracion} 
                                     <br/>
                                     Precio: {servicio.tipoPrecio} {servicio.precio}€

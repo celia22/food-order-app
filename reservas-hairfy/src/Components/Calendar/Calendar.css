@@ -1,64 +1,14 @@
 .container-calendar{
-    width: 80%;
+    width: 85%;
     margin: 2rem auto;
-    
-}
-
-.btn-view{
-    margin-right: 1rem;
-    background-color: transparent;
-    border: 1px solid #F5BC41;
-    padding: 8px 10px;
-    border-radius: 30px;
-}
-
-
-.btns-view, .btns-next{
-    background-color: transparent;
-    border: none;
-}
-.btns-view:hover{
-    color: #F5BC41;
-}
-
-
-.btn-container{
-    display: flex;
-    justify-content: center;
-}
-
-.btn-next{
-    margin-right: 1rem;
-    background-color: transparent;
-    border: 1px solid #FA676B;
-    padding: 8px 10px;
-    border-radius: 30px;
-}
-
-.btns-next:hover{
-    color: #FA676B;
-}
-
-.check-filters{
-    /* margin-bottom: 2rem; */
-}
-
-.checks{
-    margin-left: 1rem;
-}
-
-.container-btns{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem 0;
 }
 
 .btn-agregar{
     margin-right: 1rem;
-    background-color: #FA676B;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 30px;
-    color: white;
-}
+    background-color: transparent !important;
+    border: 2px solid #FA676B !important;
+    padding: 8px 10px !important;
+    border-radius: 15px !important;
+    color: #FA676B !important;
+
+}  

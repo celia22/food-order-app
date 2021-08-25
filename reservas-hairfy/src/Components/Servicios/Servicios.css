@@ -46,3 +46,8 @@ align-items: flex-end;
     font-size: 20px;
     font-weight: bold;
 }
+
+.lista-empleados{
+    overflow-y: auto;
+    max-height: 150px;
+}

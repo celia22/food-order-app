@@ -56,9 +56,9 @@ const EmpleadosContainer = () => {
 
             },{
               id: 6,
-              nombre: 'joaquin',
+              nombre: 'Alex',
               servicio: ['color'],
-              horario: '10-18',
+              horario: '',
               img: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=100'
 
             }
@@ -67,6 +67,9 @@ const EmpleadosContainer = () => {
         setServicios(['cejas', 'corte', 'color'])
         
     }, [])
+
+
+    /////// COMO GUARDAR PARA ALMACENAR AL BACK ///////////
     
     const nuevoEmpleado = () => {
 
@@ -80,7 +83,7 @@ const EmpleadosContainer = () => {
               <h2 className='titulo-empleados'>Empleados</h2>
               {
                 !addEmpleado ? 
-                <button className='btn-add-empleado' onClick={()=> setAddEmpleado(true)}>Agregar nuevo empleado</button>
+                <button className='btn-agregar mx-5' onClick={()=> setAddEmpleado(true)}>Agregar nuevo empleado</button>
                 : 
                 <button className='btn-edit' onClick={nuevoEmpleado}>Guardar cambios</button>
               }

@@ -14,7 +14,9 @@ const NuevoServicio = ({titulo, servicioEdit, empleados}) => {
     const [precio, setPrecio] = useState(servicioEdit ? servicioEdit.precio : 0)
     const [tipoPrecio, setTipoPrecio] = useState(servicioEdit ? servicioEdit.tipoPrecio :'')
     const [checked, setChecked] = useState(false)
-
+    const [intervalHrs, setIntervalHrs] = useState(0)
+    const [intervalMins, setIntervalMins] = useState(0)
+    const [descripcion, setDescripcion] = useState(servicioEdit ? servicioEdit.descripcion : '')
 
 
     return (
@@ -51,6 +53,27 @@ const NuevoServicio = ({titulo, servicioEdit, empleados}) => {
                     <hr className='my-4'/>
 
                     <Form.Group  controlId="">
+                    <Form.Label>Intervalo</Form.Label>
+                    <div className='d-flex justify-content-center'>
+                    <Form.Control className='select-form' as="select" value={intervalHrs} onChange={(e) => setIntervalHrs(e.target.value)}>
+                            <option value='0hrs'>0 hrs</option>
+                            <option value='1hrs'>1 hrs</option>
+                            <option value='2hrs'>2 hrs</option>
+                    </Form.Control>
+
+                    <Form.Control as="select" className='selectMins' value={intervalMins} onChange={(e)=> setIntervalMins(e.target.value)}>
+                            <option value='0 min'>0 mins</option>
+                            <option value='15 min'>15 mins</option>
+                            <option value='30 min'>30 mins</option>
+                            <option value='45 min'>45 mins</option>
+                    </Form.Control>
+
+                    </div>
+                    </Form.Group>
+
+                    <hr className='my-4'/>
+
+                    <Form.Group  controlId="">
                     <Form.Label>Precio y tipo de precio</Form.Label>
                     <div className='d-flex justify-content-center'>
                         <Form.Control as="select" className='select-form' value={tipoPrecio} onChange={(e)=> setTipoPrecio(e.target.value)}>
@@ -64,20 +87,30 @@ const NuevoServicio = ({titulo, servicioEdit, empleados}) => {
                     </div>
                     </Form.Group>
 
-                <button className='btn-submit mt-3' type="submit">
+                <button className='btn-agregar mt-3' type="submit">
                     Guardar
                 </button>
-            </Form>
+                </Form>
             <div className='div-medio'></div>
         <div>
+            <Form.Group controlId="">
+                <Form.Label>Descripción del servicio</Form.Label>
+                <Form.Control className='' as="textarea" rows={5} value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} />
+            </Form.Group>
+
+            <hr className='my-4'/>
+
            <p>¿A qué empleado quieres asociar este servicio? </p>
-        <ListGroup>
+        <ListGroup className='lista-empleados'>
             {empleados ?
             empleados.map((empleado, idx) => <ListGroup.Item key={idx}><input type='checkbox' value={empleado} checked={checked} onClick={()=> setChecked(!checked)} /><label className='mx-2'>{empleado}</label></ListGroup.Item>)
-            : 'No existen empleados asociados'}
+            
+            : 'No existen empleados asociados'
+        }
         </ListGroup>
 
         </div>
+        
     </div>
     </React.Fragment>
     )

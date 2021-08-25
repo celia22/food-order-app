@@ -1,7 +1,5 @@
 .container{
-    margin-left: 8rem;
-    /* margin-right: 4rem;  */
-    /* border-bottom: 1px solid lightgray; */
+    margin-left: 8rem !important;
 }
 
 .form-profile{
@@ -14,7 +12,9 @@
 }
 
 .edit-ph{
-    padding-right: 20px;
+    margin-left: auto !important;
+    padding-left: 20px;
+    margin-right: auto !important;
     cursor: pointer;
     font-size: 14px;
 }

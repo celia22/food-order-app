@@ -13,14 +13,6 @@
     margin-left: 8rem
 }
 
-.btn-add-empleado{
-    margin-right: 3rem;
-    background-color: transparent;
-    border: 1px solid #FA676B;
-    padding: 8px 10px;
-    border-radius: 50px;
-    color: #FA676B;
-}
 
  .container-info{
      width: 40vw; 
@@ -30,9 +22,9 @@
 .btn-edit{
     margin-right: 3rem;
     background-color: transparent;
-    border: 1px solid #F5BC41;
+    border: 2px solid #F5BC41;
     padding: 8px 10px;
-    border-radius: 30px;
+    border-radius: 15px;
     color: #F5BC41;
     font-size: 14px;
 }
