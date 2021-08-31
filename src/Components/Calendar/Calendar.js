@@ -1,4 +1,5 @@
 import * as React from "react";
+import { graphqlContext } from "../../Context/GraphqlProvider";
 import Paper from "@material-ui/core/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
@@ -36,11 +37,14 @@ const appointments = [
 ];
 
 class Calendar extends React.PureComponent {
+
+	static contextType = graphqlContext;
+
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			data: appointments,
+			fakeData: appointments,
 			show: false,
 		};
 
@@ -143,8 +147,15 @@ class Calendar extends React.PureComponent {
 		});
 	};
 
+	componentDidMount() {
+		this.setState({
+			data : this.context.data,
+			...this.state
+		})
+	}
+
 	render() {
-		const { data } = this.state;
+		const { fakeData } = this.state;
 
 		const firstDay = 1;
 		const locale = "es-ES";
@@ -168,7 +179,7 @@ class Calendar extends React.PureComponent {
 			<div className="container-calendar">
 				<Paper>
 					<Scheduler
-						data={data}
+						data={fakeData}
 						firstDayOfWeek={firstDay}
 						locale={locale}
 						startTime={9}

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Calendar from "./Components/Calendar/Calendar";
 import "./App.css";
@@ -12,7 +12,6 @@ import FotosCentroContainer from "./Container/FotosCentro/FotosCentroContainer";
 import ServiciosContainer from "./Container/Servicios/ServiciosContainer";
 import Perfil from "./Components/Perfil/Perfil";
 import Login from "./Components/Login/Login";
-import UserAuthProvider from "./Context/UserAuthContext";
 
 function App() {
     const [user] = useAuthState(auth);
@@ -37,37 +36,51 @@ function App() {
 
     return (
         <div className="App">
-            <UserAuthProvider>
-                <BrowserRouter>
-                    {!userLogged
-                        ? (<Redirect to="/login" />)
-                        : (<Redirect to="/" />)
-                    }
-                    <div>
-                        <Sidebar />
-                        <Switch>
-                            <Route exact path="/login">
-                                <Login />
-                            </Route>
-                            <Route exact path="/servicios">
-                                <ServiciosContainer />
-                            </Route>
-                            <Route exact path="/imagenes">
-                                <FotosCentroContainer />
-                            </Route>
-                            <Route exact path="/empleados">
-                                <EmpleadosContainer />
-                            </Route>
-                            <Route exact path="/perfil">
-                                <Perfil />
-                            </Route>
-                            <Route path="/">
-                                <Calendar />
-                            </Route>
-                        </Switch>
-                    </div>
-                </BrowserRouter>
-            </UserAuthProvider>
+            {!userLogged
+                ? (<Redirect to="/login" />)
+                : (<Redirect to="/" />)
+            }
+            <div>
+                <Sidebar />
+                <Switch>
+                    <Route
+                        exact path="/login"
+                        render={props =>
+                            <Login {...props} />
+                        }
+                    />
+                    <Route
+                        exact path="/servicios"
+                        render={props =>
+                            <ServiciosContainer {...props}/>
+                        }
+                    />
+                    <Route
+                        exact path="/imagenes"
+                        render={props =>
+                            <FotosCentroContainer {...props}/>
+                        }
+                    />
+                    <Route
+                        exact path="/empleados"
+                        render={props =>
+                            <EmpleadosContainer {...props}/>
+                        }
+                    />
+                    <Route
+                        exact path="/perfil"
+                        render={props =>
+                            <Perfil {...props}/>
+                        }
+                    />
+                    <Route
+                        exact path="/"
+                        render={props =>
+                            <Calendar {...props}/>
+                        }
+                    />
+                </Switch>
+            </div>
         </div>
     );
 }

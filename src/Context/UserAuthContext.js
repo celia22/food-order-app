@@ -32,9 +32,9 @@ const UserAuthProvider = ({ children }) => {
             .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 // Signed in
-                var user = userCredential.user;
+				const user = userCredential.user;
 
-                user.updateProfile({
+				user.updateProfile({
                     displayName: username,
                 });
                 console.log(user);
@@ -62,7 +62,7 @@ const UserAuthProvider = ({ children }) => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                console.log(`user logged in: ${user}`)
+                // console.log(`user logged in: ${user}`)
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -91,11 +91,11 @@ const UserAuthProvider = ({ children }) => {
             })
             .catch(function (error) {
                 // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode == "auth/invalid-email") {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				if (errorCode === "auth/invalid-email") {
                     alert(errorMessage);
-                } else if (errorCode == "auth/user-not-found") {
+                } else if (errorCode === "auth/user-not-found") {
                     alert(errorMessage);
                 }
                 console.log(error);
