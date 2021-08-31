@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import UserAuthProvider from "./Context/UserAuthContext";
-import {ApolloProvider} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import apolloClient from "./Apollo/createApolloClient";
 import { BrowserRouter } from "react-router-dom";
 import GraphqlProvider from "./Context/GraphqlProvider";
@@ -12,7 +12,7 @@ import GraphqlProvider from "./Context/GraphqlProvider";
 ReactDOM.render(
     <React.StrictMode>
         <UserAuthProvider>
-            <ApolloProvider  client={ apolloClient }>
+            <ApolloProvider client={ apolloClient }>
                 <GraphqlProvider >
                     <BrowserRouter>
                         <App />

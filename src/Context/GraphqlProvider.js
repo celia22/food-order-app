@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { getCenter } from "../Graphql/queries";
 import firebase from "firebase";
 
-export const graphqlContext = React.createContext();
+export const context = React.createContext();
 
 const GraphqlProvider = (props) => {
 
@@ -28,9 +28,9 @@ const GraphqlProvider = (props) => {
 	}, [currentUserEmail, refetch])
 
 	return (
-		<graphqlContext.Provider value={{ loading, error, data, refetch }} >
+		<context.Provider value={{ loading, error, data, refetch }} >
 			{ props.children }
-		</graphqlContext.Provider>
+		</context.Provider>
 	)
 };
 

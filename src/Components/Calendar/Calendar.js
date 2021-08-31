@@ -1,5 +1,5 @@
 import * as React from "react";
-import { graphqlContext } from "../../Context/GraphqlProvider";
+import { context } from "../../Context/GraphqlProvider";
 import Paper from "@material-ui/core/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
@@ -38,7 +38,7 @@ const appointments = [
 
 class Calendar extends React.PureComponent {
 
-	static contextType = graphqlContext;
+	static contextType = context;
 
 	constructor(props) {
 		super(props);
