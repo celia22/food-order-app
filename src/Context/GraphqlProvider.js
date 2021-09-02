@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from "@apollo/client";
-import { getCenter } from "../Graphql/queries";
+import { getCenterByEmail } from "../Graphql/queries";
 import firebase from "firebase";
 
 export const context = React.createContext();
@@ -10,9 +10,9 @@ const GraphqlProvider = (props) => {
 	const [currentUserEmail, setCurrentUserEmail] = useState("");
 
 	const { loading, error, data, refetch } = useQuery(
-		getCenter,
+		getCenterByEmail,
 		{
-			variables: { id: "611cd6d5d8835ed2dcc5d392" },
+			variables: { email: currentUserEmail },
 			fetchPolicy: "network-only",
 			nextFetchPolicy: "cache-and-network",
 			pollInterval: 60000, // fetches every 60 seconds
