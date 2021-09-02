@@ -47,6 +47,20 @@ export const searchCenter = gql`
 	}
 `;
 
+export const getCenterByEmail = gql`
+	query getCenterByEmail($email: String!) {
+		getCenterByEmail(email: $email) {
+			_id
+			name
+			address
+			city
+			phoneNumber
+			logo
+			pictures
+		}
+	}		
+`;
+
 export const getCenterAvailability = gql`
 	query getCenter($id: ID!, $duration: Int, $day: DateTime) {
 		getCenter(_id: $id) {

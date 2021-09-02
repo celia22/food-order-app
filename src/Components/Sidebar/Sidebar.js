@@ -48,7 +48,7 @@ const Sidebar = () => {
                             <MenuItem active={true} icon={<FaCalendar />}>
                                 Calendario
                                 <NavLink
-                                    to="/calendario"
+                                    to="/"
                                     activeClassName="active-nav"
                                 />
                             </MenuItem>

@@ -13,7 +13,7 @@ ReactDOM.render(
     <React.StrictMode>
         <UserAuthProvider>
             <ApolloProvider client={ apolloClient }>
-                <GraphqlProvider >
+                <GraphqlProvider>
                     <BrowserRouter>
                         <App />
                     </BrowserRouter>
