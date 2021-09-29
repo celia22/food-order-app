@@ -98,10 +98,7 @@ class Calendar extends React.PureComponent {
 		const month = event.target[3].value.split("-")[1] - 1;
 		const year = event.target[3].value.split("-")[0];
 
-		// const date = event.target[1].valueAsDate;
-		// const day = date.getDay() + 1; //you have to do + 1 to get the proper day
-		// const month = date.getUTCMonth();
-		// const year = date.getFullYear();
+	
 		const startTime = event.target[4].value
 			.split(":")
 			.map((el) => parseInt(el));

@@ -10,8 +10,9 @@ const UserAuthProvider = ({ children }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
+	const [userLogged, setUserLogged] = useState()
 	//const [loading, setLoading] = useState(false)
-	const [hideSidebar, setHideSidebar] = useState(false);
+	const [hideSidebar, setHideSidebar] = useState(true);
 	const [resetPass, setResetPass] = useState(false);
 
 	const sendEmailVerification = () => {
@@ -77,6 +78,7 @@ const UserAuthProvider = ({ children }) => {
 
 	const logOut = () => {
 		auth.signOut();
+		setUserLogged(false)
 		setHideSidebar(true);
 	};
 
@@ -118,6 +120,9 @@ const UserAuthProvider = ({ children }) => {
 				sendPasswordReset,
 				resetPass,
 				setResetPass,
+				userLogged, 
+				setUserLogged,
+				setHideSidebar
 			}}
 		>
 			{children}

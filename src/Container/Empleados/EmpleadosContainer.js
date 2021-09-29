@@ -3,6 +3,8 @@ import { context } from "../../Context/GraphqlProvider";
 import AgregarEmpleado from "../../Components/Empleados/AgregarEmpleado";
 import Empleados from "../../Components/Empleados/Empleados";
 import "../../Components/Empleados/empleados.css";
+import { useMutation } from "@apollo/client";
+import { createEmployee } from "../../Graphql/mutations";
 
 const EmpleadosContainer = () => {
 
@@ -12,6 +14,12 @@ const EmpleadosContainer = () => {
 	//const [empleadoInfo, setEmpleadoInfo] = useState({})
 	const [addEmpleado, setAddEmpleado] = useState(false);
 	const [servicios, setServicios] = useState([]);
+	const [nombre, setNombre] = useState("");
+    const [email, setEmail] = useState("");
+    const [horario, setHorario] = useState("");
+    const [telefono, setTelefono] = useState("");
+
+	const [createEmployee, { data, loading, error }] = useMutation(createEmployee)
 
 	useEffect(() => {
 		const empleados = [
@@ -62,9 +70,21 @@ const EmpleadosContainer = () => {
 		setServicios(["cejas", "corte", "color"]);
 	}, []);
 
-	/////// COMO GUARDAR PARA ALMACENAR AL BACK ///////////
+	
 
-	const nuevoEmpleado = () => {};
+	const nuevoEmpleado = () => {
+		createEmployee({
+			variables: { input: { 
+						"center_id": nombre,
+						"email": email,
+						// FALTA VER TEMA DE LA FOTO SUBIDA
+						"fullname": nombre,
+						"active": true,
+						"schedule": horario,
+						"getAvailability": '',
+						} },
+		})
+	};
 
 	return (
 		<div className="container-empleados">
@@ -86,7 +106,9 @@ const EmpleadosContainer = () => {
 
 			<div className="">
 				{addEmpleado ? (
-					<AgregarEmpleado servicios={servicios} />
+					<AgregarEmpleado servicios={servicios} nombre={nombre} setNombre={setNombre}
+						email={email} setEmail={setEmail} horario={horario} setHorario={setHorario}
+						 telefono={telefono} setTelefono={setTelefono} />
 				) : (
 					<Empleados empleados={empleados} />
 				)}

@@ -29,7 +29,7 @@ const Sidebar = () => {
 
     return (
         <>
-            <div id="header" className={hideSidebar ? "hide" : "we-need-to-fix-this-ask-carlos"}>
+            <div id="header">
                 {/* collapsed props to change menu size using menucollapse state */}
                 <ProSidebar collapsed={menuCollapse}>
                     <SidebarHeader>

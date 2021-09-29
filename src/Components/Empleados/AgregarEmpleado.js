@@ -3,11 +3,8 @@ import React, { useState } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import "./empleados.css";
 
-const AgregarEmpleado = ({ servicios }) => {
-    const [nombre, setNombre] = useState("");
-    const [email, setEmail] = useState("");
-    const [horario, setHorario] = useState("");
-    const [telefono, setTelefono] = useState("");
+const AgregarEmpleado = ({ servicios, nombre, setNombre, email, setEmail, horario, setHorario, telefono, setTelefono }) => {
+   
     //const [edit, setEdit] = useState(false);
     const [checked, setChecked] = useState(false);
 

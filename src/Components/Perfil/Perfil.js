@@ -3,23 +3,43 @@ import { context } from "../../Context/GraphqlProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
 import "./perfil.css";
+import { createCenter } from "../../Graphql/mutations";
+import { useMutation } from "@apollo/client";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase";
 
 const PerfilContainer = () => {
 
 	const graphqlContext = useContext(context);
+	const [user] = useAuthState(auth);
 
-	const [nombre, setNombre] = useState("tal");
-	const [horario, setHorario] = useState("8");
-	const [telefono, setTelefono] = useState("671180099");
-	const [direccion, setDireccion] = useState("balmes 456");
-	const [ciudad, setCiudad] = useState("barcelona");
-	const [codPostal, setCodPostal] = useState("08008");
+	const [nombre, setNombre] = useState("Nombre");
+	const [horario, setHorario] = useState("Horario");
+	const [telefono, setTelefono] = useState("+34 xxxxxxxxx");
+	const [direccion, setDireccion] = useState("Direccion");
+	const [ciudad, setCiudad] = useState("Ciudad");
+	const [codPostal, setCodPostal] = useState("CP");
 	const [checked, setChecked] = useState(false);
 	const [edit, setEdit] = useState(false);
 
-	const editPerfil = () => {
+	const [createProfile, { data, loading, error }] = useMutation(createCenter)
+
+	
+	//***** FX PARA CREAR PERFIL *****//
+	const crearPerfil = () => {
+
+		createProfile({
+			variables: { input: { 
+						"name": nombre,
+						"address": direccion,
+						// FALTA VER TEMA DE LA FOTO SUBIDA
+						"city": ciudad,
+						"phoneNumber": telefono,
+						"email": user.email
+						} },
+		})
 		setEdit(false);
-	};
+	 };
 
 	return (
 		<>
@@ -35,7 +55,7 @@ const PerfilContainer = () => {
 							Editar
 						</button>
 					) : (
-						<button className="btn-edit" onClick={editPerfil}>
+						<button className="btn-edit" onClick={crearPerfil}>
 							Guardar cambios
 						</button>
 					)}
@@ -88,7 +108,10 @@ const PerfilContainer = () => {
 									<p>{telefono}</p>
 								) : (
 									<Form.Control
-										type="number"
+										type="tel"
+										pattern='^\+\d{11}$'
+										title="Recuerda poner el código de area, y los 9 dígitos de tu teléfono" 
+										required
 										value={telefono}
 										onChange={(e) =>
 											setTelefono(e.target.value)

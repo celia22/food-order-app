@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Calendar from "./Components/Calendar/Calendar";
@@ -12,18 +12,20 @@ import FotosCentroContainer from "./Container/FotosCentro/FotosCentroContainer";
 import ServiciosContainer from "./Container/Servicios/ServiciosContainer";
 import Perfil from "./Components/Perfil/Perfil";
 import Login from "./Components/Login/Login";
+import { AuthContext } from "./Context/UserAuthContext";
 
 function App() {
     const [user] = useAuthState(auth);
 
-    const [userLogged, setUserLogged] = useState();
+    const { hideSidebar, setHideSidebar, userLogged, setUserLogged } = useContext(AuthContext);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 //let uid = user.uid;
-                //console.log(user);
+                console.log(user.email);
                 setUserLogged(true);
+                setHideSidebar(false)
                 //console.log(userLogged);
             } else {
                 // User is signed out
@@ -41,7 +43,7 @@ function App() {
                 : (<Redirect to="/" />)
             }
             <div>
-                <Sidebar />
+                { !hideSidebar && <Sidebar /> }
                 <Switch>
                     <Route
                         exact path="/login"
