@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { context } from "../../Context/GraphqlProvider";
+import { context } from "../../Context/apiProvider";
 import FotosCentro from "../../Components/FotosCentro/FotosCentro";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";

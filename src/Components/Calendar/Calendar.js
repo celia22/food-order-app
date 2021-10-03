@@ -1,5 +1,5 @@
 import * as React from "react";
-import { context } from "../../Context/GraphqlProvider";
+import { context } from "../../Context/apiProvider";
 import Paper from "@material-ui/core/Paper";
 import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {

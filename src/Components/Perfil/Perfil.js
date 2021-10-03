@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { context } from "../../Context/GraphqlProvider";
+import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
 import useAuthContext from "../../Context/UserAuthContext";

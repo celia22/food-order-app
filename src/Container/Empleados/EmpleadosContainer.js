@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { context } from "../../Context/GraphqlProvider";
+import { context } from "../../Context/apiProvider";
 import AgregarEmpleado from "../../Components/Empleados/AgregarEmpleado";
 import Empleados from "../../Components/Empleados/Empleados";
 import "../../Components/Empleados/empleados.css";

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState} from 'react';
-import { context } from '../../Context/GraphqlProvider';
+import { context } from '../../Context/apiProvider';
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import NuevoServicio from '../../Components/Servicios/NuevoServicio';

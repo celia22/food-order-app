@@ -4,26 +4,22 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserAuthProvider from "./Context/UserAuthContext";
-import { ApolloProvider } from "@apollo/client";
-import apolloClient from "./Apollo/createApolloClient";
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from "react-router-dom";
-import GraphqlProvider from "./Context/GraphqlProvider";
-import { QueryClient, QueryClientProvider } from "react-query";
+import ApiProvider from "./Context/apiProvider";
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <UserAuthProvider>
-      <ApolloProvider client={apolloClient}>
-        <GraphqlProvider>
+      <QueryClientProvider client={queryClient}>
+        <ApiProvider>
           <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-              <App />
-            </QueryClientProvider>
+            <App />
           </BrowserRouter>
-        </GraphqlProvider>
-      </ApolloProvider>
+        </ApiProvider>
+      </QueryClientProvider>
     </UserAuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
