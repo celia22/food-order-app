@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useMutation } from "react";
+import React, {useState, useContext, useEffect, useRef} from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
@@ -9,24 +9,31 @@ import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
 
 const PerfilContainer = () => {
-  const graphqlContext = useContext(context);
-  // console.log("graph", graphqlContext);
-  // let currentUserEmail = props.user.email;
-
-  const center = graphqlContext.data.data;
-  console.log("center", center);
-
-  const [nombre, setNombre] = useState(center.name);
-  const [horario, setHorario] = useState("center.openingHours");
-  const [telefono, setTelefono] = useState(center.phone);
-  const [direccion, setDireccion] = useState(center.address);
-  const [ciudad, setCiudad] = useState(center.city);
-  const [codPostal, setCodPostal] = useState(center.cp);
-  const [checked, setChecked] = useState(false);
+  const apiContext = useContext(context);
+  const firstRenderRef = useRef(false);
   const [edit, setEdit] = useState(false);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [openingHours, setOpeningHours] = useState([]);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [clientsChooseEmployee, setClientsChooseEmployee] = useState(false)
+  const [cp, setCp] = useState("");
 
-  const centerId = graphqlContext.data.data._id;
-  console.log("center ID", centerId);
+  useEffect(() => {
+    if (firstRenderRef.current) {
+      setName(apiContext.data?.data?.name);
+      setPhone(apiContext.data?.data?.phone);
+      //setOpeningHours(apiContext.data.data.openingHours);
+      setAddress(apiContext.data?.data?.address);
+      setCity(apiContext.data?.data?.city);
+      setClientsChooseEmployee(apiContext.data?.data?.clientsChooseEmployee);
+      setCp(apiContext.data?.data?.cp)
+    } else {
+      firstRenderRef.current = true;
+    }
+  }, [edit])
+
   // const updateDataCenter = useMutation(
   //   [setNombre, setHorario, setTelefono, setDireccion, setCiudad, setChecked],
   //   () => axios.put(`/update/${centerId}`),
@@ -35,27 +42,30 @@ const PerfilContainer = () => {
   //   }
   // );
 
-  const updateDataCenter = () => {
-    return axios.put(`/update/${centerId}`);
+  /**
+   * Toggles the boolean value of the "edit" state, which in turn, controls whether or not we show the edit form modal
+   */
+  const editPerfilHandler = () => {
+    setEdit(!edit);
   };
 
-  // const { isLoading, isError, error, mutate } = useMutation(updateDataCenter);
-
-  useEffect(() => {
-    if (edit) {
-      updateDataCenter(
-        setNombre,
-        setHorario,
-        setTelefono,
-        setDireccion,
-        setCiudad,
-        setChecked
-      );
+  /**
+   * Sends new data to the API to modify the center profile info and triggers a refetch of the apiContext fetch
+   */
+  const updateCenterProfileHandler = () => {
+    const newProfileData = {
+      name,
+      phone,
+      //openingHours,
+      address,
+      city,
+      clientsChooseEmployee,
+      cp
     }
-  }, []);
-
-  const editPerfil = () => {
-    setEdit(false);
+    console.log(newProfileData)
+    //useMutation creo
+    //apiContext.refetch()
+    editPerfilHandler()
   };
 
   return (
@@ -65,11 +75,11 @@ const PerfilContainer = () => {
           <h2 className="titulo-empleados">Información del centro</h2>
 
           {!edit ? (
-            <button className="btn-edit" onClick={() => setEdit(true)}>
+            <button className="btn-edit" onClick={editPerfilHandler}>
               Editar
             </button>
           ) : (
-            <button className="btn-edit" onClick={editPerfil}>
+            <button className="btn-edit" onClick={updateCenterProfileHandler}>
               Guardar cambios
             </button>
           )}
@@ -101,12 +111,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Nombre del centro</Form.Label>
                 {!edit ? (
-                  <p>{nombre}</p>
+                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.name}</p>
                 ) : (
                   <Form.Control
                     type="text"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 )}
               </Form.Group>
@@ -114,12 +124,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Telefono del centro</Form.Label>
                 {!edit ? (
-                  <p>{telefono}</p>
+                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.phone}</p>
                 ) : (
                   <Form.Control
-                    type="number"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
+                    type="text"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 )}
               </Form.Group>
@@ -127,12 +137,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-4">
                 <Form.Label>Horario del centro</Form.Label>
                 {!edit ? (
-                  <p>{horario}</p>
+                  <p>{"???"}</p>
                 ) : (
                   <Form.Control
                     type="text"
-                    value={horario}
-                    onChange={(e) => setHorario(e.target.value)}
+                    value={openingHours}
+                    onChange={(e) => setOpeningHours(e.target.value)}
                   />
                 )}
               </Form.Group>
@@ -140,8 +150,8 @@ const PerfilContainer = () => {
               <Form.Group controlId="">
                 <Form.Check
                   type="checkbox"
-                  value={checked}
-                  onChange={(e) => setChecked(!checked)}
+                  value={clientsChooseEmployee}
+                  onChange={() => setClientsChooseEmployee(!clientsChooseEmployee)}
                   label="Quieres que los clientes elijan a los empleados?"
                 />
               </Form.Group>
@@ -151,12 +161,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Dirección del centro</Form.Label>
                 {!edit ? (
-                  <p>{direccion}</p>
+                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.address}</p>
                 ) : (
                   <Form.Control
                     type="text"
-                    value={direccion}
-                    onChange={(e) => setDireccion(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 )}
               </Form.Group>
@@ -164,12 +174,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Ciudad</Form.Label>
                 {!edit ? (
-                  <p>{ciudad}</p>
+                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.city}</p>
                 ) : (
                   <Form.Control
                     type="text"
-                    value={ciudad}
-                    onChange={(e) => setCiudad(e.target.value)}
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                   />
                 )}
               </Form.Group>
@@ -177,12 +187,12 @@ const PerfilContainer = () => {
               <Form.Group controlId="">
                 <Form.Label>Código postal</Form.Label>
                 {!edit ? (
-                  <p>{codPostal}</p>
+                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.cp}</p>
                 ) : (
                   <Form.Control
-                    type="number"
-                    value={codPostal}
-                    onChange={(e) => setCodPostal(e.target.value)}
+                    type="text"
+                    value={cp}
+                    onChange={(e) => setCp(e.target.value)}
                   />
                 )}
               </Form.Group>
