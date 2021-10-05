@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useMutation } from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
@@ -8,24 +8,13 @@ import axios from "../../axios/axios";
 import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
 
-const PerfilContainer = (props) => {
+const PerfilContainer = () => {
   const graphqlContext = useContext(context);
   // console.log("graph", graphqlContext);
   // let currentUserEmail = props.user.email;
 
-  // const { isLoading, error, data, refetch } = useQuery(
-  //   ["CenterProfileData", currentUserEmail],
-  //   () => axios.get(`/center/login/${currentUserEmail}`),
-  //   {
-  //     enabled: false,
-  //   }
-  // );
-
-  // useEffect(() => {
-  //   if (currentUserEmail) refetch();
-  // }, [currentUserEmail, refetch]);
-
-  let center = graphqlContext.data.data;
+  const center = graphqlContext.data.data;
+  console.log("center", center);
 
   const [nombre, setNombre] = useState(center.name);
   const [horario, setHorario] = useState("center.openingHours");
@@ -36,7 +25,28 @@ const PerfilContainer = (props) => {
   const [checked, setChecked] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  console.log("horario", horario);
+  const centerId = graphqlContext.data.data._id;
+  console.log("center ID", centerId);
+  const updateDataCenter = useMutation(
+    [setNombre, setHorario, setTelefono, setDireccion, setCiudad, setChecked],
+    () => axios.put(`/update/${centerId}`),
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    if (edit) {
+      updateDataCenter(
+        setNombre,
+        setHorario,
+        setTelefono,
+        setDireccion,
+        setCiudad,
+        setChecked
+      );
+    }
+  }, []);
 
   const editPerfil = () => {
     setEdit(false);
