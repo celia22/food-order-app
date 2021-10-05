@@ -1,48 +1,46 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
 import useAuthContext from "../../Context/UserAuthContext";
 import { useQuery } from "react-query";
-import axios from "axios";
+import axios from "../../axios/axios";
+import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
-
-const getPerfil = async (props) => {
-  const userEmail = props.user.email;
-  const { data } = await axios.get(`http://localhost:5000/login/:${userEmail}`);
-
-  console.log("data", data);
-  return data;
-};
 
 const PerfilContainer = (props) => {
   const graphqlContext = useContext(context);
-  console.log("context", graphqlContext);
-  console.log("PROPS", props);
+  // console.log("graph", graphqlContext);
+  // let currentUserEmail = props.user.email;
 
-  const [nombre, setNombre] = useState(" ");
-  const [horario, setHorario] = useState(" ");
-  const [telefono, setTelefono] = useState(" ");
-  const [direccion, setDireccion] = useState(" ");
-  const [ciudad, setCiudad] = useState(" ");
-  const [codPostal, setCodPostal] = useState(" ");
+  // const { isLoading, error, data, refetch } = useQuery(
+  //   ["CenterProfileData", currentUserEmail],
+  //   () => axios.get(`/center/login/${currentUserEmail}`),
+  //   {
+  //     enabled: false,
+  //   }
+  // );
+
+  // useEffect(() => {
+  //   if (currentUserEmail) refetch();
+  // }, [currentUserEmail, refetch]);
+
+  let center = graphqlContext.data.data;
+
+  const [nombre, setNombre] = useState(center.name);
+  const [horario, setHorario] = useState("center.openingHours");
+  const [telefono, setTelefono] = useState(center.phone);
+  const [direccion, setDireccion] = useState(center.address);
+  const [ciudad, setCiudad] = useState(center.city);
+  const [codPostal, setCodPostal] = useState(center.cp);
   const [checked, setChecked] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  console.log("horario", horario);
 
   const editPerfil = () => {
     setEdit(false);
   };
-
-  const { data, error, isError, isLoading } = useQuery("create", getPerfil);
-
-  console.log("data from api", data);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return <div>Error! {error.message}</div>;
-  }
 
   return (
     <>
@@ -87,7 +85,7 @@ const PerfilContainer = (props) => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Nombre del centro</Form.Label>
                 {!edit ? (
-                  <p>{data.name}</p>
+                  <p>{nombre}</p>
                 ) : (
                   <Form.Control
                     type="text"
