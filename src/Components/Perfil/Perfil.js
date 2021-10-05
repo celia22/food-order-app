@@ -27,13 +27,19 @@ const PerfilContainer = () => {
 
   const centerId = graphqlContext.data.data._id;
   console.log("center ID", centerId);
-  const updateDataCenter = useMutation(
-    [setNombre, setHorario, setTelefono, setDireccion, setCiudad, setChecked],
-    () => axios.put(`/update/${centerId}`),
-    {
-      enabled: false,
-    }
-  );
+  // const updateDataCenter = useMutation(
+  //   [setNombre, setHorario, setTelefono, setDireccion, setCiudad, setChecked],
+  //   () => axios.put(`/update/${centerId}`),
+  //   {
+  //     enabled: false,
+  //   }
+  // );
+
+  const updateDataCenter = () => {
+    return axios.put(`/update/${centerId}`);
+  };
+
+  // const { isLoading, isError, error, mutate } = useMutation(updateDataCenter);
 
   useEffect(() => {
     if (edit) {
