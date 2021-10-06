@@ -55,16 +55,16 @@ const PerfilContainer = () => {
    * Sends new data to the API to modify the center profile info and triggers a refetch of the apiContext fetch
    */
   const UpdateCenterProfileHandler = () => {
-    const newProfileData = {
-      name,
-      phone,
-      //openingHours,
-      address,
-      city,
-      clientsChooseEmployee,
-      cp,
-    };
-    console.log(newProfileData);
+    // const newProfileData = {
+    //   name,
+    //   phone,
+    //   //openingHours,
+    //   address,
+    //   city,
+    //   clientsChooseEmployee,
+    //   cp,
+    // };
+    // console.log(newProfileData);
     //useMutation creo
     updateDataCenter.mutate({
       name,
@@ -75,7 +75,7 @@ const PerfilContainer = () => {
       clientsChooseEmployee,
       cp,
     });
-    //apiContext.refetch()
+    apiContext.refetch();
     editPerfilHandler();
   };
 
