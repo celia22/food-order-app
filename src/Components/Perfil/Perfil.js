@@ -1,9 +1,9 @@
-import React, {useState, useContext, useEffect, useRef} from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
 import useAuthContext from "../../Context/UserAuthContext";
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import axios from "../../axios/axios";
 import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
@@ -17,7 +17,7 @@ const PerfilContainer = () => {
   const [openingHours, setOpeningHours] = useState([]);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [clientsChooseEmployee, setClientsChooseEmployee] = useState(false)
+  const [clientsChooseEmployee, setClientsChooseEmployee] = useState(false);
   const [cp, setCp] = useState("");
 
   useEffect(() => {
@@ -28,19 +28,13 @@ const PerfilContainer = () => {
       setAddress(apiContext.data?.data?.address);
       setCity(apiContext.data?.data?.city);
       setClientsChooseEmployee(apiContext.data?.data?.clientsChooseEmployee);
-      setCp(apiContext.data?.data?.cp)
+      setCp(apiContext.data?.data?.cp);
     } else {
       firstRenderRef.current = true;
     }
-  }, [edit])
+  }, [edit]);
 
-  // const updateDataCenter = useMutation(
-  //   [setNombre, setHorario, setTelefono, setDireccion, setCiudad, setChecked],
-  //   () => axios.put(`/update/${centerId}`),
-  //   {
-  //     enabled: false,
-  //   }
-  // );
+  console.log(apiContext.data.data);
 
   /**
    * Toggles the boolean value of the "edit" state, which in turn, controls whether or not we show the edit form modal
@@ -49,10 +43,18 @@ const PerfilContainer = () => {
     setEdit(!edit);
   };
 
+  // async function updateDataCenter() {
+  //   await axios.put(`/update/${apiContext.data.data._id}`);
+  // }
+
+  const updateDataCenter = useMutation((updateData) =>
+    axios.put(`/center/update/${apiContext.data.data._id}`, updateData)
+  );
+
   /**
    * Sends new data to the API to modify the center profile info and triggers a refetch of the apiContext fetch
    */
-  const updateCenterProfileHandler = () => {
+  const UpdateCenterProfileHandler = () => {
     const newProfileData = {
       name,
       phone,
@@ -60,12 +62,21 @@ const PerfilContainer = () => {
       address,
       city,
       clientsChooseEmployee,
-      cp
-    }
-    console.log(newProfileData)
+      cp,
+    };
+    console.log(newProfileData);
     //useMutation creo
+    updateDataCenter.mutate({
+      name,
+      phone,
+      //openingHours,
+      address,
+      city,
+      clientsChooseEmployee,
+      cp,
+    });
     //apiContext.refetch()
-    editPerfilHandler()
+    editPerfilHandler();
   };
 
   return (
@@ -79,7 +90,7 @@ const PerfilContainer = () => {
               Editar
             </button>
           ) : (
-            <button className="btn-edit" onClick={updateCenterProfileHandler}>
+            <button className="btn-edit" onClick={UpdateCenterProfileHandler}>
               Guardar cambios
             </button>
           )}
@@ -111,7 +122,9 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Nombre del centro</Form.Label>
                 {!edit ? (
-                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.name}</p>
+                  <p>
+                    {apiContext.isLoading ? "..." : apiContext.data?.data?.name}
+                  </p>
                 ) : (
                   <Form.Control
                     type="text"
@@ -124,7 +137,11 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Telefono del centro</Form.Label>
                 {!edit ? (
-                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.phone}</p>
+                  <p>
+                    {apiContext.isLoading
+                      ? "..."
+                      : apiContext.data?.data?.phone}
+                  </p>
                 ) : (
                   <Form.Control
                     type="text"
@@ -151,7 +168,9 @@ const PerfilContainer = () => {
                 <Form.Check
                   type="checkbox"
                   value={clientsChooseEmployee}
-                  onChange={() => setClientsChooseEmployee(!clientsChooseEmployee)}
+                  onChange={() =>
+                    setClientsChooseEmployee(!clientsChooseEmployee)
+                  }
                   label="Quieres que los clientes elijan a los empleados?"
                 />
               </Form.Group>
@@ -161,7 +180,11 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Dirección del centro</Form.Label>
                 {!edit ? (
-                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.address}</p>
+                  <p>
+                    {apiContext.isLoading
+                      ? "..."
+                      : apiContext.data?.data?.address}
+                  </p>
                 ) : (
                   <Form.Control
                     type="text"
@@ -174,7 +197,9 @@ const PerfilContainer = () => {
               <Form.Group controlId="" className="mb-3">
                 <Form.Label>Ciudad</Form.Label>
                 {!edit ? (
-                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.city}</p>
+                  <p>
+                    {apiContext.isLoading ? "..." : apiContext.data?.data?.city}
+                  </p>
                 ) : (
                   <Form.Control
                     type="text"
@@ -187,7 +212,9 @@ const PerfilContainer = () => {
               <Form.Group controlId="">
                 <Form.Label>Código postal</Form.Label>
                 {!edit ? (
-                  <p>{apiContext.isLoading ? "..." : apiContext.data?.data?.cp}</p>
+                  <p>
+                    {apiContext.isLoading ? "..." : apiContext.data?.data?.cp}
+                  </p>
                 ) : (
                   <Form.Control
                     type="text"
