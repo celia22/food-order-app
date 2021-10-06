@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
-import useAuthContext from "../../Context/UserAuthContext";
+//import useAuthContext from "../../Context/UserAuthContext";
 import { useMutation } from "react-query";
 import axios from "../../axios/axios";
-import ApiProvider from "../../Context/apiProvider";
+//import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
 
 const PerfilContainer = () => {
@@ -43,30 +43,24 @@ const PerfilContainer = () => {
     setEdit(!edit);
   };
 
-  // async function updateDataCenter() {
-  //   await axios.put(`/update/${apiContext.data.data._id}`);
-  // }
-
-  const updateDataCenter = useMutation((updateData) =>
-    axios.put(`/center/update/${apiContext.data.data._id}`, updateData)
+  const updateDataCenter = useMutation(
+    (updateData) => {
+      return axios.put(
+        `/center/update/${apiContext.data.data._id}`,
+        updateData
+      );
+    },
+    {
+      onSuccess: apiContext.refetch,
+      onError: (error) => console.error(error),
+    }
   );
 
   /**
    * Sends new data to the API to modify the center profile info and triggers a refetch of the apiContext fetch
    */
   const UpdateCenterProfileHandler = () => {
-    // const newProfileData = {
-    //   name,
-    //   phone,
-    //   //openingHours,
-    //   address,
-    //   city,
-    //   clientsChooseEmployee,
-    //   cp,
-    // };
-    // console.log(newProfileData);
-    //useMutation creo
-    updateDataCenter.mutate({
+    const newProfileData = {
       name,
       phone,
       //openingHours,
@@ -74,9 +68,8 @@ const PerfilContainer = () => {
       city,
       clientsChooseEmployee,
       cp,
-    });
-    apiContext.refetch();
-    editPerfilHandler();
+    };
+    updateDataCenter.mutateAsync(newProfileData).then(editPerfilHandler());
   };
 
   return (
