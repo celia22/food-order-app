@@ -1,18 +1,13 @@
 import React, { useState, useContext } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import InfoEmpleados from "./InfoEmpleados";
-import { useQuery } from "react-query";
-import axios from "axios";
+import { useQuery, useQueries } from "react-query";
+import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 
-const Empleados = ({ empleados }) => {
+const Empleados = () => {
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const apiContext = useContext(context);
-
-  const handleInfo = (id) => {
-    const filtro = empleados.filter((empleado) => empleado.id === id);
-    setEmpleadoInfo(filtro[0]);
-  };
 
   const getEmployee = async () => {
     const { data } = await axios.get(
@@ -23,10 +18,45 @@ const Empleados = ({ empleados }) => {
 
   const { data, isLoading, isError, error } = useQuery(
     "get employees",
-    getEmployee
+    getEmployee,
+    {
+      onError: (error) => console.error(error),
+    }
   );
 
-  console.log(data);
+  const getService = async () => {
+    const { data } = await axios.get(
+      `/employee/${apiContext.data.data.employees}`
+    );
+    return data;
+  };
+
+  const serviceData = useQuery("get service", getService, {
+    onError: (error) => console.error(error),
+  });
+
+  // const data = useQueries(
+  //   [
+  //     { queryKey: ["employee", 1], queryFn: getEmployee },
+  //     { queryKey: ["service", 2], queryFn: getService },
+  //   ],
+  //   {
+  //     onError: (error) => console.error(error),
+  //   }
+  // );
+
+  // console.log("data", data);
+  // console.log("servicedata", serviceData.data.services);
+
+  const services = serviceData.data.services;
+  console.log("services", services);
+
+  const empleados = data;
+
+  const handleInfo = (id) => {
+    const filtro = empleados.filter((empleado) => empleado.id === id);
+    setEmpleadoInfo(filtro[0]);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,14 +70,27 @@ const Empleados = ({ empleados }) => {
       <div className="d-flex justify-content-between">
         <div className="empleados-list">
           <ListGroup defaultActiveKey="#link1">
-            {empleados.map((i) => (
+            <p>blo</p>
+            {empleados.map((i, index) => (
               <ListGroup.Item
-                key={i.id}
+                key={index}
                 className="py-3"
                 onClick={() => handleInfo(i.id)}
                 action
               >
-                {i.nombre}
+                <p>
+                  {" "}
+                  Nombre: {i.firstName} {i.lastName}{" "}
+                </p>
+                <p> Servicios: </p>
+                {services.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <p>{item.name}</p>
+                    </div>
+                  );
+                })}
+                <p> Horario: </p>
               </ListGroup.Item>
             ))}
           </ListGroup>
