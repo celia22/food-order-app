@@ -8,7 +8,7 @@ const AgregarEmpleado = ({ servicios }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // const [email, setEmail] = useState("");
-  const [workingHours, setWorkingHours] = useState([
+  const [workingHours, setWorkingHours] = useState(
     { "mon-mor": [{ value: 0 }, { value: 0 }] },
     { "mon-aft": [{ value: 0 }, { value: 0 }] },
     { "tue-mor": [{ value: 0 }, { value: 0 }] },
@@ -22,8 +22,8 @@ const AgregarEmpleado = ({ servicios }) => {
     { "sat-mor": [{ value: 0 }, { value: 0 }] },
     { "sat-aft": [{ value: 0 }, { value: 0 }] },
     { "sun-mor": [{ value: 0 }, { value: 0 }] },
-    { "sun-aft": [{ value: 0 }, { value: 0 }] },
-  ]);
+    { "sun-aft": [{ value: 0 }, { value: 0 }] }
+  );
   const [phone, setPhone] = useState("");
   const [profilePic, setProfilePic] = useState("");
   //const [edit, setEdit] = useState(false);
@@ -121,8 +121,6 @@ const AgregarEmpleado = ({ servicios }) => {
               {workingHours.map((item, index) => {
                 return (
                   <div key={index}>
-                    {console.log("item", index, item)}
-
                     {/* <tr>
                     <input
                       type="number"

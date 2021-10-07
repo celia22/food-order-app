@@ -10,9 +10,8 @@ const Empleados = () => {
   const apiContext = useContext(context);
 
   const getEmployee = async () => {
-    const { data } = await axios.get(
-      `/center/employees/${apiContext.data.data._id}`
-    );
+    await axios.get(`/center/employees/${apiContext.data.data._id}`);
+    await axios.get(`/employee/${apiContext.data.data.employees}`);
     return data;
   };
 
@@ -35,23 +34,11 @@ const Empleados = () => {
     onError: (error) => console.error(error),
   });
 
-  // const data = useQueries(
-  //   [
-  //     { queryKey: ["employee", 1], queryFn: getEmployee },
-  //     { queryKey: ["service", 2], queryFn: getService },
-  //   ],
-  //   {
-  //     onError: (error) => console.error(error),
-  //   }
-  // );
-
-  // console.log("data", data);
-  // console.log("servicedata", serviceData.data.services);
-
-  const services = serviceData.data.services;
-  console.log("services", services);
+  console.log("data", data);
 
   const empleados = data;
+  const services = serviceData.data.services;
+  console.log("services", services);
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
@@ -79,8 +66,7 @@ const Empleados = () => {
                 action
               >
                 <p>
-                  {" "}
-                  Nombre: {i.firstName} {i.lastName}{" "}
+                  Nombre: {i.firstName} {i.lastName}
                 </p>
                 <p> Servicios: </p>
                 {services.map((item, index) => {
