@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import InfoEmpleados from "./InfoEmpleados";
-import { useQuery, useQueries } from "react-query";
+import { useQuery } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 
@@ -10,9 +10,17 @@ const Empleados = () => {
   const apiContext = useContext(context);
 
   const getEmployee = async () => {
-    await axios.get(`/center/employees/${apiContext.data.data._id}`);
-    await axios.get(`/employee/${apiContext.data.data.employees}`);
+    const data = await axios.get(
+      `/center/employees/${apiContext.data.data._id}`
+    );
     return data;
+  };
+
+  const getService = async () => {
+    const employeeData = await axios.get(
+      `/employee/${apiContext.data.data.employees}`
+    );
+    return employeeData;
   };
 
   const { data, isLoading, isError, error } = useQuery(
@@ -23,22 +31,19 @@ const Empleados = () => {
     }
   );
 
-  const getService = async () => {
-    const { data } = await axios.get(
-      `/employee/${apiContext.data.data.employees}`
-    );
-    return data;
-  };
+  const employeeId = apiContext.data.data.employees;
+  console.log(data);
+  console.log("employeeID", employeeId);
 
-  const serviceData = useQuery("get service", getService, {
-    onError: (error) => console.error(error),
-  });
+  //  console.log("servcies", employeeData)
 
-  console.log("data", data);
+  // const serviceData = useQuery("get service", getService, {
+  //   onError: (error) => console.error(error),
+  // });
 
   const empleados = data;
-  const services = serviceData.data.services;
-  console.log("services", services);
+  // const services = serviceData.data.services;
+  // console.log("services", services);
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
@@ -58,7 +63,7 @@ const Empleados = () => {
         <div className="empleados-list">
           <ListGroup defaultActiveKey="#link1">
             <p>blo</p>
-            {empleados.map((i, index) => (
+            {empleados.data.map((i, index) => (
               <ListGroup.Item
                 key={index}
                 className="py-3"
@@ -69,13 +74,13 @@ const Empleados = () => {
                   Nombre: {i.firstName} {i.lastName}
                 </p>
                 <p> Servicios: </p>
-                {services.map((item, index) => {
+                {/* {services.map((item, index) => {
                   return (
                     <div key={index}>
                       <p>{item.name}</p>
                     </div>
                   );
-                })}
+                })}  */}
                 <p> Horario: </p>
               </ListGroup.Item>
             ))}
