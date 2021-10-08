@@ -23,7 +23,7 @@ function App() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 //let uid = user.uid;
-                console.log(user.email);
+                // console.log(user.email);
                 setUserLogged(true);
                 setHideSidebar(false)
                 //console.log(userLogged);
@@ -38,10 +38,6 @@ function App() {
 
     return (
         <div className="App">
-            {!userLogged
-                ? (<Redirect to="/login" />)
-                : (<Redirect to="/" />)
-            }
             <div>
                 { !hideSidebar && <Sidebar /> }
                 <Switch>
@@ -50,19 +46,25 @@ function App() {
                         render={props =>
                             <Login {...props} />
                         }
-                    />
+                    >
+                        {userLogged && <Redirect to="/" />}
+                    </Route>
                     <Route
                         exact path="/servicios"
                         render={props =>
                             <ServiciosContainer {...props}/>
                         }
-                    />
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
                     <Route
                         exact path="/imagenes"
                         render={props =>
                             <FotosCentroContainer {...props}/>
                         }
-                    />
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
                     <Route
                         exact path="/empleados"
                         render={props =>
@@ -74,13 +76,20 @@ function App() {
                         render={props =>
                             <Perfil {...props}/>
                         }
-                    />
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
                     <Route
                         exact path="/"
                         render={props =>
                             <Calendar {...props}/>
                         }
-                    />
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                    <Route exact path="/*">
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
                 </Switch>
             </div>
         </div>
