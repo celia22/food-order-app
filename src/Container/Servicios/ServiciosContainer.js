@@ -1,47 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
-import { context } from "../../Context/apiProvider";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useQuery } from "react-query";
+import axios from "../../axios/axios";
+import { context } from "../../Context/apiProvider";
 import NuevoServicio from "../../Components/Servicios/NuevoServicio";
 import "../../Components/Servicios/Servicios.css";
 
 const ServiciosContainer = () => {
-  const graphqlContext = useContext(context);
+  const apiContext = useContext(context);
+  const centerId = apiContext.data.data._id;
+  console.log(centerId);
+
+  /***** get services for each center *****/
+  const getServices = async () => {
+    const data = await axios.get(
+      `/center/services/${apiContext.data.data._id}`
+    );
+    return data;
+  };
+
+  const { data, isLoading, isError, error } = useQuery(
+    ["getEmployees", centerId],
+    getServices,
+    {
+      onError: (error) => console.error(error),
+      enabled: !!centerId,
+    }
+  );
+
+  console.log("data in services", data);
 
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [servEdit, setServEdit] = useState({});
   const [empleados, setEmpleados] = useState([]);
-  const [servicios, setServicios] = useState([
-    {
-      id: 1,
-      servicio: "Corte",
-      tipoPrecio: "empieza en",
-      precio: 40,
-      duracion: "30 min",
-    },
-    {
-      id: 2,
-      servicio: "Color",
-      tipoPrecio: "empieza en",
-      precio: 70,
-      duracion: "45 min",
-    },
-    {
-      id: 3,
-      servicio: "Cejas",
-      tipoPrecio: "fijo",
-      precio: 20,
-      duracion: "15 min",
-    },
-    {
-      id: 4,
-      servicio: "Manos",
-      tipoPrecio: "fijo",
-      precio: 30,
-      duracion: "30 min",
-    },
-  ]);
+  const [servicios, setServicios] = useState(data);
+
+  console.log("data in services", servicios);
 
   useEffect(() => {
     // When data is coming complete, use .data.centerData.employees / .services
@@ -85,7 +81,7 @@ const ServiciosContainer = () => {
         </button>
       </div>
 
-      <div className="">
+      {/* <div className="">
         {edit ? (
           <NuevoServicio
             titulo="Editar"
@@ -103,14 +99,14 @@ const ServiciosContainer = () => {
                   className="itemList d-flex justify-content-between align-items-center"
                 >
                   <div>
-                    <p className="nombreServicio">{servicio.servicio}</p>
+                    <p className="nombreServicio">{servicio.name}</p>
 
                     <div>
-                      Descripción: {servicio.descripcion}
+                      Descripción: {servicio.description}
                       <br />
-                      Duración: {servicio.duracion}
+                      Duración: {servicio.duration}
                       <br />
-                      Precio: {servicio.tipoPrecio} {servicio.precio}€
+                      Precio: {servicio.priceType} {servicio.price}€
                     </div>
                   </div>
                   <div className="span-icons">
@@ -127,7 +123,7 @@ const ServiciosContainer = () => {
               ))}
           </ListGroup>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

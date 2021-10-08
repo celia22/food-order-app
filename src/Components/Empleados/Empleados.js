@@ -9,6 +9,7 @@ const Empleados = () => {
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const apiContext = useContext(context);
 
+  /***** get employees for each center *****/
   const getEmployee = async () => {
     const data = await axios.get(
       `/center/employees/${apiContext.data.data._id}`
@@ -16,17 +17,8 @@ const Empleados = () => {
     return data;
   };
 
-  // const employeesIdArr = apiContext.data.data.employees;
-  // console.log("api ARR", employeesIdArr);
-
-  const getService = async () => {
-    const employeesIdArr = apiContext.data.data.employees;
-    const employeeData = employeesIdArr.map((x) => axios.get(`/employee/${x}`));
-    return employeeData;
-  };
-
   const { data, centerData, isLoading, isError, error } = useQuery(
-    "get employees",
+    "getEmployees",
     getEmployee,
     {
       onError: (error) => console.error(error),
@@ -34,16 +26,28 @@ const Empleados = () => {
   );
   const empleados = data;
 
-  // console.log("employeeID", employeeId);
+  // const employeesIdArr = apiContext.data.data.employees;
+  // console.log("api ARR", employeesIdArr);
 
-  const { employeeData } = useQuery(
-    ["get Service", { empleados }],
-    () => getService(),
+  /***** get services for each employee *****/
+  const employeesIdArr = apiContext.data.data.employees;
+
+  const getService = async () => {
+    const employeeData = employeesIdArr.map((x) => axios.get(`/employee/${x}`));
+    return employeeData;
+  };
+
+  console.log("employeeID", employeesIdArr);
+
+  const { isIdle, data: employeeData } = useQuery(
+    ["get Service", employeesIdArr],
+    getService,
     {
-      enabled: !!empleados,
+      enabled: !!employeesIdArr,
     }
   );
-  console.log(employeeData);
+
+  console.log("employee", employeeData);
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
