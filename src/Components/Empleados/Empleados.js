@@ -23,10 +23,11 @@ const Empleados = () => {
     return employeeData;
   };
 
-  const { data, isLoading, isError, error } = useQuery(
+  const { data, centerData, isLoading, isError, error } = useQuery(
     "get employees",
     getEmployee,
     {
+      // onSuccess: (centerData) => getService(centerData),
       onError: (error) => console.error(error),
     }
   );
@@ -34,14 +35,22 @@ const Empleados = () => {
   const employeeId = apiContext.data.data.employees;
   console.log(data);
   console.log("employeeID", employeeId);
-
+  const empleados = data;
   //  console.log("servcies", employeeData)
 
-  // const serviceData = useQuery("get service", getService, {
+  const { employeeData, isIdle } = useQuery(
+    ["get Service", { empleados }],
+    () => getService(),
+    {
+      enabled: !!empleados,
+    }
+  );
+  console.log(employeeData);
+
+  // const {employeeData, isIdle } = ("get service", getService, {
   //   onError: (error) => console.error(error),
   // });
 
-  const empleados = data;
   // const services = serviceData.data.services;
   // console.log("services", services);
 

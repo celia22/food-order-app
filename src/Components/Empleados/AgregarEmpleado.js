@@ -8,22 +8,22 @@ const AgregarEmpleado = ({ servicios }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // const [email, setEmail] = useState("");
-  const [workingHours, setWorkingHours] = useState(
-    { "mon-mor": [{ value: 0 }, { value: 0 }] },
-    { "mon-aft": [{ value: 0 }, { value: 0 }] },
-    { "tue-mor": [{ value: 0 }, { value: 0 }] },
-    { "tue-aft": [{ value: 0 }, { value: 0 }] },
-    { "wed-mor": [{ value: 0 }, { value: 0 }] },
-    { "wed-aft": [{ value: 0 }, { value: 0 }] },
-    { "thue-mor": [{ value: 0 }, { value: 0 }] },
-    { "thue-aft": [{ value: 0 }, { value: 0 }] },
-    { "fri-mor": [{ value: 0 }, { value: 0 }] },
-    { "fri-aft": [{ value: 0 }, { value: 0 }] },
-    { "sat-mor": [{ value: 0 }, { value: 0 }] },
-    { "sat-aft": [{ value: 0 }, { value: 0 }] },
-    { "sun-mor": [{ value: 0 }, { value: 0 }] },
-    { "sun-aft": [{ value: 0 }, { value: 0 }] }
-  );
+  const [workingHours, setWorkingHours] = useState({
+    "mon-mor": [9, 13],
+    "mon-aft": [16, 20],
+    "tue-mor": [9, 13],
+    "tue-aft": [16, 20],
+    "wed-mor": [9, 13],
+    "wed-aft": [16, 20],
+    "thue-mor": [9, 13],
+    "thue-aft": [16, 20],
+    "fri-mor": [9, 13],
+    "fri-aft": [16, 20],
+    "sat-mor": [9, 13],
+    "sat-aft": [16, 20],
+    "sun-mor": [0, 0],
+    "sun-aft": [0, 0],
+  });
   const [phone, setPhone] = useState("");
   const [profilePic, setProfilePic] = useState("");
   //const [edit, setEdit] = useState(false);
@@ -41,9 +41,18 @@ const AgregarEmpleado = ({ servicios }) => {
     });
   };
 
+  const handleFocus = (event) => event.target.select();
+  const handleHours = (event) => {
+    const { name } = event.target;
+    const value = event.target.validity.valid
+      ? event.target.value
+      : workingHours[name];
+    setWorkingHours({ ...workingHours, [name]: value });
+  };
+
   return (
     <div>
-      <button className="btn-edit" onClick={createNewEmployee}>
+      <button className="btn-edit" type="submit" onClick={createNewEmployee}>
         Guardar cambios
       </button>
       <Form className="form-profile">
@@ -117,19 +126,13 @@ const AgregarEmpleado = ({ servicios }) => {
 
             <div>
               <label>Horario</label>
-
-              {workingHours.map((item, index) => {
-                return (
-                  <div key={index}>
-                    {/* <tr>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="exampleFormControlFile1"
-                    /> */}
-                  </div>
-                );
-              })}
+              <input
+                value={workingHours["fri-mor"][0]}
+                name="fri-mor"
+                type="number"
+                onChange={handleHours}
+                onClick={handleFocus}
+              />
             </div>
           </Col>
           <Col>
