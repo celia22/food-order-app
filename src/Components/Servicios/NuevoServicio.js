@@ -36,17 +36,9 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     );
   });
 
-  // name,
-  // description,
-  // center,
   // employees,
-  // priceType,
-  // price,
   // duration,
   // interval,
-  // resetTime,
-  // hasIdleTime,
-  // serviceStructure,
 
   const creatServiceHandler = () => {
     const newServiceData = {
@@ -56,12 +48,12 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       // employees, ¿??¿¿?¿??¿
       price,
       priceType,
-      mins,
-      hrs,
+      mins, //
+      hrs, //
       checked,
       hasIdleTime,
-      intervalHrs,
-      intervalMins,
+      intervalHrs, //
+      intervalMins, //
       resetTime,
       serviceStructure,
     };

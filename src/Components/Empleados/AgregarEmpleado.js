@@ -1,10 +1,14 @@
 import { Avatar } from "@material-ui/core";
 import axios from "../../axios/axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import "./empleados.css";
+import { context } from "../../Context/apiProvider";
 
 const AgregarEmpleado = ({ servicios }) => {
+  const apiContext = useContext(context);
+  const centerId = apiContext.data.data._id;
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // const [email, setEmail] = useState("");
@@ -15,8 +19,8 @@ const AgregarEmpleado = ({ servicios }) => {
     "tue-aft": [16, 20],
     "wed-mor": [9, 13],
     "wed-aft": [16, 20],
-    "thue-mor": [9, 13],
-    "thue-aft": [16, 20],
+    "thu-mor": [9, 13],
+    "thu-aft": [16, 20],
     "fri-mor": [9, 13],
     "fri-aft": [16, 20],
     "sat-mor": [9, 13],
@@ -28,8 +32,10 @@ const AgregarEmpleado = ({ servicios }) => {
   const [profilePic, setProfilePic] = useState("");
   //const [edit, setEdit] = useState(false);
   const [category, setCategory] = useState("");
+  const [gender, setGender] = useState("");
   const [service, setService] = useState("");
   const [checked, setChecked] = useState(false);
+  const [center, setCenter] = useState(centerId);
 
   const createNewEmployee = async () => {
     await axios.post("/employee/create", {
@@ -38,21 +44,28 @@ const AgregarEmpleado = ({ servicios }) => {
       workingHours,
       phone,
       category,
+      gender,
+      center,
     });
   };
 
   const handleFocus = (event) => event.target.select();
+
   const handleHours = (event) => {
-    const { name } = event.target;
+    const { name, id } = event.target;
     const value = event.target.validity.valid
       ? event.target.value
-      : workingHours[name];
-    setWorkingHours({ ...workingHours, [name]: value });
+      : workingHours[name][id];
+    const hoursArr =
+      Number(id) === 0
+        ? [Number(value), workingHours[name][1]]
+        : [workingHours[name][0], Number(value)];
+    setWorkingHours({ ...workingHours, [name]: hoursArr });
   };
 
   return (
     <div>
-      <button className="btn-edit" type="submit" onClick={createNewEmployee}>
+      <button className="btn-edit" onClick={createNewEmployee}>
         Guardar cambios
       </button>
       <Form className="form-profile">
@@ -124,15 +137,42 @@ const AgregarEmpleado = ({ servicios }) => {
               />
             </Form.Group>
 
+            <Form.Group controlId="" className="mb-4">
+              <Form.Label>Género</Form.Label>
+              <Form.Control
+                type="text"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </Form.Group>
+
             <div>
               <label>Horario</label>
-              <input
-                value={workingHours["fri-mor"][0]}
-                name="fri-mor"
-                type="number"
-                onChange={handleHours}
-                onClick={handleFocus}
-              />
+
+              {Object.keys(workingHours).map((element, i) => {
+                return (
+                  <div key={i}>
+                    <label>Hora inicial:</label>
+                    <input
+                      value={workingHours[element][0]}
+                      name={element}
+                      type="number"
+                      id="0"
+                      onChange={handleHours}
+                      onClick={handleFocus}
+                    />
+                    <label>Hora final:</label>
+                    <input
+                      value={workingHours[element][1]}
+                      name={element}
+                      type="number"
+                      id="1"
+                      onChange={handleHours}
+                      onClick={handleFocus}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </Col>
           <Col>

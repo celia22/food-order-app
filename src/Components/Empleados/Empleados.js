@@ -16,10 +16,12 @@ const Empleados = () => {
     return data;
   };
 
+  // const employeesIdArr = apiContext.data.data.employees;
+  // console.log("api ARR", employeesIdArr);
+
   const getService = async () => {
-    const employeeData = await axios.get(
-      `/employee/${apiContext.data.data.employees}`
-    );
+    const employeesIdArr = apiContext.data.data.employees;
+    const employeeData = employeesIdArr.map((x) => axios.get(`/employee/${x}`));
     return employeeData;
   };
 
@@ -27,18 +29,14 @@ const Empleados = () => {
     "get employees",
     getEmployee,
     {
-      // onSuccess: (centerData) => getService(centerData),
       onError: (error) => console.error(error),
     }
   );
-
-  const employeeId = apiContext.data.data.employees;
-  console.log(data);
-  console.log("employeeID", employeeId);
   const empleados = data;
-  //  console.log("servcies", employeeData)
 
-  const { employeeData, isIdle } = useQuery(
+  // console.log("employeeID", employeeId);
+
+  const { employeeData } = useQuery(
     ["get Service", { empleados }],
     () => getService(),
     {
@@ -46,13 +44,6 @@ const Empleados = () => {
     }
   );
   console.log(employeeData);
-
-  // const {employeeData, isIdle } = ("get service", getService, {
-  //   onError: (error) => console.error(error),
-  // });
-
-  // const services = serviceData.data.services;
-  // console.log("services", services);
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
@@ -71,7 +62,6 @@ const Empleados = () => {
       <div className="d-flex justify-content-between">
         <div className="empleados-list">
           <ListGroup defaultActiveKey="#link1">
-            <p>blo</p>
             {empleados.data.map((i, index) => (
               <ListGroup.Item
                 key={index}
