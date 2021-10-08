@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -10,39 +10,36 @@ import "../../Components/Servicios/Servicios.css";
 const ServiciosContainer = () => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-  console.log(centerId);
 
-  /***** get services for each center *****/
-  const getServices = async () => {
-    const data = await axios.get(
-      `/center/services/${apiContext.data.data._id}`
-    );
-    return data;
-  };
-
-  const { data, isLoading, isError, error } = useQuery(
-    ["getEmployees", centerId],
-    getServices,
-    {
-      onError: (error) => console.error(error),
-      enabled: !!centerId,
-    }
-  );
-
-  console.log("data in services", data);
-
+  const firstRenderRef = useRef(false);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [servEdit, setServEdit] = useState({});
   const [empleados, setEmpleados] = useState([]);
-  const [servicios, setServicios] = useState(data);
+  const [servicios, setServicios] = useState([]);
+  console.log(centerId);
 
-  console.log("data in services", servicios);
+  /***** get services for each center *****/
+  const getServices = async () => {
+    const data = await axios.get(`/center/services/${centerId}`);
+    return data;
+  };
+
+  const { data, isLoading, isError, error } = useQuery(
+    "getEmployees",
+    getServices,
+    {
+      onSuccess: apiContext.refetch,
+      onError: (error) => console.error(error),
+    }
+  );
+
+  // console.log("data", data.data);
 
   useEffect(() => {
-    // When data is coming complete, use .data.centerData.employees / .services
-    // or however it's called to feed the setState()
-    //if (!graphqlContext?.loading) console.log(graphqlContext.data.centerData);
+    if (data) {
+      setServicios(data.data);
+    }
 
     const emple = [
       "empleado1",
@@ -56,8 +53,9 @@ const ServiciosContainer = () => {
       "empleado9",
       "empleado10",
     ];
-    setEmpleados(emple);
-  }, []);
+  }, [edit]);
+
+  console.log("services", servicios);
 
   const deleteServicio = (id) => {
     const remove = servicios.filter((i) => i.id !== id);
@@ -72,6 +70,13 @@ const ServiciosContainer = () => {
     setEdit(true);
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error! {error.message}</div>;
+  }
+
   return (
     <div style={{ marginLeft: "125px" }}>
       <div className="d-flex justify-content-between align-items-center">
@@ -81,7 +86,7 @@ const ServiciosContainer = () => {
         </button>
       </div>
 
-      {/* <div className="">
+      <div className="">
         {edit ? (
           <NuevoServicio
             titulo="Editar"
@@ -123,7 +128,7 @@ const ServiciosContainer = () => {
               ))}
           </ListGroup>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };
