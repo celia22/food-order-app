@@ -11,10 +11,11 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
 
-  const [name, setName] = useState(servicioEdit ? servicioEdit.servicio : "");
-  const [mins, setMins] = useState(servicioEdit ? servicioEdit.duracion : "");
-  const [hrs, setHrs] = useState("");
-  const [price, setPrice] = useState(servicioEdit ? servicioEdit.precio : 0);
+  const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
+  const [duration, setDuration] = useState(
+    servicioEdit ? servicioEdit.duration : ""
+  );
+  const [price, setPrice] = useState(servicioEdit ? servicioEdit.price : 0);
   const [priceType, setPriceType] = useState(
     servicioEdit ? servicioEdit.tipoPrecio : ""
   );
@@ -48,8 +49,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       // employees, ¿??¿¿?¿??¿
       price,
       priceType,
-      mins, //
-      hrs, //
+      duration,
       checked,
       hasIdleTime,
       intervalHrs, //
@@ -59,6 +59,9 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     };
     createNewService.mutate(newServiceData).then(createNewService());
   };
+
+  console.log("new serv empleados", empleados.data);
+  console.log("object values", Object.values(empleados.data));
 
   return (
     <React.Fragment>
@@ -78,18 +81,14 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <hr className="my-4" />
 
           <Form.Group controlId="">
-            <Form.Label>Duración del servicio</Form.Label>
+            <Form.Label>Duración del servicio (en minutos) </Form.Label>
             <div className="d-flex justify-content-center">
               <Form.Control
                 className="select-form"
-                as="select"
-                value={hrs}
-                onChange={(e) => setHrs(e.target.value)}
-              >
-                <option value="0">0 hrs</option>
-                <option value="1">1 hrs</option>
-                <option value="2">2 hrs</option>
-              </Form.Control>
+                type="text"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+              ></Form.Control>
             </div>
           </Form.Group>
 
@@ -217,17 +216,22 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <p>¿A qué empleado quieres asociar este servicio? </p>
           <ListGroup className="lista-empleados">
             {empleados
-              ? empleados.map((empleado, idx) => (
-                  <ListGroup.Item key={idx}>
-                    <input
-                      type="checkbox"
-                      value={empleado}
-                      checked={checked}
-                      onClick={() => setChecked(!checked)}
-                    />
-                    <label className="mx-2">{empleado}</label>
-                  </ListGroup.Item>
-                ))
+              ? Object.values(empleados.data).map((item, idx) => {
+                  return (
+                    <ListGroup.Item key={idx}>
+                      <input
+                        type="checkbox"
+                        value={item.gender}
+                        checked={checked}
+                        onClick={() => setChecked(!checked)}
+                      />
+                      <label className="mx-2">
+                        {item.firstName}
+                        {item.lastName}
+                      </label>
+                    </ListGroup.Item>
+                  );
+                })
               : "No existen empleados asociados"}
           </ListGroup>
         </div>

@@ -15,7 +15,7 @@ const ServiciosContainer = () => {
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [servEdit, setServEdit] = useState({});
-  const [empleados, setEmpleados] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [servicios, setServicios] = useState([]);
   console.log(centerId);
 
@@ -26,7 +26,7 @@ const ServiciosContainer = () => {
   };
 
   const { data, isLoading, isError, error } = useQuery(
-    "getEmployees",
+    "getServices",
     getServices,
     {
       onSuccess: apiContext.refetch,
@@ -34,28 +34,27 @@ const ServiciosContainer = () => {
     }
   );
 
-  // console.log("data", data.data);
+  /***** get employees for each center *****/
+
+  const getEmployee = async () => {
+    const employeeArr = await axios.get(
+      `/center/employees/${apiContext.data.data._id}`
+    );
+    return employeeArr;
+  };
+
+  const { data: employeeArr } = useQuery("getEmployees", getEmployee, {
+    onError: (error) => console.error(error),
+  });
+
+  console.log("employee", employeeArr);
 
   useEffect(() => {
     if (data) {
       setServicios(data.data);
+      setEmployees(employeeArr);
     }
-
-    const emple = [
-      "empleado1",
-      "empleado2",
-      "empleado3",
-      "empleado4",
-      "empleado5",
-      "empleado6",
-      "empleado7",
-      "empleado8",
-      "empleado9",
-      "empleado10",
-    ];
-  }, [edit]);
-
-  console.log("services", servicios);
+  }, [data]);
 
   const deleteServicio = (id) => {
     const remove = servicios.filter((i) => i.id !== id);
@@ -91,10 +90,10 @@ const ServiciosContainer = () => {
           <NuevoServicio
             titulo="Editar"
             servicioEdit={servEdit}
-            empleados={empleados}
+            empleados={employeeArr}
           />
         ) : show ? (
-          <NuevoServicio titulo="Nuevo Servicio" empleados={empleados} />
+          <NuevoServicio titulo="Nuevo Servicio" empleados={employeeArr} />
         ) : (
           <ListGroup className="listaServicios">
             {servicios.length &&
