@@ -17,7 +17,6 @@ const ServiciosContainer = () => {
   const [servEdit, setServEdit] = useState({});
   const [employees, setEmployees] = useState([]);
   const [servicios, setServicios] = useState([]);
-  console.log(centerId);
 
   /***** get services for each center *****/
   const getServices = async () => {
@@ -47,7 +46,7 @@ const ServiciosContainer = () => {
     onError: (error) => console.error(error),
   });
 
-  console.log("employee", employeeArr);
+  // console.log("employee", employeeArr);
 
   useEffect(() => {
     if (data) {

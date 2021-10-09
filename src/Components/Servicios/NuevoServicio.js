@@ -20,6 +20,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     servicioEdit ? servicioEdit.tipoPrecio : ""
   );
   const [checked, setChecked] = useState(false);
+  const [employees, setEmployees] = useState({});
   const [hasIdleTime, setHasIdleTime] = useState(false);
   const [intervalHrs, setIntervalHrs] = useState(0);
   const [intervalMins, setIntervalMins] = useState(0);
@@ -41,12 +42,23 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   // duration,
   // interval,
 
+  const checkHandler = (e) => {
+    const employee = []; //Array in parent component
+    const value = e.target.value; //Checkbox value
+    employee.includes(value) //If Array contains value
+      ? employee.filter((x) => x.value !== value) // Then remove item from Array
+      : employee.push(value); // Else, push item to Array;
+    setEmployees(setEmployees);
+  };
+
+  console.log("EMPLOYEES", employees);
+
   const creatServiceHandler = () => {
     const newServiceData = {
       name,
       description,
       center,
-      // employees, ¿??¿¿?¿??¿
+      employees,
       price,
       priceType,
       duration,
@@ -59,9 +71,6 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     };
     createNewService.mutate(newServiceData).then(createNewService());
   };
-
-  console.log("new serv empleados", empleados.data);
-  console.log("object values", Object.values(empleados.data));
 
   return (
     <React.Fragment>
@@ -221,13 +230,14 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
                     <ListGroup.Item key={idx}>
                       <input
                         type="checkbox"
-                        value={item.gender}
+                        name="addEmployee"
+                        value={item}
                         checked={checked}
                         onClick={() => setChecked(!checked)}
+                        onChange={checkHandler}
                       />
                       <label className="mx-2">
-                        {item.firstName}
-                        {item.lastName}
+                        {item.firstName} {item.lastName}
                       </label>
                     </ListGroup.Item>
                   );

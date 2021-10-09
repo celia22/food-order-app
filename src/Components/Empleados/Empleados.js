@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import InfoEmpleados from "./InfoEmpleados";
 import { useQuery } from "react-query";
@@ -7,6 +7,8 @@ import { context } from "../../Context/apiProvider";
 
 const Empleados = () => {
   const [empleadoInfo, setEmpleadoInfo] = useState("");
+  const [empleados, setEmpleados] = useState([]);
+  const [employeeServices, setEmployeeServices] = useState([]);
   const apiContext = useContext(context);
 
   /***** get employees for each center *****/
@@ -17,37 +19,49 @@ const Empleados = () => {
     return data;
   };
 
-  const { data, centerData, isLoading, isError, error } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     "getEmployees",
     getEmployee,
     {
       onError: (error) => console.error(error),
     }
   );
-  const empleados = data;
 
-  // const employeesIdArr = apiContext.data.data.employees;
-  // console.log("api ARR", employeesIdArr);
-
-  /***** get services for each employee *****/
-  const employeesIdArr = apiContext.data.data.employees;
-
-  const getService = async () => {
-    const employeeData = employeesIdArr.map((x) => axios.get(`/employee/${x}`));
-    return employeeData;
+  /***** get services for each center *****/
+  const getServices = async () => {
+    const centerServices = await axios.get(
+      `/center/services/${apiContext.data.data._id}`
+    );
+    return centerServices;
   };
 
-  console.log("employeeID", employeesIdArr);
+  const { data: centerServices } = useQuery("getServices", getServices, {
+    onError: (error) => console.error(error),
+  });
 
-  const { isIdle, data: employeeData } = useQuery(
-    ["get Service", employeesIdArr],
-    getService,
-    {
-      enabled: !!employeesIdArr,
+  useEffect(() => {
+    if (data) {
+      setEmpleados(data.data);
     }
-  );
+  }, [data]);
 
-  console.log("employee", employeeData);
+  console.log("data", data);
+  console.log("services", centerServices);
+
+  const employeeService = (centerServices, data) => {
+    // data.data.forEach(x => x.services.includes(centerServices.data.forEach(x => x._id)){
+    //   console.log("buuuuu")
+    // })
+    // for (let i = 0; i < data.data.length; i++) {
+    //   for (let j = 0; j < centerServices.length; j++) {
+    //     if (data.data[i].services === centerServices[j]._id) {
+    //       console.log("buuuuu");
+    //     } else {
+    //       console.log("nooooo");
+    //     }
+    //   }
+    // }
+  };
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
@@ -66,7 +80,7 @@ const Empleados = () => {
       <div className="d-flex justify-content-between">
         <div className="empleados-list">
           <ListGroup defaultActiveKey="#link1">
-            {empleados.data.map((i, index) => (
+            {empleados.map((i, index) => (
               <ListGroup.Item
                 key={index}
                 className="py-3"
