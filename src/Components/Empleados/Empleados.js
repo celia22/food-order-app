@@ -6,14 +6,14 @@ import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 
 const Empleados = () => {
+  const apiContext = useContext(context);
+  const centerId = apiContext.data.data._id;
+
   const [empleadoInfo, setEmpleadoInfo] = useState("");
-  // const [centerId, setCenterId] = useState("");
+  const [center, setCenter] = useState(centerId);
   const [empleados, setEmpleados] = useState([]);
   const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
-  const apiContext = useContext(context);
-
-  const centerId = apiContext.data.data._id;
 
   /***** get services for each employee *****/
 
@@ -23,8 +23,8 @@ const Empleados = () => {
     data: servicesData,
     refetch: servicesRefetch,
   } = useQuery(
-    ["Center Services", centerId],
-    () => axios.get(`/center/services/${centerId}`),
+    ["Center Services", center],
+    () => axios.get(`/center/services/${center}`),
     {
       enabled: true,
     }
@@ -38,8 +38,8 @@ const Empleados = () => {
     data: employeesData,
     refetch: employeesRefetch,
   } = useQuery(
-    ["Center Employees", centerId],
-    () => axios.get(`/center/employees/${centerId}`),
+    ["Center Employees", center],
+    () => axios.get(`/center/employees/${center}`),
     {
       enabled: true,
       onSuccess: servicesRefetch,

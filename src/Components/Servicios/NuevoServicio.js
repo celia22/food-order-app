@@ -19,9 +19,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   const [priceType, setPriceType] = useState(
     servicioEdit ? servicioEdit.tipoPrecio : ""
   );
-  const [checked, setChecked] = useState(
-    new Array(empleados.data.length).fill(false)
-  );
+  const [checked, setChecked] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [hasIdleTime, setHasIdleTime] = useState(false);
   const [interval, setInterval] = useState(0);
@@ -32,34 +30,32 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   );
   const [center, setCenter] = useState(centerId);
 
-  const createNewService = useMutation((newData) => {
-    return (
-      axios.post("/service/create", newData),
-      { onError: (error) => console.error(error) }
-    );
-  });
+  const handleOnChange = (id) => {
+    let selected = checked;
+    let find = checked.findIndex((item) => item.id === id);
 
-  // employees,
-  // duration,
-  // interval,
-  console.log("cheked", checked);
+    if (find > -1) {
+      selected.splice(find, 1);
+    } else {
+      selected.push(empleados.data.find((item) => item._id === id));
+    }
 
-  const handleOnChange = (position, index) => {
-    const updatedCheckedState = checked.map((item, index) =>
-      index === position ? !item : item
-    );
-    setChecked(updatedCheckedState);
-
-    const employee = []; //Array in parent component
-    //const value = position; //Checkbox value
-    employee.includes(empleados.data[index]) //If Array contains value
-      ? employee.filter((x) => x.position !== position) // Then remove item from Array
-      : employee.push(empleados.data[index]);
-    console.log("wtf", empleados.data);
-    setEmployees([...employees], employee);
+    setEmployees({ selected });
   };
 
+  console.log("cheked", checked);
+  console.log("empleados", empleados);
   console.log("EMPLOYEES", employees);
+
+  const createNewService = useMutation(
+    (newService) => {
+      return axios.post("service/create", newService);
+    },
+    {
+      onSuccess: apiContext.refetch,
+      onError: (error) => console.error(error),
+    }
+  );
 
   const creatServiceHandler = () => {
     const newServiceData = {
@@ -76,7 +72,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       resetTime,
       serviceStructure,
     };
-    createNewService.mutate(newServiceData).then(createNewService());
+    createNewService.mutate(newServiceData);
   };
 
   return (
@@ -116,7 +112,6 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
               <Form.Control
                 type="text"
                 className="selectMins"
-                as="select"
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
               ></Form.Control>
@@ -224,8 +219,8 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
                         type="checkbox"
                         name="addEmployee"
                         value={item}
-                        checked={checked[index]}
-                        onChange={() => handleOnChange(index)}
+                        onChange={() => handleOnChange(item._id)}
+                        selected={checked.includes(item._id)}
                       />
                       <label className="mx-2">
                         {item.firstName} {item.lastName}
