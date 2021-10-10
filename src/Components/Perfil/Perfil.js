@@ -2,10 +2,8 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { context } from "../../Context/apiProvider";
 import { Avatar } from "@material-ui/core";
 import { Col, Form, Row } from "react-bootstrap";
-//import useAuthContext from "../../Context/UserAuthContext";
 import { useMutation } from "react-query";
 import axios from "../../axios/axios";
-//import ApiProvider from "../../Context/apiProvider";
 import "./perfil.css";
 
 const PerfilContainer = () => {
@@ -34,8 +32,6 @@ const PerfilContainer = () => {
     }
   }, [edit]);
 
-  console.log(apiContext.data.data);
-
   /**
    * Toggles the boolean value of the "edit" state, which in turn, controls whether or not we show the edit form modal
    */
@@ -51,6 +47,7 @@ const PerfilContainer = () => {
       );
     },
     {
+      enabled: false,
       onSuccess: apiContext.refetch,
       onError: (error) => console.error(error),
     }

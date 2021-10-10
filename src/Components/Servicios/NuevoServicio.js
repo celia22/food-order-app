@@ -4,12 +4,13 @@ import Form from "react-bootstrap/Form";
 import "./Servicios.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { context } from "../../Context/apiProvider";
 
 const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
+  const queryClient = useQueryClient();
 
   const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
   const [duration, setDuration] = useState(
@@ -39,8 +40,8 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     } else {
       selected.push(empleados.data.find((item) => item._id === id));
     }
-
-    setEmployees({ selected });
+    //selected = JSON.stringify(selected);
+    setEmployees(selected);
   };
 
   console.log("cheked", checked);
@@ -49,11 +50,12 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
 
   const createNewService = useMutation(
     (newService) => {
-      return axios.post("service/create", newService);
+      return axios.post("/service/create", newService);
     },
     {
       onSuccess: apiContext.refetch,
       onError: (error) => console.error(error),
+      onSettled: queryClient.invalidateQueries("create"),
     }
   );
 
@@ -63,13 +65,12 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       description,
       center,
       employees,
-      price,
       priceType,
+      price,
       duration,
-      checked,
-      hasIdleTime,
       interval,
       resetTime,
+      hasIdleTime,
       serviceStructure,
     };
     createNewService.mutate(newServiceData);
@@ -97,7 +98,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
             <div className="d-flex justify-content-center">
               <Form.Control
                 className="select-form"
-                type="text"
+                type="number"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
               ></Form.Control>
@@ -110,7 +111,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
             <Form.Label>Intervalo (en minutos):</Form.Label>
             <div className="d-flex justify-content-center">
               <Form.Control
-                type="text"
+                type="number"
                 className="selectMins"
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
@@ -119,7 +120,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           </Form.Group>
           <hr className="my-4" />
 
-          <p> Tiempo de tratamiento de un servicio ?¿? </p>
+          <p> Tiempo de tratamiento de un servicio </p>
           {/* // IDLTE TIME */}
           <ListGroup className="d-flex justify-content-center">
             <input
@@ -137,7 +138,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
             <Form.Label>Tiempo después del servicio</Form.Label>
             <div className="d-flex justify-content-center">
               <Form.Control
-                type="text"
+                type="number"
                 className="selectMins"
                 value={serviceStructure}
                 onChange={(e) => setServiceStructure(e.target.value)}
@@ -182,6 +183,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
               </Form.Control>
 
               <Form.Control
+                className="selectMins"
                 type="number"
                 value={price}
                 onChange={(e) => setPriceType(e.target.value)}
@@ -220,7 +222,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
                         name="addEmployee"
                         value={item}
                         onChange={() => handleOnChange(item._id)}
-                        selected={checked.includes(item._id)}
+                        // selected={checked.includes(item._id)}
                       />
                       <label className="mx-2">
                         {item.firstName} {item.lastName}
