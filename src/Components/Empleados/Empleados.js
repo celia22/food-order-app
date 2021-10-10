@@ -9,14 +9,13 @@ const Empleados = () => {
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   // const [centerId, setCenterId] = useState("");
   const [empleados, setEmpleados] = useState([]);
+  const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
   const apiContext = useContext(context);
 
   const centerId = apiContext.data.data._id;
 
   /***** get services for each employee *****/
-
-  const employeesIdArr = apiContext.data.data.employees;
 
   const {
     isLoading: servicesIsLoading,
@@ -25,11 +24,7 @@ const Empleados = () => {
     refetch: servicesRefetch,
   } = useQuery(
     ["Center Services", centerId],
-    () =>
-      employeesIdArr.map((x) =>
-        axios.get(`/employee/${x}`).then(Promise.resolve(servicesData))
-      ),
-    //() => axios.get(`/center/services/${employeesIdArr}`),
+    () => axios.get(`/center/services/${centerId}`),
     {
       enabled: true,
     }
@@ -51,21 +46,40 @@ const Empleados = () => {
     }
   );
 
-  console.log("employeeID", employeesIdArr);
-
-  useEffect(() => {
-    if (employeesData) {
-      setEmpleados(employeesData.data);
-    }
-  }, [employeesData]);
-
-  //console.log("data", empleados);
-  console.log("services", servicesData);
+  //console.log("employees", empleados);
 
   const handleInfo = (id) => {
     const filtro = empleados.filter((empleado) => empleado.id === id);
     setEmpleadoInfo(filtro[0]);
   };
+
+  let employeeWithService = [];
+
+  const getEmployeesAndServices = (employeeArr, serviceArr) => {
+    return employeeArr.map((emp) => {
+      const services = serviceArr.filter((serv) =>
+        emp.services.includes(serv._id)
+      );
+
+      const newEmployee = {
+        firstName: emp.firstName,
+        lastName: emp.lastName,
+        services,
+      };
+      employeeWithService.push(newEmployee);
+      return newEmployee;
+    });
+  };
+
+  getEmployeesAndServices(empleados, services);
+
+  useEffect(() => {
+    if (employeesData && servicesData) {
+      setEmpleados(employeesData.data);
+      setServices(servicesData.data);
+      setEmployeeServices(employeeWithService);
+    }
+  }, [employeesData, servicesData]);
 
   // if (isLoading) {
   //   return <div>Loading...</div>;
@@ -73,13 +87,13 @@ const Empleados = () => {
   // if (isError) {
   //   return <div>Error! {error.message}</div>;
   // }
-
+  console.log("services", employeeWithService);
   return (
     <>
       <div className="d-flex justify-content-between">
         <div className="empleados-list">
           <ListGroup defaultActiveKey="#link1">
-            {empleados.map((i, index) => (
+            {employeeWithService.map((i, index) => (
               <ListGroup.Item
                 key={index}
                 className="py-3"
@@ -90,13 +104,13 @@ const Empleados = () => {
                   Nombre: {i.firstName} {i.lastName}
                 </p>
                 <p> Servicios: </p>
-                {/* {services.map((item, index) => {
+                {i.services.map((item, index) => {
                   return (
                     <div key={index}>
                       <p>{item.name}</p>
                     </div>
                   );
-                })}  */}
+                })}
                 <p> Horario: </p>
               </ListGroup.Item>
             ))}
