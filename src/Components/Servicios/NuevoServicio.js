@@ -19,8 +19,10 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   const [priceType, setPriceType] = useState(
     servicioEdit ? servicioEdit.tipoPrecio : ""
   );
-  const [checked, setChecked] = useState(false);
-  const [employees, setEmployees] = useState({});
+  const [checked, setChecked] = useState(
+    new Array(empleados.data.length).fill(false)
+  );
+  const [employees, setEmployees] = useState([]);
   const [hasIdleTime, setHasIdleTime] = useState(false);
   const [intervalHrs, setIntervalHrs] = useState(0);
   const [intervalMins, setIntervalMins] = useState(0);
@@ -41,14 +43,21 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   // employees,
   // duration,
   // interval,
+  console.log("cheked", checked);
 
-  const checkHandler = (e) => {
+  const handleOnChange = (position, index) => {
+    const updatedCheckedState = checked.map((item, index) =>
+      index === position ? !item : item
+    );
+    setChecked(updatedCheckedState);
+
     const employee = []; //Array in parent component
-    const value = e.target.value; //Checkbox value
-    employee.includes(value) //If Array contains value
-      ? employee.filter((x) => x.value !== value) // Then remove item from Array
-      : employee.push(value); // Else, push item to Array;
-    setEmployees(setEmployees);
+    //const value = position; //Checkbox value
+    employee.includes(empleados.data[index]) //If Array contains value
+      ? employee.filter((x) => x.position !== position) // Then remove item from Array
+      : employee.push(empleados.data[index]);
+    console.log("wtf", empleados.data);
+    setEmployees([...employees], employee);
   };
 
   console.log("EMPLOYEES", employees);
@@ -225,16 +234,15 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <p>¿A qué empleado quieres asociar este servicio? </p>
           <ListGroup className="lista-empleados">
             {empleados
-              ? Object.values(empleados.data).map((item, idx) => {
+              ? Object.values(empleados.data).map((item, index) => {
                   return (
-                    <ListGroup.Item key={idx}>
+                    <ListGroup.Item key={index}>
                       <input
                         type="checkbox"
                         name="addEmployee"
                         value={item}
-                        checked={checked}
-                        onClick={() => setChecked(!checked)}
-                        onChange={checkHandler}
+                        checked={checked[index]}
+                        onChange={() => handleOnChange(index)}
                       />
                       <label className="mx-2">
                         {item.firstName} {item.lastName}
