@@ -1,27 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import UserAuthProvider from "./Context/UserAuthContext";
-import { ApolloProvider } from "@apollo/client";
-import apolloClient from "./Apollo/createApolloClient";
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from "react-router-dom";
-import GraphqlProvider from "./Context/GraphqlProvider";
+import ApiProvider from "./Context/apiProvider";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-    <React.StrictMode>
-        <UserAuthProvider>
-            <ApolloProvider client={ apolloClient }>
-                <GraphqlProvider>
-                    <BrowserRouter>
-                        <App />
-                    </BrowserRouter>
-                </GraphqlProvider>
-            </ApolloProvider>
-        </UserAuthProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <UserAuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <ApiProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ApiProvider>
+      </QueryClientProvider>
+    </UserAuthProvider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
