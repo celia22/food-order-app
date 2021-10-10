@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Calendar from "./Components/Calendar/Calendar";
@@ -12,60 +12,88 @@ import FotosCentroContainer from "./Container/FotosCentro/FotosCentroContainer";
 import ServiciosContainer from "./Container/Servicios/ServiciosContainer";
 import Perfil from "./Components/Perfil/Perfil";
 import Login from "./Components/Login/Login";
+import { AuthContext } from "./Context/UserAuthContext";
 
 function App() {
-  const [user] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
-  const [userLogged, setUserLogged] = useState();
+    const { hideSidebar, setHideSidebar, userLogged, setUserLogged } = useContext(AuthContext);
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        //let uid = user.uid;
-        //console.log(user);
-        setUserLogged(true);
-        //console.log(userLogged);
-      } else {
-        // User is signed out
-        // ...
-        //console.log("user is not logged");
-        //console.log(userLogged);
-      }
-    });
-  }, [user]);
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                //let uid = user.uid;
+                // console.log(user.email);
+                setUserLogged(true);
+                setHideSidebar(false)
+                //console.log(userLogged);
+            } else {
+                // User is signed out
+                // ...
+                //console.log("user is not logged");
+                //console.log(userLogged);
+            }
+        });
+    }, [user]);
 
-  return (
-    <div className="App">
-      {!userLogged ? <Redirect to="/login" /> : <Redirect to="/" />}
-      <div>
-        <Sidebar />
-        <Switch>
-          <Route exact path="/login" render={(props) => <Login {...props} />} />
-          <Route
-            exact
-            path="/servicios"
-            render={(props) => <ServiciosContainer {...props} />}
-          />
-          <Route
-            exact
-            path="/imagenes"
-            render={(props) => <FotosCentroContainer {...props} />}
-          />
-          <Route
-            exact
-            path="/empleados"
-            render={(props) => <EmpleadosContainer {...props} />}
-          />
-          <Route
-            exact
-            path="/perfil"
-            render={(props) => <Perfil {...props} user={user} />}
-          />
-          <Route exact path="/" render={(props) => <Calendar {...props} />} />
-        </Switch>
-      </div>
-    </div>
-  );
+    return (
+        <div className="App">
+            <div>
+                { !hideSidebar && <Sidebar /> }
+                <Switch>
+                    <Route
+                        exact path="/login"
+                        render={props =>
+                            <Login {...props} />
+                        }
+                    >
+                        {userLogged && <Redirect to="/" />}
+                    </Route>
+                    <Route
+                        exact path="/servicios"
+                        render={props =>
+                            <ServiciosContainer {...props}/>
+                        }
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                    <Route
+                        exact path="/imagenes"
+                        render={props =>
+                            <FotosCentroContainer {...props}/>
+                        }
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                    <Route
+                        exact path="/empleados"
+                        render={props =>
+                            <EmpleadosContainer {...props}/>
+                        }
+                    />
+                    <Route
+                        exact path="/perfil"
+                        render={props =>
+                            <Perfil {...props}/>
+                        }
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                    <Route
+                        exact path="/"
+                        render={props =>
+                            <Calendar {...props}/>
+                        }
+                    >
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                    <Route exact path="/*">
+                        {!userLogged && <Redirect to="/login" />}
+                    </Route>
+                </Switch>
+            </div>
+        </div>
+    );
 }
 
 export default App;

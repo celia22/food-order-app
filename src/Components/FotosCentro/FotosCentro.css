@@ -3,14 +3,15 @@
     margin-bottom: 2rem !important;
 }
 
-.thumbsContainer{
+/* 
+ .thumbsContainer{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 16;
-    padding: 20
+    margin-top: 16px;
+    padding: 20px
 }
-
+ 
 .thumb {
     position: relative;
     display: inline-flex;
@@ -45,4 +46,4 @@
     border: 0;
     border-radius: .325em;
     cursor: pointer
-}
+} */
