@@ -24,8 +24,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
   );
   const [employees, setEmployees] = useState([]);
   const [hasIdleTime, setHasIdleTime] = useState(false);
-  const [intervalHrs, setIntervalHrs] = useState(0);
-  const [intervalMins, setIntervalMins] = useState(0);
+  const [interval, setInterval] = useState(0);
   const [resetTime, setResetTime] = useState(0);
   const [serviceStructure, setServiceStructure] = useState([]);
   const [description, setDescription] = useState(
@@ -73,8 +72,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       duration,
       checked,
       hasIdleTime,
-      intervalHrs, //
-      intervalMins, //
+      interval,
       resetTime,
       serviceStructure,
     };
@@ -113,30 +111,15 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <hr className="my-4" />
 
           <Form.Group controlId="">
-            <Form.Label>Intervalo</Form.Label>
+            <Form.Label>Intervalo (en minutos):</Form.Label>
             <div className="d-flex justify-content-center">
               <Form.Control
-                className="select-form"
-                as="select"
-                value={intervalHrs}
-                onChange={(e) => setIntervalHrs(e.target.value)}
-              >
-                <option value="0">0 hrs</option>
-                <option value="1">1 hrs</option>
-                <option value="2">2 hrs</option>
-              </Form.Control>
-
-              <Form.Control
-                as="select"
+                type="text"
                 className="selectMins"
-                value={intervalMins}
-                onChange={(e) => setIntervalMins(e.target.value)}
-              >
-                <option value="0">0 mins</option>
-                <option value="15">15 mins</option>
-                <option value="30">30 mins</option>
-                <option value="45">45 mins</option>
-              </Form.Control>
+                as="select"
+                value={interval}
+                onChange={(e) => setInterval(e.target.value)}
+              ></Form.Control>
             </div>
           </Form.Group>
           <hr className="my-4" />
@@ -162,7 +145,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
                 type="text"
                 className="selectMins"
                 value={serviceStructure}
-                onChange={(e) => setIntervalMins(setServiceStructure)}
+                onChange={(e) => setServiceStructure(e.target.value)}
               ></Form.Control>
             </div>
           </Form.Group>
