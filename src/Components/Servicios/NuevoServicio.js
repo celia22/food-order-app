@@ -10,7 +10,6 @@ import { context } from "../../Context/apiProvider";
 const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-
   const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
   const [duration, setDuration] = useState(
     servicioEdit ? servicioEdit.duration : ""
@@ -41,8 +40,6 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
     }
     setEmployees(selected);
   };
-
-  console.log("EMPLOYEES", props);
 
   const createNewService = useMutation(
     (newService) => {
@@ -224,7 +221,6 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
                         name="addEmployee"
                         value={item}
                         onChange={() => handleOnChange(item._id)}
-                        // selected={checked.includes(item._id)}
                       />
                       <label className="mx-2">
                         {item.firstName} {item.lastName}

@@ -55,8 +55,6 @@ const ServiciosContainer = (props) => {
 
   /***** delete service *****/
 
-  console.log(servicios);
-
   const deleteService = useMutation(
     (id) => {
       return axios.put(`/service/delete/${id}`);
@@ -69,12 +67,12 @@ const ServiciosContainer = (props) => {
   );
 
   const deleteServicio = (id) => {
-    const remove = servicios.filter((i) => i.id === id);
-    console.log(remove);
-    deleteService.mutate(remove._id);
+    const remove = servicios.filter((i) => i._id !== id);
+    deleteService.mutate(id);
     setServicios(remove);
   };
 
+  /********** edit services  ***********/
   const editServicio = (id) => {
     const filter = servicios.filter((i) => i.id === id);
     console.log(filter[0]);
@@ -93,9 +91,13 @@ const ServiciosContainer = (props) => {
     <div style={{ marginLeft: "125px" }}>
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="titulo-fotos">Servicios</h2>
-        <button className="btn-agregar mx-5" onClick={() => setShow(!show)}>
-          Agregar servicio
-        </button>
+        {!show ? (
+          <button className="btn-agregar mx-5" onClick={() => setShow(!show)}>
+            Agregar servicio
+          </button>
+        ) : (
+          " "
+        )}
       </div>
 
       <div className="">
@@ -114,30 +116,31 @@ const ServiciosContainer = (props) => {
         ) : (
           <ListGroup className="listaServicios">
             {servicios.length &&
-              servicios.map((servicio, idx) => (
+              servicios.map((item) => (
                 <ListGroupItem
-                  key={idx}
+                  key={item.id}
                   className="itemList d-flex justify-content-between align-items-center"
                 >
                   <div>
-                    <p className="nombreServicio">{servicio.name}</p>
+                    <p className="nombreServicio">{item.name}</p>
 
                     <div>
-                      Descripción: {servicio.description}
+                      Descripción: {item.description}
                       <br />
-                      Duración: {servicio.duration}
+                      Duración: {item.duration}
                       <br />
-                      Precio: {servicio.priceType} {servicio.price}€
+                      Precio: {item.priceType} {item.price}€
                     </div>
                   </div>
                   <div className="span-icons">
                     <FaTrash
                       className="mx-4 icon"
-                      onClick={() => deleteServicio(servicio.id)}
+                      data={item.id}
+                      onClick={() => deleteServicio(item._id)}
                     />
                     <FaEdit
                       className="icon"
-                      onClick={() => editServicio(servicio.id)}
+                      onClick={() => editServicio(item._id)}
                     />
                   </div>
                 </ListGroupItem>

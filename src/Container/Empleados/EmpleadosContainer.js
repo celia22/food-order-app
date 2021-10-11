@@ -38,7 +38,7 @@ const EmpleadosContainer = (props) => {
 
       <div className="">
         {addEmpleado ? (
-          <AgregarEmpleado servicios={servicios} />
+          <AgregarEmpleado servicios={servicios} props={props} />
         ) : (
           <Empleados empleados={empleados} />
         )}
