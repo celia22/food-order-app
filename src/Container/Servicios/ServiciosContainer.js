@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import NuevoServicio from "../../Components/Servicios/NuevoServicio";
 import "../../Components/Servicios/Servicios.css";
 
-const ServiciosContainer = () => {
+const ServiciosContainer = (props) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
 
@@ -46,8 +46,6 @@ const ServiciosContainer = () => {
     onError: (error) => console.error(error),
   });
 
-  // console.log("employee", employeeArr);
-
   useEffect(() => {
     if (data) {
       setServicios(data.data);
@@ -55,15 +53,31 @@ const ServiciosContainer = () => {
     }
   }, [data]);
 
-  const deleteServicio = (id) => {
-    const remove = servicios.filter((i) => i.id !== id);
+  /***** delete service *****/
 
+  console.log(servicios);
+
+  const deleteService = useMutation(
+    (id) => {
+      return axios.put(`/service/delete/${id}`);
+    },
+    {
+      enabled: false,
+      onError: (error) => console.error(error),
+      onSuccess: apiContext.refetch,
+    }
+  );
+
+  const deleteServicio = (id) => {
+    const remove = servicios.filter((i) => i.id === id);
+    console.log(remove);
+    deleteService.mutate(remove._id);
     setServicios(remove);
   };
 
   const editServicio = (id) => {
     const filter = servicios.filter((i) => i.id === id);
-
+    console.log(filter[0]);
     setServEdit(filter[0]);
     setEdit(true);
   };
@@ -92,7 +106,11 @@ const ServiciosContainer = () => {
             empleados={employeeArr}
           />
         ) : show ? (
-          <NuevoServicio titulo="Nuevo Servicio" empleados={employeeArr} />
+          <NuevoServicio
+            titulo="Nuevo Servicio"
+            empleados={employeeArr}
+            props={props}
+          />
         ) : (
           <ListGroup className="listaServicios">
             {servicios.length &&

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "../../axios/axios";
 import Form from "react-bootstrap/Form";
 import "./Servicios.css";
@@ -7,10 +7,9 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useMutation, useQueryClient } from "react-query";
 import { context } from "../../Context/apiProvider";
 
-const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
+const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-  const queryClient = useQueryClient();
 
   const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
   const [duration, setDuration] = useState(
@@ -40,57 +39,43 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     } else {
       selected.push(empleados.data.find((item) => item._id === id));
     }
-    //selected = JSON.stringify(selected);
     setEmployees(selected);
   };
 
-  console.log("cheked", checked);
-  console.log("empleados", empleados);
-  console.log("EMPLOYEES", employees);
+  console.log("EMPLOYEES", props);
 
   const createNewService = useMutation(
     (newService) => {
       return axios.post("/service/create", newService);
     },
     {
-      // onSuccess: apiContext.refetch,
       enabled: false,
       onError: (error) => console.error(error),
+      onSuccess: apiContext.refetch,
     }
   );
 
   const creatServiceHandler = (e) => {
-    e.preventDefault();
-    const newServiceData = {
-      name,
-      description,
-      center,
-      employees,
-      priceType,
-      price,
-      duration,
-      interval,
-      resetTime,
-      hasIdleTime,
-      serviceStructure,
-    };
-    createNewService.mutate(newServiceData);
+    try {
+      e.preventDefault();
+      const newServiceData = {
+        name,
+        description,
+        center,
+        employees,
+        priceType,
+        price,
+        duration,
+        interval,
+        resetTime,
+        hasIdleTime,
+        serviceStructure,
+      };
+      createNewService.mutate(newServiceData);
+    } finally {
+      props.history.push("/");
+    }
   };
-
-  // const newServiceData = {
-  //   name,
-  //   description,
-  //   center,
-  //   employees,
-  //   priceType,
-  //   price,
-  //   duration,
-  //   interval,
-  //   resetTime,
-  //   hasIdleTime,
-  //   serviceStructure,
-  // };
-  // const creatServiceHandler = axios.post("/service/create", newServiceData);
 
   return (
     <React.Fragment>
