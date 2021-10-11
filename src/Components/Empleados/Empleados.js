@@ -10,7 +10,7 @@ const Empleados = () => {
   const centerId = apiContext.data.data._id;
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const [center, setCenter] = useState(centerId);
-  const [empleados, setEmpleados] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
 
@@ -45,14 +45,10 @@ const Empleados = () => {
     }
   );
 
-  //console.log("employees", empleados);
-
   const handleInfo = (id) => {
-    const filtro = empleados.filter((empleado) => empleado.id === id);
+    const filtro = employees.filter((empleado) => empleado.id === id);
     setEmpleadoInfo(filtro[0]);
   };
-
-  let employeeWithService = []; // hacer esto a = linia 74, quitar el estado de esto y mapear directamentee
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     return employeeArr.map((emp) => {
@@ -65,51 +61,37 @@ const Empleados = () => {
         lastName: emp.lastName,
         services,
       };
-      employeeWithService.push(newEmployee);
       return newEmployee;
     });
   };
 
-  getEmployeesAndServices(empleados, services);
+  const printServices = (servicesArr) =>
+    servicesArr.map((serv) => serv.name).join(", ");
 
   useEffect(() => {
     if (employeesData && servicesData) {
-      setEmpleados(employeesData.data);
+      setEmployees(employeesData.data);
       setServices(servicesData.data);
-      setEmployeeServices(employeeWithService);
     }
   }, [employeesData, servicesData]);
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-  // if (isError) {
-  //   return <div>Error! {error.message}</div>;
-  // }
-  console.log("services", employeeWithService);
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <div className="empleados-list">
-          <ListGroup defaultActiveKey="#link1">
-            {employeeWithService.map((i, index) => (
+      <div className='d-flex justify-content-between'>
+        <div className='empleados-list'>
+          <ListGroup defaultActiveKey='#link1'>
+            {getEmployeesAndServices(employees, services).map((i, index) => (
               <ListGroup.Item
                 key={index}
-                className="py-3"
+                className='py-3'
                 onClick={() => handleInfo(i.id)}
                 action
               >
                 <p>
                   Nombre: {i.firstName} {i.lastName}
                 </p>
-                <p> Servicios: </p>
-                {i.services.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <p>{item.name}</p>
-                    </div>
-                  );
-                })}
+
+                <p> Servicios: {printServices(i.services)}</p>
                 <p> Horario: </p>
               </ListGroup.Item>
             ))}
