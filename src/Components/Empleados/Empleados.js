@@ -45,11 +45,6 @@ const Empleados = () => {
     }
   );
 
-  const handleInfo = (id) => {
-    const filtro = employees.filter((empleado) => empleado.id === id);
-    setEmpleadoInfo(filtro[0]);
-  };
-
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     return employeeArr.map((emp) => {
       const services = serviceArr.filter((serv) =>
@@ -74,6 +69,11 @@ const Empleados = () => {
       setServices(servicesData.data);
     }
   }, [employeesData, servicesData]);
+
+  const handleInfo = (id) => {
+    const filtro = employees.filter((empleado) => empleado.id === id);
+    setEmpleadoInfo(filtro[0]);
+  };
 
   return (
     <>
