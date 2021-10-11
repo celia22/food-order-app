@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import NuevoServicio from "../../Components/Servicios/NuevoServicio";
+import EditServicio from "../../Components/Servicios/EditServicio";
 import "../../Components/Servicios/Servicios.css";
 
 const ServiciosContainer = (props) => {
@@ -73,10 +74,10 @@ const ServiciosContainer = (props) => {
   };
 
   /********** edit services  ***********/
+
   const editServicio = (id) => {
-    const filter = servicios.filter((i) => i.id === id);
-    console.log(filter[0]);
-    setServEdit(filter[0]);
+    const filter = servicios.filter((i) => i._id === id);
+    setServEdit(filter);
     setEdit(true);
   };
 
@@ -91,7 +92,7 @@ const ServiciosContainer = (props) => {
     <div style={{ marginLeft: "125px" }}>
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="titulo-fotos">Servicios</h2>
-        {!show ? (
+        {!show && !edit ? (
           <button className="btn-agregar mx-5" onClick={() => setShow(!show)}>
             Agregar servicio
           </button>
@@ -102,7 +103,7 @@ const ServiciosContainer = (props) => {
 
       <div className="">
         {edit ? (
-          <NuevoServicio
+          <EditServicio
             titulo="Editar"
             servicioEdit={servEdit}
             empleados={employeeArr}
