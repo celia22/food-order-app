@@ -175,24 +175,6 @@ const AgregarEmpleado = ({ servicios }) => {
               })}
             </div>
           </Col>
-          <Col>
-            <Form.Label className="mx-4 mb-2">Servicios asociados</Form.Label>
-            <ListGroup>
-              {servicios
-                ? servicios.map((servicio, idx) => (
-                    <ListGroup.Item className="mx-4" key={idx}>
-                      <input
-                        type="checkbox"
-                        value={servicio}
-                        checked={checked}
-                        onClick={() => setChecked(!checked)}
-                      />
-                      <label className="mx-2">{servicio}</label>
-                    </ListGroup.Item>
-                  ))
-                : "No existen servicios disponibles"}
-            </ListGroup>
-          </Col>
         </Row>
       </Form>
     </div>

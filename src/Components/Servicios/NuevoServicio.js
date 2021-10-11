@@ -53,13 +53,14 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
       return axios.post("/service/create", newService);
     },
     {
-      onSuccess: apiContext.refetch,
+      // onSuccess: apiContext.refetch,
+      enabled: false,
       onError: (error) => console.error(error),
-      onSettled: queryClient.invalidateQueries("create"),
     }
   );
 
-  const creatServiceHandler = () => {
+  const creatServiceHandler = (e) => {
+    e.preventDefault();
     const newServiceData = {
       name,
       description,
@@ -76,6 +77,21 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
     createNewService.mutate(newServiceData);
   };
 
+  // const newServiceData = {
+  //   name,
+  //   description,
+  //   center,
+  //   employees,
+  //   priceType,
+  //   price,
+  //   duration,
+  //   interval,
+  //   resetTime,
+  //   hasIdleTime,
+  //   serviceStructure,
+  // };
+  // const creatServiceHandler = axios.post("/service/create", newServiceData);
+
   return (
     <React.Fragment>
       <h4 className="titulo-servicio">{titulo}</h4>
@@ -84,6 +100,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <Form.Group controlId="">
             <Form.Label>Nombre del Servicio</Form.Label>
             <Form.Control
+              className="select-form"
               type="text"
               value={name}
               placeholder="¿Cuál es el nombre de su servicio?"
@@ -186,7 +203,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
                 className="selectMins"
                 type="number"
                 value={price}
-                onChange={(e) => setPriceType(e.target.value)}
+                onChange={(e) => setPrice(e.target.value)}
                 placeholder="0€"
               />
             </div>
@@ -201,7 +218,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados }) => {
           <Form.Group controlId="">
             <Form.Label>Descripción del servicio</Form.Label>
             <Form.Control
-              className=""
+              className="select-form"
               as="textarea"
               rows={5}
               value={description}

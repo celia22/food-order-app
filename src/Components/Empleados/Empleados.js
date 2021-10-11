@@ -8,7 +8,6 @@ import { context } from "../../Context/apiProvider";
 const Empleados = () => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const [center, setCenter] = useState(centerId);
   const [empleados, setEmpleados] = useState([]);
@@ -53,7 +52,7 @@ const Empleados = () => {
     setEmpleadoInfo(filtro[0]);
   };
 
-  let employeeWithService = [];
+  let employeeWithService = []; // hacer esto a = linia 74, quitar el estado de esto y mapear directamentee
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     return employeeArr.map((emp) => {
