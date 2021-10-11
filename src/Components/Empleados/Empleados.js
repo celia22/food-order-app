@@ -8,7 +8,6 @@ import { context } from "../../Context/apiProvider";
 const Empleados = () => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const [center, setCenter] = useState(centerId);
   const [employees, setEmployees] = useState([]);
@@ -91,8 +90,8 @@ const Empleados = () => {
                 <p>
                   Nombre: {i.firstName} {i.lastName}
                 </p>
-                <p> Servicios: {printServices(i.services)}</p>
 
+                <p> Servicios: {printServices(i.services)}</p>
                 <p> Horario: </p>
               </ListGroup.Item>
             ))}
