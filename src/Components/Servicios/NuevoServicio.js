@@ -180,14 +180,15 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
                 <option value="gratis">Gratis</option>
                 <option value="empieza en">Precio empieza en...</option>
               </Form.Control>
-
-              <Form.Control
-                className="selectMins"
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="0€"
-              />
+              <span className="priceInput">
+                <Form.Control
+                  className="selectMins"
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="0€"
+                />
+              </span>
             </div>
           </Form.Group>
 

@@ -141,7 +141,7 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
                 className="selectMins"
                 value={serviceStructure}
                 onChange={(e) => setServiceStructure(e.target.value)}
-              ></Form.Control>
+              />
             </div>
           </Form.Group>
 
@@ -181,13 +181,15 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
                 <option value="empieza en">Precio empieza en...</option>
               </Form.Control>
 
-              <Form.Control
-                className="selectMins"
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                placeholder="0€"
-              />
+              <span className="priceInput">
+                <Form.Control
+                  className="selectMins"
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="0€"
+                />
+              </span>
             </div>
           </Form.Group>
 

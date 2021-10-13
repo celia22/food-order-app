@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Calendar from "./Components/Calendar/Calendar";
+import Home from "./Pages/Home";
 import "./App.css";
 import auth from "./firebase";
 import firebase from "firebase";
@@ -82,7 +82,7 @@ function App() {
                     <Route
                         exact path="/"
                         render={props =>
-                            <Calendar {...props}/>
+                            <Home {...props}/>
                         }
                     >
                         {!userLogged && <Redirect to="/login" />}

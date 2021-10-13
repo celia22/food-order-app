@@ -84,6 +84,7 @@ class Calendar extends React.PureComponent {
 		});
 	}
 
+
 	/**
 	 * Crea una nueva cita metiendo otro objeto al array "data" del state
 	 * @param event
@@ -179,8 +180,8 @@ class Calendar extends React.PureComponent {
 						data={fakeData}
 						firstDayOfWeek={firstDay}
 						locale={locale}
-						startTime={9}
-						endTime={20}
+						startTime={8}
+						endTime={23}
 					>
 						<EditingState onCommitChanges={this.commitChanges} />
 						<ViewState />
@@ -188,10 +189,10 @@ class Calendar extends React.PureComponent {
 						<MonthView name="Mes" />
 						<WeekView
 							name="Semana"
-							startWeekHour={9}
-							endWeekHour={19}
+							startWeekHour={8}
+							endWeekHour={23}
 						/>
-						<DayView name="Dia" startDayHour={9} endDayHour={19} />
+						<DayView name="Dia" startDayHour={8} endDayHour={23} />
 						<TodayButton messages={messages} />
 						<ViewSwitcher />
 						<Appointments />

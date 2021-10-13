@@ -128,7 +128,7 @@ const ServiciosContainer = (props) => {
                     <div>
                       Descripción: {item.description}
                       <br />
-                      Duración: {item.duration}
+                      Duración: {item.duration} minutos
                       <br />
                       Precio: {item.priceType} {item.price}€
                     </div>
