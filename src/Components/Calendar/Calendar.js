@@ -36,8 +36,6 @@ import ModalReserva from "../Modal/Modal";
 //   },
 // ];
 
-// console.log(this.props);
-
 class Calendar extends React.PureComponent {
   static contextType = context;
 
@@ -151,6 +149,7 @@ class Calendar extends React.PureComponent {
 
   render() {
     const { fakeData } = this.state;
+    console.log("fakeData", fakeData);
 
     const firstDay = 1;
     const locale = "es-ES";

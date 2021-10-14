@@ -42,20 +42,27 @@ const Home = (props) => {
   const bookingsArray = [];
 
   const bookingsTranslator = () => {
+    let employeeName = [];
+
+    for (let i = 0; i < data[0].data.data.length; i++) {
+      for (let j = 0; j < data[2].data.data.length; j++) {
+        if (data[0].data.data[i].employee === data[2].data.data[j]._id) {
+          console.log("push");
+          employeeName.push(
+            data[2].data.data[j].firstName + " " + data[2].data.data[j].lastName
+          );
+        }
+      }
+    }
+
     data[0].data.data.map((item, index) => {
       bookingsArray.push({
         id: index,
-        title: `Servicio: ${data[1].data.data[index].name} , Empleado/a: ${
-          data[2].data.data[data[0].data.data[index].employee]
-        }`,
-        startTime: `${data[0].data.data[0].startTime}`,
-        endTime: `${data[0].data.data[0].endTime}`,
+        title: `Servicio: ${data[1].data.data[index].name} , Empleado/a: ${employeeName[index]}`,
+        startTime: `${timeConverter(new Date(data[0].data.data[0].startTime))}`,
+        endTime: `${timeConverter(new Date(data[0].data.data[0].endTime))}`,
       });
-      console.log("index", data[0].data.data[0].employee);
-      console.log("employee", data[2].data.data);
-      console.log("employee name", data[2].data.data[index].firstName);
     });
-
     setBookings(bookingsArray);
   };
 
