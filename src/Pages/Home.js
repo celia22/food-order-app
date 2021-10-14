@@ -7,6 +7,7 @@ import axios from "../axios/axios";
 
 const Home = (props) => {
 	const apiContext = useContext(context);
+	const [bookings, setBooking] = useState([]);
 
 	const data = useQueries(
 		[
@@ -29,9 +30,17 @@ const Home = (props) => {
 		}
 	)
 
+	const bookingsTranslator = () => {
+		array.push({
+			id: index,
+			title: `${data[0].data.data.title}  employee:${data[2].data[data[0].data.employee].name}`
+		})
+
+	}
+
 	useEffect(() => {
 		return () => {
-			apiContext.data.data && data.forEach(query => query.refetch())
+			apiContext.data && data.forEach(query => query.refetch())
 		};
 	}, [apiContext.data]);
 
