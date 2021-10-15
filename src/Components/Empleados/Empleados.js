@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 
-const Empleados = () => {
+const Empleados = (props) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
   const [empleadoInfo, setEmpleadoInfo] = useState("");
@@ -77,13 +77,13 @@ const Empleados = () => {
 
   return (
     <>
-      <div className='d-flex justify-content-between'>
-        <div className='empleados-list'>
-          <ListGroup defaultActiveKey='#link1'>
+      <div className="d-flex justify-content-between">
+        <div className="empleados-list">
+          <ListGroup defaultActiveKey="#link1">
             {getEmployeesAndServices(employees, services).map((i, index) => (
               <ListGroup.Item
                 key={index}
-                className='py-3'
+                className="py-3"
                 onClick={() => handleInfo(i.id)}
                 action
               >
@@ -99,7 +99,7 @@ const Empleados = () => {
         </div>
 
         <div>
-          <InfoEmpleados empleado={empleadoInfo} />
+          <InfoEmpleados empleado={employees} props={props} />
         </div>
       </div>
     </>
