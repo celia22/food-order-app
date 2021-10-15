@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
@@ -61,7 +62,6 @@ const Empleados = (props) => {
         _id: emp._id,
         services,
       };
-      console.log(newEmployee);
       return newEmployee;
     });
   };
@@ -99,44 +99,49 @@ const Empleados = (props) => {
 
   const editEmpleado = (id) => {
     const filter = employees.filter((i) => i._id === id);
-    setEmployeeEdit(filter);
+    setEmployeeEdit(filter[0]);
     setEdit(true);
   };
+  console.log("PROPS", props);
 
   return (
     <>
       <div className="d-flex justify-content-between">
         <div className="empleados-list">
-          <ListGroup defaultActiveKey="#link1">
-            {getEmployeesAndServices(employees, services).map((i, index) => (
-              <ListGroup.Item
-                key={index}
-                className="py-3"
-                // onClick={() => handleInfo(i.id)}
-                action
-              >
-                <div>
-                  <p>
-                    Nombre: {i.firstName} {i.lastName}
-                  </p>
+          {edit ? (
+            <EditarEmpleado employee2Edit={employeeEdit} props={props} />
+          ) : (
+            <ListGroup defaultActiveKey="#link1">
+              {getEmployeesAndServices(employees, services).map((i, index) => (
+                <ListGroup.Item
+                  key={index}
+                  className="py-3"
+                  // onClick={() => handleInfo(i.id)}
+                  action
+                >
+                  <div>
+                    <p>
+                      Nombre: {i.firstName} {i.lastName}
+                    </p>
 
-                  <p> Servicios: {printServices(i.services)}</p>
-                  <p> Horario: </p>
-                </div>
-                <div className="span-icons">
-                  <FaTrash
-                    className="mx-4 icon"
-                    data={i.id}
-                    onClick={() => deleteEmpleado(i._id)}
-                  />
-                  <FaEdit
-                    className="icon"
-                    // onClick={() => editEmpleado(i._id)}
-                  />
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+                    <p> Servicios: {printServices(i.services)}</p>
+                    <p> Horario: </p>
+                  </div>
+                  <div className="span-icons">
+                    <FaTrash
+                      className="mx-4 icon"
+                      data={i.id}
+                      onClick={() => deleteEmpleado(i._id)}
+                    />
+                    <FaEdit
+                      className="icon"
+                      onClick={() => editEmpleado(i._id)}
+                    />
+                  </div>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
         </div>
 
         <div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>

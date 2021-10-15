@@ -49,8 +49,7 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
   );
 
   const updateServiceHandler = (e) => {
-    // try {
-    e.preventDefault();
+   e.preventDefault();
     const updateService = {
       name,
       description,
@@ -65,10 +64,9 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
       serviceStructure,
     };
   editService.mutate(updateService);
-  //  } finally {
-  //     props.history.push("/");
-  //   }
   };
+
+  
   return (
     <React.Fragment>
 

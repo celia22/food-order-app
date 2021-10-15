@@ -40,7 +40,7 @@ const EmpleadosContainer = (props) => {
         {addEmpleado ? (
           <AgregarEmpleado servicios={servicios} props={props} />
         ) : (
-          <Empleados empleado={empleados} />
+          <Empleados empleado={empleados} props={props} />
         )}
       </div>
     </div>
