@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import NuevoServicio from "../../Components/Servicios/NuevoServicio";
+import EditServicio from "../../Components/Servicios/EditServicio";
 import "../../Components/Servicios/Servicios.css";
 
-const ServiciosContainer = () => {
+const ServiciosContainer = (props) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
 
@@ -46,8 +47,6 @@ const ServiciosContainer = () => {
     onError: (error) => console.error(error),
   });
 
-  // console.log("employee", employeeArr);
-
   useEffect(() => {
     if (data) {
       setServicios(data.data);
@@ -55,16 +54,30 @@ const ServiciosContainer = () => {
     }
   }, [data]);
 
-  const deleteServicio = (id) => {
-    const remove = servicios.filter((i) => i.id !== id);
+  /***** delete service *****/
 
+  const deleteService = useMutation(
+    (id) => {
+      return axios.put(`/service/delete/${id}`);
+    },
+    {
+      enabled: false,
+      onError: (error) => console.error(error),
+      onSuccess: apiContext.refetch,
+    }
+  );
+
+  const deleteServicio = (id) => {
+    const remove = servicios.filter((i) => i._id !== id);
+    deleteService.mutate(id);
     setServicios(remove);
   };
 
-  const editServicio = (id) => {
-    const filter = servicios.filter((i) => i.id === id);
+  /********** edit services  ***********/
 
-    setServEdit(filter[0]);
+  const editServicio = (id) => {
+    const filter = servicios.filter((i) => i._id === id);
+    setServEdit(filter);
     setEdit(true);
   };
 
@@ -79,47 +92,56 @@ const ServiciosContainer = () => {
     <div style={{ marginLeft: "125px" }}>
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="titulo-fotos">Servicios</h2>
-        <button className="btn-agregar mx-5" onClick={() => setShow(!show)}>
-          Agregar servicio
-        </button>
+        {!show && !edit ? (
+          <button className="btn-agregar mx-5" onClick={() => setShow(!show)}>
+            Agregar servicio
+          </button>
+        ) : (
+          " "
+        )}
       </div>
 
       <div className="">
         {edit ? (
-          <NuevoServicio
+          <EditServicio
             titulo="Editar"
             servicioEdit={servEdit}
             empleados={employeeArr}
           />
         ) : show ? (
-          <NuevoServicio titulo="Nuevo Servicio" empleados={employeeArr} />
+          <NuevoServicio
+            titulo="Nuevo Servicio"
+            empleados={employeeArr}
+            props={props}
+          />
         ) : (
           <ListGroup className="listaServicios">
             {servicios.length &&
-              servicios.map((servicio, idx) => (
+              servicios.map((item) => (
                 <ListGroupItem
-                  key={idx}
+                  key={item.id}
                   className="itemList d-flex justify-content-between align-items-center"
                 >
                   <div>
-                    <p className="nombreServicio">{servicio.name}</p>
+                    <p className="nombreServicio">{item.name}</p>
 
                     <div>
-                      Descripción: {servicio.description}
+                      Descripción: {item.description}
                       <br />
-                      Duración: {servicio.duration}
+                      Duración: {item.duration} minutos
                       <br />
-                      Precio: {servicio.priceType} {servicio.price}€
+                      Precio: {item.priceType} {item.price}€
                     </div>
                   </div>
                   <div className="span-icons">
                     <FaTrash
                       className="mx-4 icon"
-                      onClick={() => deleteServicio(servicio.id)}
+                      data={item.id}
+                      onClick={() => deleteServicio(item._id)}
                     />
                     <FaEdit
                       className="icon"
-                      onClick={() => editServicio(servicio.id)}
+                      onClick={() => editServicio(item._id)}
                     />
                   </div>
                 </ListGroupItem>

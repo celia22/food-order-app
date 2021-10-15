@@ -7,31 +7,26 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useMutation, useQueryClient } from "react-query";
 import { context } from "../../Context/apiProvider";
 
-const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
+const EditServicio = ({ servicioEdit, empleados, props }) => {
+  console.log(servicioEdit);
   const apiContext = useContext(context);
-  const centerId = apiContext.data.data._id;
-  const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
-  const [duration, setDuration] = useState(
-    servicioEdit ? servicioEdit.duration : ""
-  );
-  const [price, setPrice] = useState(servicioEdit ? servicioEdit.price : 0);
-  const [priceType, setPriceType] = useState(
-    servicioEdit ? servicioEdit.tipoPrecio : ""
-  );
+ 
+  const [name, setName] = useState(servicioEdit[0].name);
+  const [duration, setDuration] = useState(servicioEdit[0].duration);
+  const [price, setPrice] = useState(servicioEdit[0].price);
+  const [priceType, setPriceType] = useState(servicioEdit[0].priceType);
   const [checked, setChecked] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [hasIdleTime, setHasIdleTime] = useState(false);
-  const [interval, setInterval] = useState(0);
-  const [resetTime, setResetTime] = useState(0);
+  const [hasIdleTime, setHasIdleTime] = useState(servicioEdit[0].hasIdleTime);
+  const [interval, setInterval] = useState(servicioEdit[0].interval);
+  const [resetTime, setResetTime] = useState(servicioEdit[0].resetTime);
   const [serviceStructure, setServiceStructure] = useState([]);
-  const [description, setDescription] = useState(
-    servicioEdit ? servicioEdit.description : ""
-  );
-  const [center, setCenter] = useState(centerId);
+  const [description, setDescription] = useState(servicioEdit[0].description);
+  const [center, setCenter] = useState(servicioEdit[0].center);
 
   const handleOnChange = (id) => {
     let selected = checked;
-    let find = checked.findIndex((item) => item.id === id);
+    let find = checked.findIndex((item) => item._id === id);
 
     if (find > -1) {
       selected.splice(find, 1);
@@ -41,9 +36,10 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
     setEmployees(selected);
   };
 
-  const createNewService = useMutation(
-    (newService) => {
-      return axios.post("/service/create", newService);
+
+  const editService = useMutation(
+    ( updateService) => {
+      return axios.put(`/service/update/${servicioEdit[0]._id}`, updateService);
     },
     {
       enabled: false,
@@ -52,31 +48,33 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
     }
   );
 
-  const creatServiceHandler = (e) => {
-    try {
-      e.preventDefault();
-      const newServiceData = {
-        name,
-        description,
-        center,
-        employees,
-        priceType,
-        price,
-        duration,
-        interval,
-        resetTime,
-        hasIdleTime,
-        serviceStructure,
-      };
-      createNewService.mutate(newServiceData);
-    } finally {
-      props.history.push("/");
-    }
+  const updateServiceHandler = (e) => {
+    // try {
+    e.preventDefault();
+    const updateService = {
+      name,
+      description,
+      center,
+      employees,
+      priceType,
+      price,
+      duration,
+      interval,
+      resetTime,
+      hasIdleTime,
+      serviceStructure,
+    };
+  editService.mutate(updateService);
+  //  } finally {
+  //     props.history.push("/");
+  //   }
   };
-
   return (
     <React.Fragment>
-      <h4 className="titulo-servicio">{titulo}</h4>
+
+        <h4 className="titulo-servicio">Editar Servicio</h4>
+
+  
       <div className="d-flex mt-3">
         <Form className="form-services">
           <Form.Group controlId="">
@@ -133,6 +131,8 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
           <hr className="my-4" />
 
           <Form.Group controlId="">
+            {" "}
+          
             {/* SERVICE STRUCTURE, AFEGIR CASELLAS SI NO SI */}
             <Form.Label>Tiempo después del servicio</Form.Label>
             <div className="d-flex justify-content-center">
@@ -141,7 +141,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
                 className="selectMins"
                 value={serviceStructure}
                 onChange={(e) => setServiceStructure(e.target.value)}
-              ></Form.Control>
+              />
             </div>
           </Form.Group>
 
@@ -180,6 +180,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
                 <option value="gratis">Gratis</option>
                 <option value="empieza en">Precio empieza en...</option>
               </Form.Control>
+
               <span className="priceInput">
                 <Form.Control
                   className="selectMins"
@@ -192,8 +193,8 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
             </div>
           </Form.Group>
 
-          <button className="btn-agregar mt-3" onClick={creatServiceHandler}>
-            Guardar
+          <button className="btn-agregar mt-3" onClick={updateServiceHandler}>
+            Guardar Cambios
           </button>
         </Form>
         <div className="div-medio"></div>
@@ -237,4 +238,4 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
   );
 };
 
-export default NuevoServicio;
+export default EditServicio;

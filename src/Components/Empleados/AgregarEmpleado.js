@@ -5,7 +5,7 @@ import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import "./empleados.css";
 import { context } from "../../Context/apiProvider";
 
-const AgregarEmpleado = ({ servicios }) => {
+const AgregarEmpleado = ({ servicios, props }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
 
@@ -37,16 +37,21 @@ const AgregarEmpleado = ({ servicios }) => {
   const [checked, setChecked] = useState(false);
   const [center, setCenter] = useState(centerId);
 
+  console.log(props);
   const createNewEmployee = async () => {
-    await axios.post("/employee/create", {
-      firstName,
-      lastName,
-      workingHours,
-      phone,
-      category,
-      gender,
-      center,
-    });
+    try {
+      await axios.post("/employee/create", {
+        firstName,
+        lastName,
+        workingHours,
+        phone,
+        category,
+        gender,
+        center,
+      });
+    } finally {
+      props.history.push("/");
+    }
   };
 
   const handleFocus = (event) => event.target.select();
@@ -174,24 +179,6 @@ const AgregarEmpleado = ({ servicios }) => {
                 );
               })}
             </div>
-          </Col>
-          <Col>
-            <Form.Label className="mx-4 mb-2">Servicios asociados</Form.Label>
-            <ListGroup>
-              {servicios
-                ? servicios.map((servicio, idx) => (
-                    <ListGroup.Item className="mx-4" key={idx}>
-                      <input
-                        type="checkbox"
-                        value={servicio}
-                        checked={checked}
-                        onClick={() => setChecked(!checked)}
-                      />
-                      <label className="mx-2">{servicio}</label>
-                    </ListGroup.Item>
-                  ))
-                : "No existen servicios disponibles"}
-            </ListGroup>
           </Col>
         </Row>
       </Form>
