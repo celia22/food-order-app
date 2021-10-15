@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import InfoEmpleados from "./InfoEmpleados";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
@@ -13,6 +14,9 @@ const Empleados = (props) => {
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
+  const [show, setShow] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [employeeEdit, setEmployeeEdit] = useState({});
 
   /***** get services for each employee *****/
 
@@ -54,8 +58,10 @@ const Empleados = (props) => {
       const newEmployee = {
         firstName: emp.firstName,
         lastName: emp.lastName,
+        _id: emp._id,
         services,
       };
+      console.log(newEmployee);
       return newEmployee;
     });
   };
@@ -70,9 +76,31 @@ const Empleados = (props) => {
     }
   }, [employeesData, servicesData]);
 
-  const handleInfo = (id) => {
-    const filtro = employees.filter((empleado) => empleado.id === id);
-    setEmpleadoInfo(filtro[0]);
+  /***** delete service *****/
+
+  const deleteEmployee = useMutation(
+    (id) => {
+      return axios.put(`/employee/delete/${id}`);
+    },
+    {
+      enabled: false,
+      onError: (error) => console.error(error),
+      onSuccess: apiContext.refetch,
+    }
+  );
+
+  const deleteEmpleado = (id) => {
+    const remove = employees.filter((i) => i._id !== id);
+    deleteEmployee.mutate(id);
+    setEmployees(remove);
+  };
+
+  /********** edit services  ***********/
+
+  const editEmpleado = (id) => {
+    const filter = employees.filter((i) => i._id === id);
+    setEmployeeEdit(filter);
+    setEdit(true);
   };
 
   return (
@@ -84,23 +112,34 @@ const Empleados = (props) => {
               <ListGroup.Item
                 key={index}
                 className="py-3"
-                onClick={() => handleInfo(i.id)}
+                // onClick={() => handleInfo(i.id)}
                 action
               >
-                <p>
-                  Nombre: {i.firstName} {i.lastName}
-                </p>
+                <div>
+                  <p>
+                    Nombre: {i.firstName} {i.lastName}
+                  </p>
 
-                <p> Servicios: {printServices(i.services)}</p>
-                <p> Horario: </p>
+                  <p> Servicios: {printServices(i.services)}</p>
+                  <p> Horario: </p>
+                </div>
+                <div className="span-icons">
+                  <FaTrash
+                    className="mx-4 icon"
+                    data={i.id}
+                    onClick={() => deleteEmpleado(i._id)}
+                  />
+                  <FaEdit
+                    className="icon"
+                    // onClick={() => editEmpleado(i._id)}
+                  />
+                </div>
               </ListGroup.Item>
             ))}
           </ListGroup>
         </div>
 
-        <div>
-          <InfoEmpleados empleado={employees} props={props} />
-        </div>
+        <div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>
       </div>
     </>
   );
