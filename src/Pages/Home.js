@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import Calendar from "../Components/Calendar/Calendar";
 import { useMutation, useQueries, useQuery } from "react-query";
 import axios from "../axios/axios";
-import timeConverter from "../helpers/helpers";
 
 const Home = (props) => {
   const apiContext = useContext(context);
@@ -59,8 +58,8 @@ const Home = (props) => {
       bookingsArray.push({
         id: index,
         title: `Servicio: ${data[1].data.data[index].name} , Empleado/a: ${employeeName[index]}`,
-        startTime: `${timeConverter(new Date(data[0].data.data[0].startTime))}`,
-        endTime: `${timeConverter(new Date(data[0].data.data[0].endTime))}`,
+        startDate: new Date(data[0].data.data[0].startTime),
+        endDate: new Date(data[0].data.data[0].endTime),
       });
     });
     setBookings(bookingsArray);
@@ -73,8 +72,7 @@ const Home = (props) => {
   }, [data[0].data, data[1].data, data[2].data]);
 
   console.log("bookings", bookings);
-
-  return <Calendar appointments={bookings} />;
+  return <div>{bookings ? <Calendar appointments={bookings} /> : " "}</div>;
 };
 
 export default Home;

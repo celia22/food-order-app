@@ -25,14 +25,14 @@ import ModalReserva from "../Modal/Modal";
 //   {
 //     id: 0,
 //     title: "Cita corte de pelo",
-//     startDate: new Date(2021, 7, 23, 9, 30),
-//     endDate: new Date(2021, 7, 23, 11, 30),
+//     startDate: new Date(2021, 10, 23, 9, 30),
+//     endDate: new Date(2021, 10, 23, 11, 30),
 //   },
 //   {
 //     id: 1,
 //     title: "Cita tinte",
-//     startDate: new Date(2021, 7, 28, 9, 30),
-//     endDate: new Date(2021, 7, 28, 11, 30),
+//     startDate: new Date(2021, 11, 28, 9, 30),
+//     endDate: new Date(2021, 11, 28, 11, 30),
 //   },
 // ];
 
@@ -52,6 +52,14 @@ class Calendar extends React.PureComponent {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.appointments !== prevProps.appointments) {
+      this.setState({
+        fakeData: this.props.appointments,
+      });
+    }
   }
 
   /**
