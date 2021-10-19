@@ -21,21 +21,6 @@ import "./Calendar.css";
 import { Button } from "@material-ui/core";
 import ModalReserva from "../Modal/Modal";
 
-// const appointments = [
-//   {
-//     id: 0,
-//     title: "Cita corte de pelo",
-//     startDate: new Date(2021, 10, 23, 9, 30),
-//     endDate: new Date(2021, 10, 23, 11, 30),
-//   },
-//   {
-//     id: 1,
-//     title: "Cita tinte",
-//     startDate: new Date(2021, 11, 28, 9, 30),
-//     endDate: new Date(2021, 11, 28, 11, 30),
-//   },
-// ];
-
 class Calendar extends React.PureComponent {
   static contextType = context;
 
@@ -45,6 +30,7 @@ class Calendar extends React.PureComponent {
     this.state = {
       fakeData: this.props.appointments,
       show: false,
+      data: this.props.data,
     };
 
     this.commitChanges = this.commitChanges.bind(this);
@@ -54,7 +40,7 @@ class Calendar extends React.PureComponent {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.appointments !== prevProps.appointments) {
       this.setState({
         fakeData: this.props.appointments,
@@ -157,6 +143,7 @@ class Calendar extends React.PureComponent {
 
   render() {
     const { fakeData } = this.state;
+    const { data } = this.state;
     console.log("fakeData", fakeData);
 
     const firstDay = 1;
@@ -215,6 +202,7 @@ class Calendar extends React.PureComponent {
 
         {this.state.show && (
           <ModalReserva
+            data={data}
             show={this.state.show}
             close={this.handleClose}
             submit={(e) => this.handleCrearNuevaCita(e)}

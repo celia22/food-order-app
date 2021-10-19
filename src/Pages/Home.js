@@ -71,8 +71,8 @@ const Home = (props) => {
     }
   }, [data[0].data, data[1].data, data[2].data]);
 
-  console.log("bookings", bookings);
-  return <div>{bookings ? <Calendar appointments={bookings} /> : " "}</div>;
+  //console.log("bookings", bookings);
+  return <Calendar appointments={bookings} data={data} />;
 };
 
 export default Home;

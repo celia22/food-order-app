@@ -102,7 +102,7 @@ const Empleados = (props) => {
     setEmployeeEdit(filter[0]);
     setEdit(true);
   };
-  console.log("PROPS", props);
+  // console.log("PROPS", props);
 
   return (
     <>
