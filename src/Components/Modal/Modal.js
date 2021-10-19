@@ -49,22 +49,34 @@ const ModalReserva = ({ show, submit, close, data }) => {
 
   console.log("serv selc", servicioSeleccionado);
 
-  const handleSelectedService = ({ item }) => {
+  const handleSelectedService = (item) => {
+    setServicioSeleccionado(item.item._id);
+
+    console.log("duration", item.item.duration);
     let date = startTime;
-    date.setMinutes(date.getMinutes + setServicioSeleccionado);
+    let d1 = startTime,
+      d2 = new Date(d1);
+    d2.setMinutes(d1.getMinutes() + item.item.duration);
+
+    setEndTime(date);
   };
 
-  useEffect(() => {
-    if (startTime) {
-      setEndTime();
-    }
-  });
+  console.log("end", endTime);
 
-  useEffect(() => {
-    if (servicioSeleccionado) {
-      servicesByEmployee();
-    }
-  }, [servicioSeleccionado]);
+  // console.log("serv secl", servicioSeleccionado);
+  // console.log("endtime", endTime);
+
+  // useEffect(() => {
+  //   if (startTime) {
+  //     handleSelectedService();
+  //   }
+  // }, [startTime]);
+
+  // useEffect(() => {
+  //   if (servicioSeleccionado) {
+  //     servicesByEmployee();
+  //   }
+  // }, [servicioSeleccionado]);
 
   console.log("servicios", servicios);
 
@@ -100,7 +112,6 @@ const ModalReserva = ({ show, submit, close, data }) => {
                   id="fecha"
                   onChange={(e) => setStartTime(new Date(e.target.value))}
                 />
-                {console.log("startime", startTime)}
               </Form.Group>
             </div>
 
@@ -114,7 +125,7 @@ const ModalReserva = ({ show, submit, close, data }) => {
                         type="checkbox"
                         name="addService"
                         value={item}
-                        onChange={() => setServicioSeleccionado(item)}
+                        onClick={() => handleSelectedService({ item })}
                       />
                       <option value={item}>{item.name}</option>
                     </ListGroup.Item>
