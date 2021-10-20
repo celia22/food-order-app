@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import Calendar from "../Components/Calendar/Calendar";
 import { useMutation, useQueries, useQuery } from "react-query";
 import axios from "../axios/axios";
-import timeConverter from "../helpers/helpers";
 
 const Home = (props) => {
   const apiContext = useContext(context);
@@ -47,7 +46,6 @@ const Home = (props) => {
     for (let i = 0; i < data[0].data.data.length; i++) {
       for (let j = 0; j < data[2].data.data.length; j++) {
         if (data[0].data.data[i].employee === data[2].data.data[j]._id) {
-          console.log("push");
           employeeName.push(
             data[2].data.data[j].firstName + " " + data[2].data.data[j].lastName
           );
@@ -55,12 +53,22 @@ const Home = (props) => {
       }
     }
 
+    let serviceName = [];
+
+    for (let i = 0; i < data[0].data.data.length; i++) {
+      for (let j = 0; j < data[1].data.data.length; j++) {
+        if (data[0].data.data[i].service === data[1].data.data[j]._id) {
+          serviceName.push(data[1].data.data[j].name);
+        }
+      }
+    }
+
     data[0].data.data.map((item, index) => {
       bookingsArray.push({
         id: index,
-        title: `Servicio: ${data[1].data.data[index].name} , Empleado/a: ${employeeName[index]}`,
-        startTime: `${timeConverter(new Date(data[0].data.data[0].startTime))}`,
-        endTime: `${timeConverter(new Date(data[0].data.data[0].endTime))}`,
+        title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
+        startDate: data[0].data.data[index].startTime,
+        endDate: data[0].data.data[index].endTime,
       });
     });
     setBookings(bookingsArray);
@@ -73,8 +81,7 @@ const Home = (props) => {
   }, [data[0].data, data[1].data, data[2].data]);
 
   console.log("bookings", bookings);
-
-  return <Calendar appointments={bookings} />;
+  return <Calendar appointments={bookings} data={data} />;
 };
 
 export default Home;

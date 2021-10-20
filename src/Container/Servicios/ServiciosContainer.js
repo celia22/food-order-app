@@ -107,6 +107,7 @@ const ServiciosContainer = (props) => {
             titulo="Editar"
             servicioEdit={servEdit}
             empleados={employeeArr}
+            props={props}
           />
         ) : show ? (
           <NuevoServicio
@@ -117,9 +118,9 @@ const ServiciosContainer = (props) => {
         ) : (
           <ListGroup className="listaServicios">
             {servicios.length &&
-              servicios.map((item) => (
+              servicios.map((item, index) => (
                 <ListGroupItem
-                  key={item.id}
+                  key={index}
                   className="itemList d-flex justify-content-between align-items-center"
                 >
                   <div>

@@ -1,72 +1,71 @@
-.titulo-empleados{
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important; 
+.titulo-empleados {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 
-.empleados-list{
-    width: 30%;
-    height: 90vh;
-    overflow-y: auto;
+.empleados-list {
+  width: 70%;
+  height: 90vh;
+  overflow-y: auto;
 }
 
-.container-empleados{
-    margin-left: 8rem
+.container-empleados {
+  margin-left: 25%;
 }
 
-
- .container-info{
-     width: 40vw; 
-    margin-right: 5rem;
-} 
-
-.btn-edit{
-    margin-right: 3rem;
-    background-color: transparent;
-    border: 2px solid #F5BC41;
-    padding: 8px 10px;
-    border-radius: 15px;
-    color: #F5BC41;
-    font-size: 14px;
+.container-info {
+  width: 40vw;
+  margin-right: 5rem;
 }
 
-.nombre-profile{
-    margin-left: 20px;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 20px;
+.btn-edit {
+  margin-right: 3rem;
+  background-color: transparent;
+  border: 2px solid #f5bc41;
+  padding: 8px 10px;
+  border-radius: 15px;
+  color: #f5bc41;
+  font-size: 14px;
 }
 
-.img-profile{
-    width: 80px;
-    height: 80px;
+.nombre-profile {
+  margin-left: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.lista-servicios li{
-    list-style: none;
+.img-profile {
+  width: 80px;
+  height: 80px;
 }
 
-.lista-servicios{
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+.lista-servicios li {
+  list-style: none;
 }
 
-.lista-servicios li:hover{
-    border-bottom: 2px solid #FA676B;
-    transition: width 0.8s ease ;
-    cursor: pointer;
+.lista-servicios {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.lista-servicios li:hover {
+  border-bottom: 2px solid #fa676b;
+  transition: width 0.8s ease;
+  cursor: pointer;
 }
 
 .lista-servicios li.active {
-    border-bottom: 2px solid #FA676B;
+  border-bottom: 2px solid #fa676b;
 }
 
-.edit-name{
-    margin-left: 14px;
+.edit-name {
+  margin-left: 14px;
 }
 
-.edit-ph{
-    margin-right: 50px;
-    cursor: pointer;
-    font-size: 14px;
+.edit-ph {
+  margin-right: 50px;
+  cursor: pointer;
+  font-size: 14px;
 }
