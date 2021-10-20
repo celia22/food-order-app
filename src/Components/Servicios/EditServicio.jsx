@@ -20,9 +20,12 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
   const [hasIdleTime, setHasIdleTime] = useState(servicioEdit[0].hasIdleTime);
   const [interval, setInterval] = useState(servicioEdit[0].interval);
   const [resetTime, setResetTime] = useState(servicioEdit[0].resetTime);
-  const [serviceStructure, setServiceStructure] = useState([]);
   const [description, setDescription] = useState(servicioEdit[0].description);
   const [center, setCenter] = useState(servicioEdit[0].center);
+  const [serviceStructure1, setServiceStructure1] = useState(0);
+  const [serviceStructure2, setServiceStructure2] = useState(0);
+  const [serviceStructure3, setServiceStructure3] = useState(0);
+  const [serviceStructure, setServiceStructure] = useState([]);
 
   const handleOnChange = (id) => {
     let selected = checked;
@@ -48,7 +51,19 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
     }
   );
 
-  console.log("props", props)
+  const createServiceStructure = () => {
+    let serviceArr = [];
+    serviceArr.push(serviceStructure1);
+    serviceArr.push(serviceStructure2);
+    serviceArr.push(serviceStructure3);
+    setServiceStructure(serviceArr);
+  };
+
+  useEffect(() => {
+    if (serviceStructure3) {
+      createServiceStructure();
+    }
+  }, [serviceStructure3]);
 
   const updateServiceHandler = (e) => {
     try {
@@ -135,18 +150,28 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
 
           <hr className="my-4" />
 
-          <Form.Group controlId="">
-            {" "}
-          
-            {/* SERVICE STRUCTURE, AFEGIR CASELLAS SI NO SI */}
-            <Form.Label>Tiempo después del servicio</Form.Label>
+
+            <Form.Group controlId="">
+              <Form.Label>Tiempo después del servicio</Form.Label>
             <div className="d-flex justify-content-center">
               <Form.Control
                 type="number"
                 className="selectMins"
-                value={serviceStructure}
-                onChange={(e) => setServiceStructure(e.target.value)}
-              />
+                value={serviceStructure1}
+                onChange={(e) => setServiceStructure1(e.target.value)}
+              ></Form.Control>
+              <Form.Control
+                type="number"
+                className="selectMins"
+                value={serviceStructure2}
+                onChange={(e) => setServiceStructure2(e.target.value)}
+              ></Form.Control>
+              <Form.Control
+                type="number"
+                className="selectMins"
+                value={serviceStructure3}
+                onChange={(e) => setServiceStructure3(e.target.value)}
+              ></Form.Control>
             </div>
           </Form.Group>
 
