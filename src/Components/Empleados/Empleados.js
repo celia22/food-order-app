@@ -52,19 +52,21 @@ const Empleados = (props) => {
   );
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
-    return employeeArr.map((emp) => {
-      const services = serviceArr.filter((serv) =>
-        emp.services.includes(serv._id)
-      );
+    if (employeeArr && serviceArr) {
+      return employeeArr.map((emp) => {
+        // const services = serviceArr.filter((serv) =>
+        //   emp.services.includes(serv._id)
+        // );
 
-      const newEmployee = {
-        firstName: emp.firstName,
-        lastName: emp.lastName,
-        _id: emp._id,
-        services,
-      };
-      return newEmployee;
-    });
+        const newEmployee = {
+          firstName: emp.firstName,
+          lastName: emp.lastName,
+          _id: emp._id,
+          services,
+        };
+        return newEmployee;
+      });
+    }
   };
 
   const printServices = (servicesArr) =>
