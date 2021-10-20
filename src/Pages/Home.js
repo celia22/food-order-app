@@ -64,13 +64,11 @@ const Home = (props) => {
     }
 
     data[0].data.data.map((item, index) => {
-      console.log("name?", data[1].data.data[index]);
-      console.log("bookings", data[0].data.data);
       bookingsArray.push({
         id: index,
         title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
-        startDate: new Date(data[0].data.data[0].startTime),
-        endDate: new Date(data[0].data.data[0].endTime),
+        startDate: data[0].data.data[index].startTime,
+        endDate: data[0].data.data[index].endTime,
       });
     });
     setBookings(bookingsArray);
@@ -82,7 +80,7 @@ const Home = (props) => {
     }
   }, [data[0].data, data[1].data, data[2].data]);
 
-  //console.log("bookings", bookings);
+  console.log("bookings", bookings);
   return <Calendar appointments={bookings} data={data} />;
 };
 

@@ -31,6 +31,7 @@ const Empleados = (props) => {
     () => axios.get(`/center/services/${center}`),
     {
       enabled: true,
+      onSuccess: apiContext.refetch,
     }
   );
 
@@ -112,6 +113,7 @@ const Empleados = (props) => {
             <EditarEmpleado employee2Edit={employeeEdit} props={props} />
           ) : (
             <ListGroup defaultActiveKey="#link1">
+              {console.log("services", services)}
               {getEmployeesAndServices(employees, services).map((i, index) => (
                 <ListGroup.Item
                   key={index}
@@ -125,6 +127,7 @@ const Empleados = (props) => {
                     </p>
 
                     <p> Servicios: {printServices(i.services)}</p>
+                    {console.log(i.services)}
                     <p> Horario: </p>
                   </div>
                   <div className="span-icons">

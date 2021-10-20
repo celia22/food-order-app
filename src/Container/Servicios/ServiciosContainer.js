@@ -107,6 +107,7 @@ const ServiciosContainer = (props) => {
             titulo="Editar"
             servicioEdit={servEdit}
             empleados={employeeArr}
+            props={props}
           />
         ) : show ? (
           <NuevoServicio

@@ -48,22 +48,29 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
     }
   );
 
+  console.log("props", props)
+
   const updateServiceHandler = (e) => {
-   e.preventDefault();
-    const updateService = {
-      name,
-      description,
-      center,
-      employees,
-      priceType,
-      price,
-      duration,
-      interval,
-      resetTime,
-      hasIdleTime,
-      serviceStructure,
-    };
-  editService.mutate(updateService);
+    try {
+      e.preventDefault();
+      const updateService = {
+        name,
+        description,
+        center,
+        employees,
+        priceType,
+        price,
+        duration,
+        interval,
+        resetTime,
+        hasIdleTime,
+        serviceStructure,
+      };
+    editService.mutate(updateService);
+    } finally {
+      props.history.push("/")
+    }
+ 
   };
 
   
