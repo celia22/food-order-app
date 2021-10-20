@@ -144,7 +144,6 @@ class Calendar extends React.PureComponent {
   render() {
     const { fakeData } = this.state;
     const { data } = this.state;
-    console.log("fakeData", fakeData);
 
     const firstDay = 1;
     const locale = "es-ES";

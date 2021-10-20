@@ -25,7 +25,6 @@ const ModalReserva = ({ show, submit, close, data }) => {
     if (data[0].data && data[1].data && data[2].data) {
       setServicios(data[1]?.data?.data);
     }
-    //  setEmpleados(empleados.map((empleado) => empleado.nombre));
   }, [data[0].data, data[1].data, data[2].data]);
 
   // center: centerId,
@@ -34,20 +33,6 @@ const ModalReserva = ({ show, submit, close, data }) => {
   // status,
   // startTime,
   // endTime,
-
-  const servicesByEmployee = () => {
-    const arr = [];
-    for (let i = 0; i < empleados.length; i++) {
-      for (let j = 0; j < empleados[i].services.length; j++) {
-        if (empleados[i].services[j] === servicioSeleccionado) {
-          arr.push([empleados[i]]);
-        }
-      }
-    }
-    setEmpleados(arr);
-  };
-
-  console.log("serv selc", servicioSeleccionado);
 
   const handleSelectedService = (item) => {
     setServicioSeleccionado(item.item._id);
@@ -62,6 +47,18 @@ const ModalReserva = ({ show, submit, close, data }) => {
   };
 
   console.log("end", endTime);
+
+  const servicesByEmployee = () => {
+    const arr = [];
+    for (let i = 0; i < empleados.length; i++) {
+      for (let j = 0; j < empleados[i].services.length; j++) {
+        if (empleados[i].services[j] === servicioSeleccionado) {
+          arr.push([empleados[i]]);
+        }
+      }
+    }
+    setEmpleados(arr);
+  };
 
   // console.log("serv secl", servicioSeleccionado);
   // console.log("endtime", endTime);

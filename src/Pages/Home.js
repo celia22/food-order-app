@@ -46,7 +46,6 @@ const Home = (props) => {
     for (let i = 0; i < data[0].data.data.length; i++) {
       for (let j = 0; j < data[2].data.data.length; j++) {
         if (data[0].data.data[i].employee === data[2].data.data[j]._id) {
-          console.log("push");
           employeeName.push(
             data[2].data.data[j].firstName + " " + data[2].data.data[j].lastName
           );
@@ -54,10 +53,22 @@ const Home = (props) => {
       }
     }
 
+    let serviceName = [];
+
+    for (let i = 0; i < data[0].data.data.length; i++) {
+      for (let j = 0; j < data[1].data.data.length; j++) {
+        if (data[0].data.data[i].service === data[1].data.data[j]._id) {
+          serviceName.push(data[1].data.data[j].name);
+        }
+      }
+    }
+
     data[0].data.data.map((item, index) => {
+      console.log("name?", data[1].data.data[index]);
+      console.log("bookings", data[0].data.data);
       bookingsArray.push({
         id: index,
-        title: `Servicio: ${data[1].data.data[index].name} , Empleado/a: ${employeeName[index]}`,
+        title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
         startDate: new Date(data[0].data.data[0].startTime),
         endDate: new Date(data[0].data.data[0].endTime),
       });
