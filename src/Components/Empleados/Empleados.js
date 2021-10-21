@@ -54,23 +54,24 @@ const Empleados = (props) => {
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     if (employeeArr && serviceArr) {
       return employeeArr.map((emp) => {
-        // const services = serviceArr.filter((serv) =>
-        //   emp.services.includes(serv._id)
-        // );
+        const service = serviceArr.filter((serv) =>
+          serv.employees.includes(emp._id)
+        );
 
         const newEmployee = {
           firstName: emp.firstName,
           lastName: emp.lastName,
           _id: emp._id,
-          services,
+          service,
         };
+        console.log(newEmployee);
         return newEmployee;
       });
     }
   };
 
-  const printServices = (servicesArr) =>
-    servicesArr.map((serv) => serv.name).join(", ");
+  const printServices = (service) =>
+    service.map((serv) => serv.name).join(", ");
 
   useEffect(() => {
     if (employeesData && servicesData) {
@@ -115,7 +116,6 @@ const Empleados = (props) => {
             <EditarEmpleado employee2Edit={employeeEdit} props={props} />
           ) : (
             <ListGroup defaultActiveKey="#link1">
-              {console.log("services", services)}
               {getEmployeesAndServices(employees, services).map((i, index) => (
                 <ListGroup.Item
                   key={index}
@@ -128,8 +128,8 @@ const Empleados = (props) => {
                       Nombre: {i.firstName} {i.lastName}
                     </p>
 
-                    <p> Servicios: {printServices(i.services)}</p>
-                    {console.log(i.services)}
+                    <p> Servicios: {printServices(i.service)}</p>
+
                     <p> Horario: </p>
                   </div>
                   <div className="span-icons">
