@@ -64,7 +64,6 @@ const Empleados = (props) => {
           _id: emp._id,
           service,
         };
-        console.log(newEmployee);
         return newEmployee;
       });
     }

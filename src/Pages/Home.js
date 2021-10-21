@@ -41,38 +41,36 @@ const Home = (props) => {
   const bookingsArray = [];
 
   const bookingsTranslator = () => {
-    let employeeName = [];
-
     /*********** loop each booking and compares with employees id array */
+    let employeeName = [];
     data[0].data.data.map((item, index) => {
-      let name;
-
       data[2].data.data.map((x, index) => {
+        console.log("id", x._id);
         if (item.employee.includes(x._id)) {
-          name = x.firstName + " " + x.lastName;
+          employeeName.push(x.firstName + " " + x.lastName);
         }
       });
-      employeeName.push(name);
     });
 
     /*********** loop each booking and compares with employees id array */
     let serviceName = [];
 
-    for (let i = 0; i < data[0].data.data.length; i++) {
-      for (let j = 0; j < data[1].data.data.length; j++) {
-        if (data[0].data.data[i].service.includes(data[1].data.data[j]._id)) {
-          serviceName.push(data[1].data.data[j].name);
+    data[0].data.data.map((item, index) => {
+      data[1].data.data.map((x, index) => {
+        console.log("id", x._id);
+        if (item.service.includes(x._id)) {
+          serviceName.push(x.name);
         }
-      }
-    }
+      });
+    });
 
     data[0].data.data.map((item, index) => {
       console.log(
         "index",
         index,
         "servicename",
-        serviceName,
-        employeeName,
+        serviceName[index],
+
         "employeename",
         employeeName[index]
       );
