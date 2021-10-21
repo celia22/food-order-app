@@ -145,7 +145,7 @@ class Calendar extends React.PureComponent {
     const { fakeData } = this.state;
     const { data } = this.state;
 
-    console.log("fakedata", fakeData);
+    //console.log("fakedata", fakeData);
 
     const firstDay = 1;
     const locale = "es-ES";
@@ -159,9 +159,9 @@ class Calendar extends React.PureComponent {
 
     const FlexibleSpace = () => (
       <Toolbar.FlexibleSpace>
-        <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
+        {/* <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
           Agregar
-        </Button>
+        </Button> */}
       </Toolbar.FlexibleSpace>
     );
 

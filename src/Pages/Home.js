@@ -43,27 +43,39 @@ const Home = (props) => {
   const bookingsTranslator = () => {
     let employeeName = [];
 
-    for (let i = 0; i < data[0].data.data.length; i++) {
-      for (let j = 0; j < data[2].data.data.length; j++) {
-        if (data[0].data.data[i].employee === data[2].data.data[j]._id) {
-          employeeName.push(
-            data[2].data.data[j].firstName + " " + data[2].data.data[j].lastName
-          );
-        }
-      }
-    }
+    /*********** loop each booking and compares with employees id array */
+    data[0].data.data.map((item, index) => {
+      let name;
 
+      data[2].data.data.map((x, index) => {
+        if (item.employee.includes(x._id)) {
+          name = x.firstName + " " + x.lastName;
+        }
+      });
+      employeeName.push(name);
+    });
+
+    /*********** loop each booking and compares with employees id array */
     let serviceName = [];
 
     for (let i = 0; i < data[0].data.data.length; i++) {
       for (let j = 0; j < data[1].data.data.length; j++) {
-        if (data[0].data.data[i].service === data[1].data.data[j]._id) {
+        if (data[0].data.data[i].service.includes(data[1].data.data[j]._id)) {
           serviceName.push(data[1].data.data[j].name);
         }
       }
     }
 
     data[0].data.data.map((item, index) => {
+      console.log(
+        "index",
+        index,
+        "servicename",
+        serviceName,
+        employeeName,
+        "employeename",
+        employeeName[index]
+      );
       bookingsArray.push({
         id: index,
         title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
@@ -80,7 +92,7 @@ const Home = (props) => {
     }
   }, [data[0].data, data[1].data, data[2].data]);
 
-  console.log("bookings", bookings);
+  // console.log("bookings", bookings);
   return <Calendar appointments={bookings} data={data} />;
 };
 
