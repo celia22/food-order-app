@@ -1,7 +1,13 @@
 import * as React from "react";
+import { useQuery, useMutation } from "react-query";
+import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import Paper from "@material-ui/core/Paper";
-import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+} from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   MonthView,
@@ -16,6 +22,8 @@ import {
   EditRecurrenceMenu,
   DragDropProvider,
   CurrentTimeIndicator,
+  ConfirmationDialog,
+  AppointmentForm,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import "./Calendar.css";
 import { Button } from "@material-ui/core";
@@ -28,9 +36,9 @@ class Calendar extends React.PureComponent {
     super(props);
 
     this.state = {
-      fakeData: this.props.appointments,
       show: false,
-      data: this.props.data,
+      data: this.props.appointments,
+      setDeleted: false,
     };
 
     this.commitChanges = this.commitChanges.bind(this);
@@ -43,7 +51,7 @@ class Calendar extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (this.props.appointments !== prevProps.appointments) {
       this.setState({
-        fakeData: this.props.appointments,
+        data: this.props.appointments,
       });
     }
   }
@@ -55,8 +63,25 @@ class Calendar extends React.PureComponent {
    * @param deleted {object}
    * @return {undefined}
    */
+
+  deleteBooking = async (id) => {
+    try {
+      await axios.put(`/booking/delete/${id}`);
+    } catch (e) {
+      console.log(e);
+    }
+    const filtered = this.state.data.filter((item) => {
+      return item._id !== id;
+    });
+    console.log("filtered", filtered);
+    this.setState({
+      data: filtered,
+    });
+  };
+
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
+      console.log("state", state);
       let { data } = state;
       if (added) {
         const startingAddedId =
@@ -71,7 +96,18 @@ class Calendar extends React.PureComponent {
         );
       }
       if (deleted !== undefined) {
-        data = data.filter((appointment) => appointment.id !== deleted);
+        const filtered = data.filter(
+          (appointment) => appointment.id === deleted
+        );
+        // const deletedId = data.filter((x) => !filtered.includes(x));
+        console.log("appointmnet id", filtered[0]._id);
+        this.deleteBooking(filtered[0]._id);
+
+        // if (state.setDeleted) {
+        //   data = filtered;
+        // }
+
+        // setTimeout()
       }
       return { data };
     });
@@ -142,10 +178,7 @@ class Calendar extends React.PureComponent {
   }
 
   render() {
-    const { fakeData } = this.state;
     const { data } = this.state;
-
-    //console.log("fakedata", fakeData);
 
     const firstDay = 1;
     const locale = "es-ES";
@@ -159,9 +192,9 @@ class Calendar extends React.PureComponent {
 
     const FlexibleSpace = () => (
       <Toolbar.FlexibleSpace>
-        {/* <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
+        <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
           Agregar
-        </Button> */}
+        </Button>
       </Toolbar.FlexibleSpace>
     );
 
@@ -169,13 +202,14 @@ class Calendar extends React.PureComponent {
       <div className="container-calendar">
         <Paper>
           <Scheduler
-            data={fakeData}
+            data={data}
             firstDayOfWeek={firstDay}
             locale={locale}
             startTime={8}
             endTime={23}
           >
             <EditingState onCommitChanges={this.commitChanges} />
+            <IntegratedEditing />
             <ViewState />
             <Toolbar flexibleSpaceComponent={FlexibleSpace} />
             <MonthView name="Mes" />
@@ -183,15 +217,18 @@ class Calendar extends React.PureComponent {
             <DayView name="Dia" startDayHour={8} endDayHour={23} />
             <TodayButton messages={messages} />
             <ViewSwitcher />
+            <EditRecurrenceMenu />
+            <ConfirmationDialog />
             <Appointments />
             <DateNavigator />
-            <EditRecurrenceMenu />
+
             <AppointmentTooltip
               showCloseButton
               showDeleteButton
               showOpenButton
               onOpenButtonClick={this.handleEdit}
             />
+            <AppointmentForm />
             <DragDropProvider />
             <CurrentTimeIndicator
               shadePreviousCells={shadePreviousCells}

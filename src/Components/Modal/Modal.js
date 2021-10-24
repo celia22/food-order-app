@@ -35,15 +35,16 @@ const ModalReserva = ({ show, submit, close, data }) => {
   // endTime,
 
   const handleSelectedService = (item) => {
+    console.log("item", item);
     setServicioSeleccionado(item.item._id);
 
-    console.log("duration", item.item.duration);
-    let date = startTime;
-    let d1 = startTime,
-      d2 = new Date(d1);
-    d2.setMinutes(d1.getMinutes() + item.item.duration);
+    // console.log("duration", item.item.duration);
+    // let date = startTime;
+    // let d1 = startTime,
+    //   d2 = new Date(d1);
+    // d2.setMinutes(d1.getMinutes() + item.item.duration);
 
-    setEndTime(date);
+    // setEndTime(date);
   };
 
   console.log("end", endTime);
@@ -60,20 +61,20 @@ const ModalReserva = ({ show, submit, close, data }) => {
     setEmpleados(arr);
   };
 
-  // console.log("serv secl", servicioSeleccionado);
-  // console.log("endtime", endTime);
+  console.log("serv secl", servicioSeleccionado);
+  console.log("endtime", endTime);
 
-  // useEffect(() => {
-  //   if (startTime) {
-  //     handleSelectedService();
-  //   }
-  // }, [startTime]);
+  useEffect(() => {
+    if (startTime) {
+      handleSelectedService();
+    }
+  }, [startTime]);
 
-  // useEffect(() => {
-  //   if (servicioSeleccionado) {
-  //     servicesByEmployee();
-  //   }
-  // }, [servicioSeleccionado]);
+  useEffect(() => {
+    if (servicioSeleccionado) {
+      servicesByEmployee();
+    }
+  }, [servicioSeleccionado]);
 
   console.log("servicios", servicios);
 

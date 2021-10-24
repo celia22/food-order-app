@@ -9,9 +9,9 @@ import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
-  const centerId = apiContext.data.data._id;
+
   const [empleadoInfo, setEmpleadoInfo] = useState("");
-  const [center, setCenter] = useState(centerId);
+  const [center, setCenter] = useState(apiContext.data.data._id);
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
@@ -30,7 +30,7 @@ const Empleados = (props) => {
     ["Center Services", center],
     () => axios.get(`/center/services/${center}`),
     {
-      enabled: true,
+      enabled: false,
       onSuccess: apiContext.refetch,
     }
   );
@@ -46,10 +46,16 @@ const Empleados = (props) => {
     ["Center Employees", center],
     () => axios.get(`/center/employees/${center}`),
     {
-      enabled: true,
+      enabled: false,
       onSuccess: servicesRefetch,
     }
   );
+
+  useEffect(() => {
+    return () => {
+      center && employeesRefetch();
+    };
+  }, [center]);
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     if (employeeArr && serviceArr) {

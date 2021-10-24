@@ -5,6 +5,23 @@ import { Col, Form, ListGroup, Row } from "react-bootstrap";
 import "./empleados.css";
 import { context } from "../../Context/apiProvider";
 
+const dictionary = {
+  "mon-mor": "lunes mañana",
+  "mon-aft": "lunes tarde",
+  "tue-mor": "martes mañana",
+  "tue-aft": "martes tarde",
+  "wed-mor": "miércoles mañana",
+  "wed-aft": "miércoles tarde",
+  "thu-mor": "jueves mañana",
+  "thu-aft": "jueves tarde",
+  "fri-mor": "viernes mañana",
+  "fri-aft": "viernes tarde",
+  "sat-mor": "sábado mañana",
+  "sat-aft": "sábado tarde",
+  "sun-mor": "domingo mañana",
+  "sun-aft": "domingo tarde",
+};
+
 const AgregarEmpleado = ({ servicios, props }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
@@ -37,7 +54,6 @@ const AgregarEmpleado = ({ servicios, props }) => {
   const [checked, setChecked] = useState(false);
   const [center, setCenter] = useState(centerId);
 
-  console.log(props);
   const createNewEmployee = async () => {
     try {
       await axios.post("/employee/create", {
@@ -157,7 +173,7 @@ const AgregarEmpleado = ({ servicios, props }) => {
               {Object.keys(workingHours).map((element, i) => {
                 return (
                   <div key={i}>
-                    <label>Hora inicial:</label>
+                    <label>{dictionary[element]}</label>
                     <input
                       value={workingHours[element][0]}
                       name={element}
@@ -166,7 +182,7 @@ const AgregarEmpleado = ({ servicios, props }) => {
                       onChange={handleHours}
                       onClick={handleFocus}
                     />
-                    <label>Hora final:</label>
+                    <label>{dictionary[element]}</label>
                     <input
                       value={workingHours[element][1]}
                       name={element}

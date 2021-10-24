@@ -43,8 +43,7 @@ const EditarEmpleado = ({employee2Edit, props}) => {
   const [edit, setEdit] = useState(false);
   const [employeeEdit, setEmployeeEdit] = useState({});
 
-  console.log("2edit", props)
-
+ 
 
   const editEmployee = useMutation(
     ( updateEmployee) => {
