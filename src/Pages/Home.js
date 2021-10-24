@@ -62,13 +62,16 @@ const Home = (props) => {
       });
     });
 
-    data[0].data.data.map((item, index) => {
+    const activeBookings = data[0].data.data.filter((x) => x.active);
+    console.log("active?", activeBookings);
+
+    activeBookings.map((item, index) => {
       bookingsArray.push({
         id: index,
         title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
-        startDate: data[0].data.data[index].startTime,
-        endDate: data[0].data.data[index].endTime,
-        _id: data[0].data.data[index]._id,
+        startDate: activeBookings[index].startTime,
+        endDate: activeBookings[index].endTime,
+        _id: activeBookings[index]._id,
       });
     });
     setBookings(bookingsArray);
@@ -80,6 +83,8 @@ const Home = (props) => {
       bookingsTranslator();
     }
   }, [data[0].data, data[1].data, data[2].data]);
+
+  console.log("bokkings", bookings);
 
   return <Calendar appointments={bookings} data={data} />;
 };
