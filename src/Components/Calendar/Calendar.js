@@ -73,15 +73,43 @@ class Calendar extends React.PureComponent {
     const filtered = this.state.data.filter((item) => {
       return item._id !== id;
     });
-    console.log("filtered", filtered);
+
     this.setState({
       data: filtered,
     });
   };
 
+  updateBooking = async (item) => {
+    try {
+      console.log("date", item.filter.startDate);
+      const startDate = item.filter.startDate.toISOString();
+      console.log("startdate¿?", startDate);
+      const status = item.filter.status;
+      const id = item.filter._id;
+      const day = startDate.split("-")[2].slice(0, 2);
+      const month = startDate.split("-")[1] - 1;
+      const year = startDate.split("-")[0];
+      const hour = startDate.split("T")[1].slice(0, 2);
+      const minute = startDate.split(":")[1];
+      await axios.put(
+        `/booking/update/${id}`,
+        {
+          status,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+        },
+        id
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
-      console.log("state", state);
       let { data } = state;
       if (added) {
         const startingAddedId =
@@ -89,25 +117,25 @@ class Calendar extends React.PureComponent {
         data = [...data, { id: startingAddedId, ...added }];
       }
       if (changed) {
-        data = data.map((appointment) =>
-          changed[appointment.id]
+        let filter;
+        data = data.map((appointment) => {
+          if (changed[appointment.id]) {
+            filter = appointment;
+          }
+
+          return changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }
-            : appointment
-        );
+            : appointment;
+        });
+
+        this.updateBooking({ filter });
       }
       if (deleted !== undefined) {
         const filtered = data.filter(
           (appointment) => appointment.id === deleted
         );
-        // const deletedId = data.filter((x) => !filtered.includes(x));
-        console.log("appointmnet id", filtered[0]._id);
+
         this.deleteBooking(filtered[0]._id);
-
-        // if (state.setDeleted) {
-        //   data = filtered;
-        // }
-
-        // setTimeout()
       }
       return { data };
     });

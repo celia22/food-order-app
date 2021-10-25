@@ -63,11 +63,11 @@ const Home = (props) => {
     });
 
     const activeBookings = data[0].data.data.filter((x) => x.active);
-    console.log("active?", activeBookings);
 
     activeBookings.map((item, index) => {
       bookingsArray.push({
         id: index,
+        status: activeBookings[index].status,
         title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
         startDate: activeBookings[index].startTime,
         endDate: activeBookings[index].endTime,
@@ -75,7 +75,7 @@ const Home = (props) => {
       });
     });
     setBookings(bookingsArray);
-    console.log("bookings", data[0].data.data);
+    // console.log("bokkings", bookings);
   };
 
   useEffect(() => {
@@ -83,8 +83,6 @@ const Home = (props) => {
       bookingsTranslator();
     }
   }, [data[0].data, data[1].data, data[2].data]);
-
-  console.log("bokkings", bookings);
 
   return <Calendar appointments={bookings} data={data} />;
 };
