@@ -75,6 +75,7 @@ const ModalReserva = ({
     const availableEmployee = [];
 
     bookings.map((item, index) => {
+      console.log("item employees", item.employee);
       const bookingStartTime = parseInt(
         (new Date(item.startTime).getTime() / 1000).toFixed(0)
       );
@@ -85,17 +86,17 @@ const ModalReserva = ({
         appointmentEndTime < bookingStartTime ||
         appointmentStartTime > bookingEndTime
       ) {
-        availableEmployee.push(item.employee);
+        console.log("available", item.employee);
       } else {
         console.log("busy", item.employee);
+        // empleados.filter((x) => x._id !== item.employee);
       }
     });
-    // let uniq = [...new Set(availableEmployee)];
-    // console.log("uniq", uniq);
-    setEmpleados(availableEmployee);
-  };
 
-  console.log("available employee", empleados);
+    //console.log("available ", availableEmployee);
+    setEmpleados(availableEmployee);
+    //console.log("available ", availableEmployee);
+  };
 
   useEffect(() => {
     if (startTime && endTime && servicioSeleccionado) {
