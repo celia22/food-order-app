@@ -68,7 +68,8 @@ const Home = (props) => {
       bookingsArray.push({
         id: index,
         status: activeBookings[index].status,
-        title: ` Servicio: ${serviceName[index]} ,Empleado/a: ${employeeName[index]}`,
+        title: ` Servicio: ${serviceName[index]}, Empleado/a: ${employeeName[index]}`,
+        employee: `Empleado/a: ${employeeName[index]}`,
         startDate: activeBookings[index].startTime,
         endDate: activeBookings[index].endTime,
         _id: activeBookings[index]._id,
@@ -84,7 +85,15 @@ const Home = (props) => {
     }
   }, [data[0].data, data[1].data, data[2].data]);
 
-  return <Calendar appointments={bookings} data={data} />;
+  return (
+    <Calendar
+      appointments={bookings}
+      data={data}
+      dataBookings={data[0].data}
+      dataEmployees={data[2].data}
+      dataServices={data[1].data}
+    />
+  );
 };
 
 export default Home;

@@ -39,6 +39,9 @@ class Calendar extends React.PureComponent {
       show: false,
       data: this.props.appointments,
       setDeleted: false,
+      dataBookings: this.props.dataBookings,
+      dataEmployees: this.props.dataEmployees,
+      dataServices: this.props.dataServices,
     };
 
     this.commitChanges = this.commitChanges.bind(this);
@@ -52,6 +55,9 @@ class Calendar extends React.PureComponent {
     if (this.props.appointments !== prevProps.appointments) {
       this.setState({
         data: this.props.appointments,
+        dataBookings: this.props.dataBookings,
+        dataEmployees: this.props.dataEmployees,
+        dataServices: this.props.dataServices,
       });
     }
   }
@@ -268,6 +274,9 @@ class Calendar extends React.PureComponent {
 
         {this.state.show && (
           <ModalReserva
+            dataBookings={this.state.dataBookings}
+            dataEmployees={this.state.dataEmployees}
+            dataServices={this.state.dataServices}
             data={data}
             show={this.state.show}
             close={this.handleClose}
