@@ -34,9 +34,9 @@ const ModalReserva = ({
     if (dataEmployees && dataServices && dataBookings) {
       setServicios(dataServices.data);
       setEmpleados(dataEmployees.data);
-      setBookings(dataBookings.data);
+      setBookings(dataBookings);
       console.log("employees", dataEmployees.data);
-      console.log("bookings", dataBookings.data);
+      console.log("bookings", dataBookings);
     }
   }, [dataEmployees && dataServices && dataBookings]);
 
@@ -72,9 +72,8 @@ const ModalReserva = ({
     const appointmentEndTime = parseInt(
       (new Date(endTime).getTime() / 1000).toFixed(0)
     );
-    console.log("unix?¿", appointmentStartTime);
-    console.log("unix?¿", appointmentEndTime);
     const availableEmployee = [];
+
     bookings.map((item, index) => {
       const bookingStartTime = parseInt(
         (new Date(item.startTime).getTime() / 1000).toFixed(0)
@@ -82,23 +81,20 @@ const ModalReserva = ({
       const bookingEndTime = parseInt(
         (new Date(item.endTime).getTime() / 1000).toFixed(0)
       );
-      console.log(index, "bookingStart", bookingStartTime);
-      console.log(index, "bookingEnd", bookingEndTime);
-
       if (
-        (appointmentStartTime < bookingStartTime ||
-          appointmentStartTime > bookingStartTime) &&
-        (appointmentEndTime < bookingEndTime ||
-          appointmentEndTime > bookingEndTime)
+        appointmentEndTime < bookingStartTime ||
+        appointmentStartTime > bookingEndTime
       ) {
         availableEmployee.push(item.employee);
       } else {
         console.log("busy", item.employee);
       }
     });
-    let uniq = [...new Set(availableEmployee)];
-    setEmpleados(uniq);
+    // let uniq = [...new Set(availableEmployee)];
+    // console.log("uniq", uniq);
+    setEmpleados(availableEmployee);
   };
+
   console.log("available employee", empleados);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import axios from "../axios/axios";
 const Home = (props) => {
   const apiContext = useContext(context);
   const [bookings, setBookings] = useState([]);
+  const [activeBookings, setActiveBookings] = useState([]);
 
   const data = useQueries(
     [
@@ -76,6 +77,7 @@ const Home = (props) => {
       });
     });
     setBookings(bookingsArray);
+    setActiveBookings(activeBookings);
     // console.log("bokkings", bookings);
   };
 
@@ -89,7 +91,7 @@ const Home = (props) => {
     <Calendar
       appointments={bookings}
       data={data}
-      dataBookings={data[0].data}
+      dataBookings={activeBookings}
       dataEmployees={data[2].data}
       dataServices={data[1].data}
     />

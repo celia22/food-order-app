@@ -231,6 +231,7 @@ class Calendar extends React.PureComponent {
         </Button>
       </Toolbar.FlexibleSpace>
     );
+    //  console.log("databookings", this.state.dataBookings);
 
     return (
       <div className="container-calendar">
