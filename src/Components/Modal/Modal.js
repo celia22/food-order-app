@@ -26,6 +26,7 @@ const ModalReserva = ({
   const [status, setStatus] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [availableEmployees, setAvailableEmployees] = useState([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [nombre, setNombre] = useState("");
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState();
@@ -72,10 +73,10 @@ const ModalReserva = ({
     const appointmentEndTime = parseInt(
       (new Date(endTime).getTime() / 1000).toFixed(0)
     );
-    const availableEmployee = [];
+
+    let filtered = [];
 
     bookings.map((item, index) => {
-      console.log("item employees", item.employee);
       const bookingStartTime = parseInt(
         (new Date(item.startTime).getTime() / 1000).toFixed(0)
       );
@@ -86,16 +87,15 @@ const ModalReserva = ({
         appointmentEndTime < bookingStartTime ||
         appointmentStartTime > bookingEndTime
       ) {
-        console.log("available", item.employee);
+        //console.log("available", item.employee);
       } else {
         console.log("busy", item.employee);
-        // empleados.filter((x) => x._id !== item.employee);
+        filtered = empleados.filter((x) => x._id !== item.employee);
+        console.log("filtered", filtered);
       }
     });
-
-    //console.log("available ", availableEmployee);
-    setEmpleados(availableEmployee);
-    //console.log("available ", availableEmployee);
+    setAvailableEmployees(filtered);
+    console.log("available ", availableEmployees);
   };
 
   useEffect(() => {
@@ -162,7 +162,7 @@ const ModalReserva = ({
               {servicioSeleccionado ? (
                 <Form.Group className="w-50 mb-2 me-2">
                   <Form.Label htmlFor="servicio">Empleados</Form.Label>
-                  {Object.values(empleados).map((item, index) => {
+                  {Object.values(availableEmployees).map((item, index) => {
                     return (
                       <ListGroup.Item key={index}>
                         <input
