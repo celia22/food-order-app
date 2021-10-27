@@ -1,0 +1,15 @@
+.form-profile {
+  width: 60%;
+  margin: 5% 20%;
+}
+
+.btn-newform {
+  margin-left: 17rem;
+  margin-top: 5rem;
+  background-color: transparent;
+  border: 2px solid #f5bc41;
+  padding: 8px 10px;
+  border-radius: 15px;
+  color: #f5bc41;
+  font-size: 14px;
+}

@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import Calendar from "../Components/Calendar/Calendar";
 import { useMutation, useQueries, useQuery } from "react-query";
 import axios from "../axios/axios";
+import AgregarCentro from "../Components/Centro/AgregarCentro";
 
 const Home = (props) => {
   const apiContext = useContext(context);
+  const [existingCenter, setExistingCenter] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [activeBookings, setActiveBookings] = useState([]);
 
@@ -83,11 +85,12 @@ const Home = (props) => {
 
   useEffect(() => {
     if (data[0].data && data[1].data && data[2].data) {
+      setExistingCenter(true);
       bookingsTranslator();
     }
   }, [data[0].data, data[1].data, data[2].data]);
 
-  return (
+  return existingCenter ? (
     <Calendar
       appointments={bookings}
       data={data}
@@ -95,6 +98,8 @@ const Home = (props) => {
       dataEmployees={data[2].data}
       dataServices={data[1].data}
     />
+  ) : (
+    <AgregarCentro />
   );
 };
 
