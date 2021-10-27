@@ -10,9 +10,8 @@ import "../../Components/Servicios/Servicios.css";
 
 const ServiciosContainer = (props) => {
   const apiContext = useContext(context);
-  const centerId = apiContext.data.data._id;
+  const centerId = apiContext.data?.data?._id;
 
-  const firstRenderRef = useRef(false);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [servEdit, setServEdit] = useState({});
@@ -81,14 +80,16 @@ const ServiciosContainer = (props) => {
     setEdit(true);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return <div>Error! {error.message}</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+  // if (isError) {
+  //   return <div>Error! {error.message}</div>;
+  // }
 
-  return (
+  return !servicios ? (
+    <h2>Aún no hay servicios asociados a este centro</h2>
+  ) : (
     <div style={{ marginLeft: "125px" }}>
       <div className="d-flex justify-content-between align-items-center">
         <h2 className="titulo-fotos">Servicios</h2>

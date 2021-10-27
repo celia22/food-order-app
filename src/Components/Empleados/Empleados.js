@@ -9,6 +9,7 @@ import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
+  const centerId = apiContext.data?.data?._id;
 
   const [empleadoInfo, setEmpleadoInfo] = useState("");
   const [center, setCenter] = useState("");
@@ -27,8 +28,8 @@ const Empleados = (props) => {
     data: servicesData,
     refetch: servicesRefetch,
   } = useQuery(
-    ["Center Services", apiContext.data.data._id],
-    () => axios.get(`/center/services/${apiContext.data.data._id}`),
+    ["Center Services", centerId],
+    () => axios.get(`/center/services/${centerId}`),
     {
       enabled: false,
       onSuccess: apiContext.refetch,
@@ -43,8 +44,8 @@ const Empleados = (props) => {
     data: employeesData,
     refetch: employeesRefetch,
   } = useQuery(
-    ["Center Employees", apiContext.data.data._id],
-    () => axios.get(`/center/employees/${apiContext.data.data._id}`),
+    ["Center Employees", centerId],
+    () => axios.get(`/center/employees/${centerId}`),
     {
       enabled: false,
       onSuccess: servicesRefetch,
@@ -53,9 +54,9 @@ const Empleados = (props) => {
 
   useEffect(() => {
     return () => {
-      apiContext.data.data._id && employeesRefetch();
+      apiContext.data?.data?._id && employeesRefetch();
     };
-  }, [apiContext.data.data._id]);
+  }, [apiContext.data?.data?._id]);
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     if (employeeArr && serviceArr) {

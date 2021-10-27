@@ -186,12 +186,13 @@ const AgregarCentro = () => {
                 />
               </Form.Group>
         
-
+                
               <label>Horario</label>
 
               {Object.keys(openingHours).map((element, i) => {
                 return (
                   <div key={i}>
+                    
                     <label>{dictionary[element]}</label>
                     <input
                       value={openingHours[element][0]}
@@ -213,7 +214,7 @@ const AgregarCentro = () => {
                   </div>
                 );
               })}
-       
+     
           </Col>
         </Row>
       </Form>
