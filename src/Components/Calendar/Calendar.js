@@ -1,7 +1,13 @@
 import * as React from "react";
+import { useQuery, useMutation } from "react-query";
+import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import Paper from "@material-ui/core/Paper";
-import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
+import {
+  ViewState,
+  EditingState,
+  IntegratedEditing,
+} from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   MonthView,
@@ -16,6 +22,8 @@ import {
   EditRecurrenceMenu,
   DragDropProvider,
   CurrentTimeIndicator,
+  ConfirmationDialog,
+  AppointmentForm,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import "./Calendar.css";
 import { Button } from "@material-ui/core";
@@ -28,9 +36,12 @@ class Calendar extends React.PureComponent {
     super(props);
 
     this.state = {
-      fakeData: this.props.appointments,
       show: false,
-      data: this.props.data,
+      data: this.props.appointments,
+      setDeleted: false,
+      dataBookings: this.props.dataBookings,
+      dataEmployees: this.props.dataEmployees,
+      dataServices: this.props.dataServices,
     };
 
     this.commitChanges = this.commitChanges.bind(this);
@@ -43,7 +54,10 @@ class Calendar extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (this.props.appointments !== prevProps.appointments) {
       this.setState({
-        fakeData: this.props.appointments,
+        data: this.props.appointments,
+        dataBookings: this.props.dataBookings,
+        dataEmployees: this.props.dataEmployees,
+        dataServices: this.props.dataServices,
       });
     }
   }
@@ -55,6 +69,51 @@ class Calendar extends React.PureComponent {
    * @param deleted {object}
    * @return {undefined}
    */
+
+  deleteBooking = async (id) => {
+    try {
+      await axios.put(`/booking/delete/${id}`);
+    } catch (e) {
+      console.log(e);
+    }
+    const filtered = this.state.data.filter((item) => {
+      return item._id !== id;
+    });
+
+    this.setState({
+      data: filtered,
+    });
+  };
+
+  updateBooking = async (item) => {
+    try {
+      console.log("date", item.filter.startDate);
+      const startDate = item.filter.startDate.toISOString();
+      console.log("startdate¿?", startDate);
+      const status = item.filter.status;
+      const id = item.filter._id;
+      const day = startDate.split("-")[2].slice(0, 2);
+      const month = startDate.split("-")[1] - 1;
+      const year = startDate.split("-")[0];
+      const hour = startDate.split("T")[1].slice(0, 2);
+      const minute = startDate.split(":")[1];
+      await axios.put(
+        `/booking/update/${id}`,
+        {
+          status,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+        },
+        id
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   commitChanges({ added, changed, deleted }) {
     this.setState((state) => {
       let { data } = state;
@@ -64,14 +123,25 @@ class Calendar extends React.PureComponent {
         data = [...data, { id: startingAddedId, ...added }];
       }
       if (changed) {
-        data = data.map((appointment) =>
-          changed[appointment.id]
+        let filter;
+        data = data.map((appointment) => {
+          if (changed[appointment.id]) {
+            filter = appointment;
+          }
+
+          return changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }
-            : appointment
-        );
+            : appointment;
+        });
+
+        this.updateBooking({ filter });
       }
       if (deleted !== undefined) {
-        data = data.filter((appointment) => appointment.id !== deleted);
+        const filtered = data.filter(
+          (appointment) => appointment.id === deleted
+        );
+
+        this.deleteBooking(filtered[0]._id);
       }
       return { data };
     });
@@ -142,10 +212,7 @@ class Calendar extends React.PureComponent {
   }
 
   render() {
-    const { fakeData } = this.state;
     const { data } = this.state;
-
-    //console.log("fakedata", fakeData);
 
     const firstDay = 1;
     const locale = "es-ES";
@@ -159,23 +226,25 @@ class Calendar extends React.PureComponent {
 
     const FlexibleSpace = () => (
       <Toolbar.FlexibleSpace>
-        {/* <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
+        <Button className="mx-3 btn-agregar" onClick={this.handleShow}>
           Agregar
-        </Button> */}
+        </Button>
       </Toolbar.FlexibleSpace>
     );
+    //  console.log("databookings", this.state.dataBookings);
 
     return (
       <div className="container-calendar">
         <Paper>
           <Scheduler
-            data={fakeData}
+            data={data}
             firstDayOfWeek={firstDay}
             locale={locale}
             startTime={8}
             endTime={23}
           >
             <EditingState onCommitChanges={this.commitChanges} />
+            <IntegratedEditing />
             <ViewState />
             <Toolbar flexibleSpaceComponent={FlexibleSpace} />
             <MonthView name="Mes" />
@@ -183,15 +252,18 @@ class Calendar extends React.PureComponent {
             <DayView name="Dia" startDayHour={8} endDayHour={23} />
             <TodayButton messages={messages} />
             <ViewSwitcher />
+            <EditRecurrenceMenu />
+            <ConfirmationDialog />
             <Appointments />
             <DateNavigator />
-            <EditRecurrenceMenu />
+
             <AppointmentTooltip
               showCloseButton
               showDeleteButton
               showOpenButton
               onOpenButtonClick={this.handleEdit}
             />
+            <AppointmentForm />
             <DragDropProvider />
             <CurrentTimeIndicator
               shadePreviousCells={shadePreviousCells}
@@ -203,6 +275,9 @@ class Calendar extends React.PureComponent {
 
         {this.state.show && (
           <ModalReserva
+            dataBookings={this.state.dataBookings}
+            dataEmployees={this.state.dataEmployees}
+            dataServices={this.state.dataServices}
             data={data}
             show={this.state.show}
             close={this.handleClose}

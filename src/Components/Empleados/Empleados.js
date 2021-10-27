@@ -9,9 +9,10 @@ import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
-  const centerId = apiContext.data.data._id;
+  const centerId = apiContext.data?.data?._id;
+
   const [empleadoInfo, setEmpleadoInfo] = useState("");
-  const [center, setCenter] = useState(centerId);
+  const [center, setCenter] = useState("");
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
   const [employeeServices, setEmployeeServices] = useState([]);
@@ -27,10 +28,10 @@ const Empleados = (props) => {
     data: servicesData,
     refetch: servicesRefetch,
   } = useQuery(
-    ["Center Services", center],
-    () => axios.get(`/center/services/${center}`),
+    ["Center Services", centerId],
+    () => axios.get(`/center/services/${centerId}`),
     {
-      enabled: true,
+      enabled: false,
       onSuccess: apiContext.refetch,
     }
   );
@@ -43,13 +44,19 @@ const Empleados = (props) => {
     data: employeesData,
     refetch: employeesRefetch,
   } = useQuery(
-    ["Center Employees", center],
-    () => axios.get(`/center/employees/${center}`),
+    ["Center Employees", centerId],
+    () => axios.get(`/center/employees/${centerId}`),
     {
-      enabled: true,
+      enabled: false,
       onSuccess: servicesRefetch,
     }
   );
+
+  useEffect(() => {
+    return () => {
+      apiContext.data?.data?._id && employeesRefetch();
+    };
+  }, [apiContext.data?.data?._id]);
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     if (employeeArr && serviceArr) {

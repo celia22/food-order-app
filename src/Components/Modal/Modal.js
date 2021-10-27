@@ -8,24 +8,38 @@ import "./Modal.css";
 import { Form, ListGroup, ListGroupItem } from "react-bootstrap";
 import { ControlPointSharp } from "@material-ui/icons";
 
-const ModalReserva = ({ show, submit, close, data }) => {
+const ModalReserva = ({
+  show,
+  submit,
+  close,
+  data,
+  dataBookings,
+  dataEmployees,
+  dataServices,
+}) => {
   const apiContext = useContext(context);
 
   const [centerId, setCenterId] = useState(apiContext.data._id);
-  const [empleados, setEmpleados] = useState(data[2]?.data?.data);
-  const [servicios, setServicios] = useState([]);
+  const [empleados, setEmpleados] = useState("");
+  const [servicios, setServicios] = useState("");
+  const [bookings, setBookings] = useState("");
   const [status, setStatus] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [availableEmployees, setAvailableEmployees] = useState([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [nombre, setNombre] = useState("");
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState();
 
   useEffect(() => {
-    if (data[0].data && data[1].data && data[2].data) {
-      setServicios(data[1]?.data?.data);
+    if (dataEmployees && dataServices && dataBookings) {
+      setServicios(dataServices.data);
+      setEmpleados(dataEmployees.data);
+      setBookings(dataBookings);
+      console.log("employees", dataEmployees.data);
+      console.log("bookings", dataBookings);
     }
-  }, [data[0].data, data[1].data, data[2].data]);
+  }, [dataEmployees && dataServices && dataBookings]);
 
   // center: centerId,
   // employee,
@@ -35,49 +49,63 @@ const ModalReserva = ({ show, submit, close, data }) => {
   // endTime,
 
   const handleSelectedService = (item) => {
+    console.log("item", item);
     setServicioSeleccionado(item.item._id);
 
     console.log("duration", item.item.duration);
+
     let date = startTime;
     let d1 = startTime,
       d2 = new Date(d1);
     d2.setMinutes(d1.getMinutes() + item.item.duration);
 
-    setEndTime(date);
+    setEndTime(d2);
   };
 
+  console.log("startime", startTime);
   console.log("end", endTime);
 
-  const servicesByEmployee = () => {
-    const arr = [];
-    for (let i = 0; i < empleados.length; i++) {
-      for (let j = 0; j < empleados[i].services.length; j++) {
-        if (empleados[i].services[j] === servicioSeleccionado) {
-          arr.push([empleados[i]]);
-        }
+  const handleAvailableEmployee = () => {
+    const appointmentStartTime = parseInt(
+      (new Date(startTime).getTime() / 1000).toFixed(0)
+    );
+
+    const appointmentEndTime = parseInt(
+      (new Date(endTime).getTime() / 1000).toFixed(0)
+    );
+
+    let filtered = [];
+
+    bookings.map((item, index) => {
+      const bookingStartTime = parseInt(
+        (new Date(item.startTime).getTime() / 1000).toFixed(0)
+      );
+      const bookingEndTime = parseInt(
+        (new Date(item.endTime).getTime() / 1000).toFixed(0)
+      );
+      if (
+        appointmentEndTime < bookingStartTime ||
+        appointmentStartTime > bookingEndTime
+      ) {
+        //console.log("available", item.employee);
+      } else {
+        console.log("busy", item.employee);
+        filtered = empleados.filter((x) => x._id !== item.employee);
+        console.log("filtered", filtered);
       }
-    }
-    setEmpleados(arr);
+    });
+    setAvailableEmployees(filtered);
+    console.log("available ", availableEmployees);
   };
+
+  useEffect(() => {
+    if (startTime && endTime && servicioSeleccionado) {
+      handleAvailableEmployee();
+    }
+  }, [startTime && endTime && servicioSeleccionado]);
 
   // console.log("serv secl", servicioSeleccionado);
   // console.log("endtime", endTime);
-
-  // useEffect(() => {
-  //   if (startTime) {
-  //     handleSelectedService();
-  //   }
-  // }, [startTime]);
-
-  // useEffect(() => {
-  //   if (servicioSeleccionado) {
-  //     servicesByEmployee();
-  //   }
-  // }, [servicioSeleccionado]);
-
-  console.log("servicios", servicios);
-
-  console.log("empleados tras servicio selec", empleados);
 
   return (
     <div>
@@ -128,13 +156,13 @@ const ModalReserva = ({ show, submit, close, data }) => {
                     </ListGroup.Item>
                   );
                 })}
-                {console.log("selected", servicioSeleccionado)}
+                {/*  {console.log("selected", servicioSeleccionado)} */}
               </Form.Group>
 
               {servicioSeleccionado ? (
                 <Form.Group className="w-50 mb-2 me-2">
                   <Form.Label htmlFor="servicio">Empleados</Form.Label>
-                  {Object.values(empleados).map((item, index) => {
+                  {Object.values(availableEmployees).map((item, index) => {
                     return (
                       <ListGroup.Item key={index}>
                         <input
@@ -150,7 +178,6 @@ const ModalReserva = ({ show, submit, close, data }) => {
                       </ListGroup.Item>
                     );
                   })}
-                  {console.log("selected", servicioSeleccionado)}
                 </Form.Group>
               ) : (
                 ""
@@ -168,3 +195,27 @@ const ModalReserva = ({ show, submit, close, data }) => {
 };
 
 export default ModalReserva;
+
+// const servicesByEmployee = () => {
+//   const arr = [];
+//   servicioSeleccionado.map((item, index) => {
+//     item.employees.map((x) => {
+//       console.log("x", x);
+//     });
+//   });
+//   // for (let i = 0; i < empleados.length; i++) {
+//   //   for (let j = 0; j < empleados[i].services.length; j++) {
+//   //     console.log("wtf", empleados[i].services[j]);
+//   //     if (empleados[i].services[j] === servicioSeleccionado) {
+//   //       arr.push([empleados[i]]);
+//   //     }
+//   //   }
+//   // }
+//   // setEmpleados(arr);
+// };
+
+// useEffect(() => {
+//   if (startTime && servicioSeleccionado) {
+//     handleSelectedService();
+//   }
+// }, [startTime]);
