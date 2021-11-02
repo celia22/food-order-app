@@ -65,6 +65,7 @@ const AgregarCentro = () => {
       enabled: false,
       onError: (error) => console.error(error),
       onSuccess: apiContext.refetch,
+      retry: false,
     }
   );
 

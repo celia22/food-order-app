@@ -17,27 +17,36 @@ const Home = (props) => {
         queryKey: ["bookings", apiContext.data?.data?._id],
         queryFn: () =>
           axios.get(`center/bookings/${apiContext.data?.data?._id}`),
+        enabled: false,
+        onSuccess: () => console.log(data),
       },
       {
         queryKey: ["Center Services", apiContext.data?.data?._id],
         queryFn: () =>
           axios.get(`/center/services/${apiContext.data?.data?._id}`),
+        enabled: false,
+        onSuccess: () => console.log(data),
       },
       {
         queryKey: ["Center Employees", apiContext.data?.data?._id],
         queryFn: () =>
           axios.get(`/center/employees/${apiContext.data?.data?._id}`),
+        enabled: false,
+        onSuccess: () => console.log(data),
       },
-    ],
-    {
-      enabled: false,
-      onSuccess: () => console.log(data),
-    }
+    ]
+    // {
+    //   enabled: false,
+    //   onSuccess: () => console.log(data),
+    // }
   );
 
   useEffect(() => {
     return () => {
-      apiContext.data && data.forEach((query) => query.refetch());
+      if (apiContext.data?.data?._id) {
+        data.forEach((query) => query.refetch());
+        console.log("me llaman");
+      }
     };
   }, [apiContext.data]);
 

@@ -13,6 +13,7 @@ const ApiProvider = (props) => {
     () => axios.get(`/center/login/${currentUserEmail}`),
     {
       enabled: false,
+      retry: false,
     }
   );
 

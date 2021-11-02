@@ -7,6 +7,8 @@ import { CgClose } from "react-icons/cg";
 import "./Modal.css";
 import { Form, ListGroup, ListGroupItem } from "react-bootstrap";
 import { ControlPointSharp } from "@material-ui/icons";
+import { useMutation } from "react-query";
+import axios from "../../axios/axios";
 
 const ModalReserva = ({
   show,
@@ -19,7 +21,7 @@ const ModalReserva = ({
 }) => {
   const apiContext = useContext(context);
 
-  const [centerId, setCenterId] = useState(apiContext.data._id);
+  const [centerId, setCenterId] = useState("");
   const [empleados, setEmpleados] = useState("");
   const [servicios, setServicios] = useState("");
   const [bookings, setBookings] = useState("");
@@ -37,18 +39,46 @@ const ModalReserva = ({
       setServicios(dataServices.data);
       setEmpleados(dataEmployees.data);
       setBookings(dataBookings);
+      setCenterId(apiContext.data.data._id);
       setUnregisteredUser(apiContext.data.data.unregisteredUser);
       console.log("employees", dataEmployees.data);
       console.log("bookings", dataBookings);
     }
   }, [dataEmployees && dataServices && dataBookings]);
 
-  // center: centerId,
-  // employee,
-  // service,
-  // status,
-  // startTime,
-  // endTime,
+  const createNewBooking = useMutation(
+    (newBooking) => {
+      return axios.post("/booking/create", newBooking);
+    },
+    {
+      enabled: false,
+      onError: (error) => console.error(error),
+      onSuccess: apiContext.refetch,
+      retry: false,
+    }
+  );
+
+  const createBookingHandler = (e) => {
+    const startDate = startTime.toISOString();
+    e.preventDefault();
+    const newBookingData = {
+      center: centerId,
+      user: unregisteredUser,
+      bookings: [
+        {
+          employee: empleadoSeleccionado,
+          service: servicioSeleccionado,
+          minute: startDate.split(":")[1],
+          hour: startDate.split("T")[1].slice(0, 2),
+          day: startDate.split("-")[2].slice(0, 2),
+          month: startDate.split("-")[1] - 1,
+          year: startDate.split("-")[0],
+        },
+      ],
+    };
+    console.log("newbooking", newBookingData);
+    createNewBooking.mutate(newBookingData);
+  };
 
   const handleSelectedService = (item) => {
     console.log("item", item);
@@ -76,7 +106,7 @@ const ModalReserva = ({
       (new Date(endTime).getTime() / 1000).toFixed(0)
     );
 
-    let filtered = [];
+    let filtered = empleados;
 
     bookings.map((item, index) => {
       const bookingStartTime = parseInt(
@@ -89,9 +119,10 @@ const ModalReserva = ({
         appointmentEndTime < bookingStartTime ||
         appointmentStartTime > bookingEndTime
       ) {
-        //console.log("available", item.employee);
+        console.log("available", item.employee);
       } else {
         console.log("busy", item.employee);
+        console.log("available", item.employee);
         filtered = empleados.filter((x) => x._id !== item.employee);
         console.log("filtered", filtered);
       }
@@ -187,7 +218,11 @@ const ModalReserva = ({
               )}
             </div>
 
-            <Button type="submit" className="btn-agregar mt-2">
+            <Button
+              type="submit"
+              className="btn-agregar mt-2"
+              onClick={createBookingHandler}
+            >
               Crear nueva cita
             </Button>
           </form>
