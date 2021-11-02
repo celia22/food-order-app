@@ -30,12 +30,14 @@ const ModalReserva = ({
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [nombre, setNombre] = useState("");
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState();
+  const [unregisteredUser, setUnregisteredUser] = useState("");
 
   useEffect(() => {
     if (dataEmployees && dataServices && dataBookings) {
       setServicios(dataServices.data);
       setEmpleados(dataEmployees.data);
       setBookings(dataBookings);
+      setUnregisteredUser(apiContext.data.data.unregisteredUser);
       console.log("employees", dataEmployees.data);
       console.log("bookings", dataBookings);
     }
@@ -104,6 +106,7 @@ const ModalReserva = ({
     }
   }, [startTime && endTime && servicioSeleccionado]);
 
+  console.log("unregist", unregisteredUser);
   // console.log("serv secl", servicioSeleccionado);
   // console.log("endtime", endTime);
 

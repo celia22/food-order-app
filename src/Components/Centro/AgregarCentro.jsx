@@ -187,9 +187,9 @@ const AgregarCentro = () => {
               </Form.Group>
         
                 
-              <label>Horario</label>
+             {/* <label>Horario</label>
 
-              {Object.keys(openingHours).map((element, i) => {
+               {Object.keys(openingHours).map((element, i) => {
                 return (
                   <div key={i}>
                     
@@ -213,7 +213,7 @@ const AgregarCentro = () => {
                     />
                   </div>
                 );
-              })}
+              })} */}
      
           </Col>
         </Row>
