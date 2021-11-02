@@ -5,8 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { CgClose } from "react-icons/cg";
 import "./Modal.css";
-import { Form, ListGroup, ListGroupItem } from "react-bootstrap";
-import { ControlPointSharp } from "@material-ui/icons";
+import { Form, ListGroup } from "react-bootstrap";
 import { useMutation } from "react-query";
 import axios from "../../axios/axios";
 
@@ -20,18 +19,16 @@ const ModalReserva = ({
   dataServices,
 }) => {
   const apiContext = useContext(context);
-
   const [centerId, setCenterId] = useState("");
   const [empleados, setEmpleados] = useState("");
   const [servicios, setServicios] = useState("");
   const [bookings, setBookings] = useState("");
-  const [status, setStatus] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [availableEmployees, setAvailableEmployees] = useState([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [nombre, setNombre] = useState("");
-  const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState();
+  const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState("");
   const [unregisteredUser, setUnregisteredUser] = useState("");
 
   useEffect(() => {
@@ -41,8 +38,6 @@ const ModalReserva = ({
       setBookings(dataBookings);
       setCenterId(apiContext.data.data._id);
       setUnregisteredUser(apiContext.data.data.unregisteredUser);
-      console.log("employees", dataEmployees.data);
-      console.log("bookings", dataBookings);
     }
   }, [dataEmployees && dataServices && dataBookings]);
 
@@ -76,15 +71,12 @@ const ModalReserva = ({
         },
       ],
     };
-    console.log("newbooking", newBookingData);
+    // console.log("newbooking", newBookingData);
     createNewBooking.mutate(newBookingData);
   };
 
   const handleSelectedService = (item) => {
-    console.log("item", item);
     setServicioSeleccionado(item.item._id);
-
-    console.log("duration", item.item.duration);
 
     let date = startTime;
     let d1 = startTime,
@@ -93,9 +85,6 @@ const ModalReserva = ({
 
     setEndTime(d2);
   };
-
-  console.log("startime", startTime);
-  console.log("end", endTime);
 
   const handleAvailableEmployee = () => {
     const appointmentStartTime = parseInt(
@@ -108,7 +97,7 @@ const ModalReserva = ({
 
     let filtered = empleados;
 
-    bookings.map((item, index) => {
+    bookings.map((item) => {
       const bookingStartTime = parseInt(
         (new Date(item.startTime).getTime() / 1000).toFixed(0)
       );
@@ -121,14 +110,10 @@ const ModalReserva = ({
       ) {
         console.log("available", item.employee);
       } else {
-        console.log("busy", item.employee);
-        console.log("available", item.employee);
         filtered = empleados.filter((x) => x._id !== item.employee);
-        console.log("filtered", filtered);
       }
     });
     setAvailableEmployees(filtered);
-    console.log("available ", availableEmployees);
   };
 
   useEffect(() => {
@@ -136,10 +121,6 @@ const ModalReserva = ({
       handleAvailableEmployee();
     }
   }, [startTime && endTime && servicioSeleccionado]);
-
-  console.log("unregist", unregisteredUser);
-  // console.log("serv secl", servicioSeleccionado);
-  // console.log("endtime", endTime);
 
   return (
     <div>

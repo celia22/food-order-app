@@ -1,16 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import InfoEmpleados from "./InfoEmpleados";
-import { useQuery, useMutation } from "react-query";
+
+import { useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { Col, Form, ListGroup, Row } from "react-bootstrap";
-import { Avatar } from "@material-ui/core";
+import { Col, Form,  Row } from "react-bootstrap";
+// import { Avatar } from "@material-ui/core";
 
 const EditarEmpleado = ({employee2Edit, props}) => {
   const apiContext = useContext(context);
-  const centerId = apiContext.data.data._id; 
-  const [center, setCenter] = useState(centerId);
+  const [center, setCenter] = useState("");
    const [firstName, setFirstName] = useState(employee2Edit.firstName);
   const [lastName, setLastName] = useState(employee2Edit.lastName);
   // const [email, setEmail] = useState("");
@@ -35,13 +33,11 @@ const EditarEmpleado = ({employee2Edit, props}) => {
   //const [edit, setEdit] = useState(false);
   const [category, setCategory] = useState(employee2Edit.category);
   const [gender, setGender] = useState(employee2Edit.gender);
- // const [service, setService] = useState("");
-  const [checked, setChecked] = useState(false); 
-  const [services, setServices] = useState([]);
-  const [employeeServices, setEmployeeServices] = useState([]);
-  const [show, setShow] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [employeeEdit, setEmployeeEdit] = useState({});
+
+
+ useEffect(() => {
+   setCenter(apiContext.data.data._id)
+ }, [apiContext.data])
 
  
 
@@ -96,11 +92,11 @@ const EditarEmpleado = ({employee2Edit, props}) => {
       <Form className="form-profile">
         <Row className="my-4">
           <Col xs={2}>
-            <Form.Group
+            {/* <Form.Group
               controlId=""
               className="d-flex flex-column justify-content-center"
             >
-              <Avatar className="avatar" />
+              <Avatar className="avatar" /> 
               <div className="mx-2 my-1">
                 <input
                   type="file"
@@ -113,7 +109,7 @@ const EditarEmpleado = ({employee2Edit, props}) => {
                   Editar
                 </Form.Label>
               </div>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
 
           <Col>

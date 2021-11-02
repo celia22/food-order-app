@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import "./Servicios.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import { context } from "../../Context/apiProvider";
 
 const EditServicio = ({ servicioEdit, empleados, props }) => {
@@ -118,7 +118,7 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
                 type="number"
                 value={duration}
                 onChange={(e) => setDuration(e.target.value)}
-              ></Form.Control>
+              />
             </div>
           </Form.Group>
 
@@ -132,7 +132,7 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
                 className="selectMins"
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
-              ></Form.Control>
+              />
             </div>
           </Form.Group>
           <hr className="my-4" />
@@ -159,19 +159,19 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
                 className="selectMins"
                 value={serviceStructure1}
                 onChange={(e) => setServiceStructure1(e.target.value)}
-              ></Form.Control>
+              />
               <Form.Control
                 type="number"
                 className="selectMins"
                 value={serviceStructure2}
                 onChange={(e) => setServiceStructure2(e.target.value)}
-              ></Form.Control>
+              />
               <Form.Control
                 type="number"
                 className="selectMins"
                 value={serviceStructure3}
                 onChange={(e) => setServiceStructure3(e.target.value)}
-              ></Form.Control>
+              />
             </div>
           </Form.Group>
 
@@ -227,11 +227,11 @@ const EditServicio = ({ servicioEdit, empleados, props }) => {
             Guardar Cambios
           </button>
         </Form>
-        <div className="div-medio"></div>
+ 
         <div>
           <Form.Group controlId="">
             <Form.Label>Descripción del servicio</Form.Label>
-            <Form.Control
+             <Form.Control
               className="select-form"
               as="textarea"
               rows={5}

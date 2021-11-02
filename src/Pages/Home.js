@@ -1,45 +1,38 @@
 import { context } from "../Context/apiProvider";
 import { useContext, useEffect, useState } from "react";
 import Calendar from "../Components/Calendar/Calendar";
-import { useMutation, useQueries, useQuery } from "react-query";
+import { useQueries } from "react-query";
 import axios from "../axios/axios";
 import AgregarCentro from "../Components/Centro/AgregarCentro";
 
-const Home = (props) => {
+const Home = () => {
   const apiContext = useContext(context);
   const [existingCenter, setExistingCenter] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [activeBookings, setActiveBookings] = useState([]);
 
-  const data = useQueries(
-    [
-      {
-        queryKey: ["bookings", apiContext.data?.data?._id],
-        queryFn: () =>
-          axios.get(`center/bookings/${apiContext.data?.data?._id}`),
-        enabled: false,
-        onSuccess: () => console.log(data),
-      },
-      {
-        queryKey: ["Center Services", apiContext.data?.data?._id],
-        queryFn: () =>
-          axios.get(`/center/services/${apiContext.data?.data?._id}`),
-        enabled: false,
-        onSuccess: () => console.log(data),
-      },
-      {
-        queryKey: ["Center Employees", apiContext.data?.data?._id],
-        queryFn: () =>
-          axios.get(`/center/employees/${apiContext.data?.data?._id}`),
-        enabled: false,
-        onSuccess: () => console.log(data),
-      },
-    ]
-    // {
-    //   enabled: false,
-    //   onSuccess: () => console.log(data),
-    // }
-  );
+  const data = useQueries([
+    {
+      queryKey: ["bookings", apiContext.data?.data?._id],
+      queryFn: () => axios.get(`center/bookings/${apiContext.data?.data?._id}`),
+      enabled: false,
+      //  onSuccess: () => console.log(data),
+    },
+    {
+      queryKey: ["Center Services", apiContext.data?.data?._id],
+      queryFn: () =>
+        axios.get(`/center/services/${apiContext.data?.data?._id}`),
+      enabled: false,
+      // onSuccess: () => console.log(data),
+    },
+    {
+      queryKey: ["Center Employees", apiContext.data?.data?._id],
+      queryFn: () =>
+        axios.get(`/center/employees/${apiContext.data?.data?._id}`),
+      enabled: false,
+      //  onSuccess: () => console.log(data),
+    },
+  ]);
 
   useEffect(() => {
     return () => {

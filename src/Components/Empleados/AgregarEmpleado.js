@@ -1,7 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import axios from "../../axios/axios";
 import React, { useState, useContext } from "react";
-import { Col, Form, ListGroup, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import "./empleados.css";
 import { context } from "../../Context/apiProvider";
 
@@ -25,7 +25,6 @@ const dictionary = {
 const AgregarEmpleado = ({ servicios, props }) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data.data._id;
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   // const [email, setEmail] = useState("");
@@ -46,12 +45,9 @@ const AgregarEmpleado = ({ servicios, props }) => {
     "sun-aft": [0, 0],
   });
   const [phone, setPhone] = useState("");
-  const [profilePic, setProfilePic] = useState("");
+  // const [profilePic, setProfilePic] = useState("");
   //const [edit, setEdit] = useState(false);
   const [category, setCategory] = useState("");
-  const [gender, setGender] = useState("");
-  const [service, setService] = useState("");
-  const [checked, setChecked] = useState(false);
   const [center, setCenter] = useState(centerId);
 
   const createNewEmployee = async () => {
@@ -62,7 +58,6 @@ const AgregarEmpleado = ({ servicios, props }) => {
         workingHours,
         phone,
         category,
-        gender,
         center,
       });
     } finally {
@@ -155,15 +150,6 @@ const AgregarEmpleado = ({ servicios, props }) => {
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="" className="mb-4">
-              <Form.Label>Género</Form.Label>
-              <Form.Control
-                type="text"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
               />
             </Form.Group>
 

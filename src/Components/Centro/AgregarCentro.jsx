@@ -1,6 +1,6 @@
 import axios from "../../axios/axios";
 import React, { useState, useContext } from "react";
-import { Col, Form, ListGroup, Row } from "react-bootstrap";
+import { Col, Form,  Row } from "react-bootstrap";
 import "./Agregarcentro.css";
 import { context } from "../../Context/apiProvider";
 import { useMutation } from "react-query";
@@ -26,9 +26,6 @@ const dictionary = {
 const AgregarCentro = () => {
   const apiContext = useContext(context);
   // const centerId = apiContext.data.data._id;
-
-
-  
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [legalName, setLegalName] = useState("");
@@ -36,7 +33,7 @@ const AgregarCentro = () => {
   const [cp, setCp] = useState("");
   const [loc, setLoc] = useState([]);
   const [centerPics, setCenterPics] = useState([]);
-  const [city, setCity] = useState(false);
+  const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("");
   const [clientsChooseEmployee, setClientsChooseEmployee] = useState("");
@@ -156,6 +153,15 @@ const AgregarCentro = () => {
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="" className="mb-4">
+              <Form.Label>Ciudad</Form.Label>
+              <Form.Control
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
             </Form.Group>
 

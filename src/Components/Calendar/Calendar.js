@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useQuery, useMutation } from "react-query";
+
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import Paper from "@material-ui/core/Paper";
@@ -62,14 +62,6 @@ class Calendar extends React.PureComponent {
     }
   }
 
-  /**
-   * Esto viene de la documentación y actualiza el state según sea necesario (add, change or delete an appointment)
-   * @param added {object}
-   * @param changed {object}
-   * @param deleted {object}
-   * @return {undefined}
-   */
-
   deleteBooking = async (id) => {
     try {
       await axios.put(`/booking/delete/${id}`);
@@ -87,9 +79,8 @@ class Calendar extends React.PureComponent {
 
   updateBooking = async (item) => {
     try {
-      console.log("date", item.filter.startDate);
       const startDate = item.filter.startDate.toISOString();
-      console.log("startdate¿?", startDate);
+
       const status = item.filter.status;
       const id = item.filter._id;
       const day = startDate.split("-")[2].slice(0, 2);
