@@ -6,20 +6,20 @@ import "./empleados.css";
 import { context } from "../../Context/apiProvider";
 
 const dictionary = {
-  "mon-mor": "lunes mañana",
-  "mon-aft": "lunes tarde",
-  "tue-mor": "martes mañana",
-  "tue-aft": "martes tarde",
-  "wed-mor": "miércoles mañana",
-  "wed-aft": "miércoles tarde",
-  "thu-mor": "jueves mañana",
-  "thu-aft": "jueves tarde",
-  "fri-mor": "viernes mañana",
-  "fri-aft": "viernes tarde",
-  "sat-mor": "sábado mañana",
-  "sat-aft": "sábado tarde",
-  "sun-mor": "domingo mañana",
-  "sun-aft": "domingo tarde",
+  "mon-mor": "Lunes mañana",
+  "mon-aft": "Lunes tarde",
+  "tue-mor": "Martes mañana",
+  "tue-aft": "Martes tarde",
+  "wed-mor": "Miércoles mañana",
+  "wed-aft": "Miércoles tarde",
+  "thu-mor": "Jueves mañana",
+  "thu-aft": "Jueves tarde",
+  "fri-mor": "Viernes mañana",
+  "fri-aft": "Viernes tarde",
+  "sat-mor": "Sábado mañana",
+  "sat-aft": "Sábado tarde",
+  "sun-mor": "Domingo mañana",
+  "sun-aft": "Domingo tarde",
 };
 
 const AgregarEmpleado = ({ servicios, props }) => {
@@ -86,7 +86,7 @@ const AgregarEmpleado = ({ servicios, props }) => {
       </button>
       <Form className="form-profile">
         <Row className="my-4">
-          <Col xs={2}>
+          {/* <Col xs={2}>
             <Form.Group
               controlId=""
               className="d-flex flex-column justify-content-center"
@@ -105,7 +105,7 @@ const AgregarEmpleado = ({ servicios, props }) => {
                 </Form.Label>
               </div>
             </Form.Group>
-          </Col>
+          </Col> */}
 
           <Col>
             <Form.Group controlId="" className="mb-3">
@@ -154,29 +154,37 @@ const AgregarEmpleado = ({ servicios, props }) => {
             </Form.Group>
 
             <div>
-              <label>Horario</label>
+              <label className="horario_title">Horario</label>
 
               {Object.keys(workingHours).map((element, i) => {
                 return (
-                  <div key={i}>
-                    <label>{dictionary[element]}</label>
-                    <input
-                      value={workingHours[element][0]}
-                      name={element}
-                      type="number"
-                      id="0"
-                      onChange={handleHours}
-                      onClick={handleFocus}
-                    />
-                    <label>{dictionary[element]}</label>
-                    <input
-                      value={workingHours[element][1]}
-                      name={element}
-                      type="number"
-                      id="1"
-                      onChange={handleHours}
-                      onClick={handleFocus}
-                    />
+                  <div key={i} className="add_employee_grid">
+                    <div className="add_employee_subgrid_1">
+                      <div className="add_employee_label">
+                        <label>{dictionary[element]} desde: </label>
+                      </div>
+                      <input
+                        className="add_employee_input"
+                        value={workingHours[element][0]}
+                        name={element}
+                        type="number"
+                        id="0"
+                        onChange={handleHours}
+                        onClick={handleFocus}
+                      />
+                    </div>
+                    <div className="add_employee_subgrid_2">
+                      <label> hasta: </label>
+                      <input
+                        className="add_employee_input"
+                        value={workingHours[element][1]}
+                        name={element}
+                        type="number"
+                        id="1"
+                        onChange={handleHours}
+                        onClick={handleFocus}
+                      />
+                    </div>
                   </div>
                 );
               })}

@@ -8,38 +8,35 @@ import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
   const apiContext = useContext(context);
-  const centerId = apiContext.data?.data?._id;
+
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
+
   const [edit, setEdit] = useState(false);
   const [employeeEdit, setEmployeeEdit] = useState({});
-
   /***** get services for each employee *****/
-
   const {
     isLoading: servicesIsLoading,
     error: servicesError,
     data: servicesData,
     refetch: servicesRefetch,
   } = useQuery(
-    ["Center Services", centerId],
-    () => axios.get(`/center/services/${centerId}`),
+    ["Center Services", apiContext.data.data._id],
+    () => axios.get(`/center/services/${apiContext.data.data._id}`),
     {
       enabled: false,
       onSuccess: apiContext.refetch,
     }
   );
-
   /***** get employees for each center *****/
-
   const {
     isLoading: employeesIsLoading,
     error: employeesError,
     data: employeesData,
     refetch: employeesRefetch,
   } = useQuery(
-    ["Center Employees", centerId],
-    () => axios.get(`/center/employees/${centerId}`),
+    ["Center Employees", apiContext.data.data._id],
+    () => axios.get(`/center/employees/${apiContext.data.data._id}`),
     {
       enabled: false,
       onSuccess: servicesRefetch,
@@ -48,9 +45,9 @@ const Empleados = (props) => {
 
   useEffect(() => {
     return () => {
-      apiContext.data?.data?._id && employeesRefetch();
+      apiContext.data.data._id && employeesRefetch();
     };
-  }, [apiContext.data?.data?._id]);
+  }, [apiContext.data.data._id]);
 
   const getEmployeesAndServices = (employeeArr, serviceArr) => {
     if (employeeArr && serviceArr) {
@@ -58,7 +55,6 @@ const Empleados = (props) => {
         const service = serviceArr.filter((serv) =>
           serv.employees.includes(emp._id)
         );
-
         const newEmployee = {
           firstName: emp.firstName,
           lastName: emp.lastName,
@@ -69,19 +65,15 @@ const Empleados = (props) => {
       });
     }
   };
-
   const printServices = (service) =>
     service.map((serv) => serv.name).join(", ");
-
   useEffect(() => {
     if (employeesData && servicesData) {
       setEmployees(employeesData.data);
       setServices(servicesData.data);
     }
   }, [employeesData, servicesData]);
-
   /***** delete service *****/
-
   const deleteEmployee = useMutation(
     (id) => {
       return axios.put(`/employee/delete/${id}`);
@@ -92,22 +84,18 @@ const Empleados = (props) => {
       onSuccess: apiContext.refetch,
     }
   );
-
   const deleteEmpleado = (id) => {
     const remove = employees.filter((i) => i._id !== id);
     deleteEmployee.mutate(id);
     setEmployees(remove);
   };
-
   /********** edit services  ***********/
-
   const editEmpleado = (id) => {
     const filter = employees.filter((i) => i._id === id);
     setEmployeeEdit(filter[0]);
     setEdit(true);
   };
   // console.log("PROPS", props);
-
   return (
     <>
       <div className="d-flex justify-content-between">
@@ -127,9 +115,7 @@ const Empleados = (props) => {
                     <p>
                       Nombre: {i.firstName} {i.lastName}
                     </p>
-
                     <p> Servicios: {printServices(i.service)}</p>
-
                     <p> Horario: </p>
                   </div>
                   <div className="span-icons">
@@ -148,9 +134,9 @@ const Empleados = (props) => {
             </ListGroup>
           )}
         </div>
+        <div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>
       </div>
     </>
   );
 };
-
 export default Empleados;

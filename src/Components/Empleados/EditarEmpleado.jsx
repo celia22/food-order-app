@@ -4,7 +4,25 @@ import { useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
 import { Col, Form,  Row } from "react-bootstrap";
-// import { Avatar } from "@material-ui/core";
+
+
+const dictionary = {
+  "mon-mor": "Lunes mañana",
+  "mon-aft": "Lunes tarde",
+  "tue-mor": "Martes mañana",
+  "tue-aft": "Martes tarde",
+  "wed-mor": "Miércoles mañana",
+  "wed-aft": "Miércoles tarde",
+  "thu-mor": "Jueves mañana",
+  "thu-aft": "Jueves tarde",
+  "fri-mor": "Viernes mañana",
+  "fri-aft": "Viernes tarde",
+  "sat-mor": "Sábado mañana",
+  "sat-aft": "Sábado tarde",
+  "sun-mor": "Domingo mañana",
+  "sun-aft": "Domingo tarde",
+};
+
 
 const EditarEmpleado = ({employee2Edit, props}) => {
   const apiContext = useContext(context);
@@ -168,29 +186,37 @@ const EditarEmpleado = ({employee2Edit, props}) => {
             </Form.Group>
 
             <div>
-              <label>Horario</label>
+              <label className="horario_title">Horario</label>
 
               {Object.keys(workingHours).map((element, i) => {
                 return (
-                  <div key={i}>
-                    <label>Hora inicial:</label>
-                    <input
-                      value={workingHours[element][0]}
-                      name={element}
-                      type="number"
-                      id="0"
-                      onChange={handleHours}
-                      onClick={handleFocus}
-                    />
-                    <label>Hora final:</label>
-                    <input
-                      value={workingHours[element][1]}
-                      name={element}
-                      type="number"
-                      id="1"
-                      onChange={handleHours}
-                      onClick={handleFocus}
-                    />
+                  <div key={i} className="add_employee_grid">
+                    <div className="add_employee_subgrid_1">
+                      <div className="add_employee_label">
+                        <label>{dictionary[element]} desde: </label>
+                      </div>
+                      <input
+                        className="add_employee_input"
+                        value={workingHours[element][0]}
+                        name={element}
+                        type="number"
+                        id="0"
+                        onChange={handleHours}
+                        onClick={handleFocus}
+                      />
+                    </div>
+                    <div className="add_employee_subgrid_2">
+                      <label> hasta: </label>
+                      <input
+                        className="add_employee_input"
+                        value={workingHours[element][1]}
+                        name={element}
+                        type="number"
+                        id="1"
+                        onChange={handleHours}
+                        onClick={handleFocus}
+                      />
+                    </div>
                   </div>
                 );
               })}
