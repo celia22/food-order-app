@@ -69,3 +69,31 @@
   cursor: pointer;
   font-size: 14px;
 }
+
+.horario_title {
+  margin-bottom: 1rem;
+}
+
+.add_employee_grid {
+  display: flex;
+  width: 100%;
+}
+
+.add_employee_subgrid_1 {
+  width: 60%;
+  display: flex;
+}
+.add_employee_subgrid_2 {
+  width: 40%;
+  margin-left: none;
+}
+
+.add_employee_input {
+  width: 4rem;
+  margin: 0.3rem 0.5rem;
+}
+
+.add_employee_label {
+  display: flex;
+  width: 60%;
+}
