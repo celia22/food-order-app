@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import InfoEmpleados from "./InfoEmpleados";
 import { useQuery, useMutation } from "react-query";
 import axios from "../../axios/axios";
 import { context } from "../../Context/apiProvider";
@@ -10,13 +9,8 @@ import EditarEmpleado from "./EditarEmpleado";
 const Empleados = (props) => {
   const apiContext = useContext(context);
   const centerId = apiContext.data?.data?._id;
-
-  const [empleadoInfo, setEmpleadoInfo] = useState("");
-  const [center, setCenter] = useState("");
   const [employees, setEmployees] = useState([]);
   const [services, setServices] = useState([]);
-  const [employeeServices, setEmployeeServices] = useState([]);
-  const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [employeeEdit, setEmployeeEdit] = useState({});
 
@@ -154,8 +148,6 @@ const Empleados = (props) => {
             </ListGroup>
           )}
         </div>
-
-        <div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>
       </div>
     </>
   );

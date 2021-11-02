@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserAuthProvider from "./Context/UserAuthContext";
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import ApiProvider from "./Context/apiProvider";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ ReactDOM.render(
         <ApiProvider>
           <BrowserRouter>
             <App />
+            <ReactQueryDevtools initialIsOpen={false} />
           </BrowserRouter>
         </ApiProvider>
       </QueryClientProvider>

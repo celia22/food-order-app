@@ -1,21 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
-import { context } from "../../Context/apiProvider";
+import React, { useState } from "react";
 import AgregarEmpleado from "../../Components/Empleados/AgregarEmpleado";
 import Empleados from "../../Components/Empleados/Empleados";
 import "../../Components/Empleados/empleados.css";
-import { useQuery } from "react-query";
 
 const EmpleadosContainer = (props) => {
-  // const graphqlContext = useContext(context);
-  const apiContext = useContext(context);
   const [empleados, setEmpleados] = useState([]);
-  //const [empleadoInfo, setEmpleadoInfo] = useState({})
   const [addEmpleado, setAddEmpleado] = useState(false);
   const [servicios, setServicios] = useState([]);
 
   /////// COMO GUARDAR PARA ALMACENAR AL BACK ///////////
-
-  const nuevoEmpleado = () => {};
 
   return (
     <div className="container-empleados">
