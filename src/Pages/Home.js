@@ -86,15 +86,15 @@ const Home = () => {
 		}
 	}, []);
 
-	return ( existingCenter
-		? <Calendar
-			appointments={bookings}
-			data={data}
-			dataBookings={activeBookings}
-			dataEmployees={data[2].data}
-			dataServices={data[1].data}
-		/>
-		: <AgregarCentro />
+	return (existingCenter
+			? <Calendar
+				appointments={bookings}
+				data={data}
+				dataBookings={activeBookings}
+				dataEmployees={data[2].data}
+				dataServices={data[1].data}
+			/>
+			: <AgregarCentro/>
 	)
 };
 

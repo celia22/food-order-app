@@ -1,141 +1,141 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useQuery, useMutation } from "react-query";
+import {useMutation, useQuery} from "react-query";
 import axios from "../../axios/axios";
-import { context } from "../../Context/apiProvider";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import {context} from "../../Context/apiProvider";
+import {FaEdit, FaTrash} from "react-icons/fa";
 import EditarEmpleado from "./EditarEmpleado";
 
 const Empleados = (props) => {
-  const apiContext = useContext(context);
+	const apiContext = useContext(context);
 
-  const [employees, setEmployees] = useState([]);
-  const [services, setServices] = useState([]);
+	const [employees, setEmployees] = useState([]);
+	const [services, setServices] = useState([]);
 
-  const [edit, setEdit] = useState(false);
-  const [employeeEdit, setEmployeeEdit] = useState({});
-  /***** get services for each employee *****/
-  const {
-    isLoading: servicesIsLoading,
-    error: servicesError,
-    data: servicesData,
-    refetch: servicesRefetch,
-  } = useQuery(
-    ["Center Services", apiContext.data.data._id],
-    () => axios.get(`/center/services/${apiContext.data.data._id}`),
-    {
-      enabled: false,
-      onSuccess: apiContext.refetch,
-    }
-  );
-  /***** get employees for each center *****/
-  const {
-    isLoading: employeesIsLoading,
-    error: employeesError,
-    data: employeesData,
-    refetch: employeesRefetch,
-  } = useQuery(
-    ["Center Employees", apiContext.data.data._id],
-    () => axios.get(`/center/employees/${apiContext.data.data._id}`),
-    {
-      enabled: false,
-      onSuccess: servicesRefetch,
-    }
-  );
+	const [edit, setEdit] = useState(false);
+	const [employeeEdit, setEmployeeEdit] = useState({});
+	/***** get services for each employee *****/
+	const {
+		isLoading: servicesIsLoading,
+		error: servicesError,
+		data: servicesData,
+		refetch: servicesRefetch,
+	} = useQuery(
+		["Center Services", apiContext.data.data._id],
+		() => axios.get(`/center/services/${apiContext.data.data._id}`),
+		{
+			enabled: false,
+			onSuccess: apiContext.refetch,
+		}
+	);
+	/***** get employees for each center *****/
+	const {
+		isLoading: employeesIsLoading,
+		error: employeesError,
+		data: employeesData,
+		refetch: employeesRefetch,
+	} = useQuery(
+		["Center Employees", apiContext.data.data._id],
+		() => axios.get(`/center/employees/${apiContext.data.data._id}`),
+		{
+			enabled: false,
+			onSuccess: servicesRefetch,
+		}
+	);
 
-  useEffect(() => {
-    return () => {
-      apiContext.data.data._id && employeesRefetch();
-    };
-  }, [apiContext.data.data._id]);
+	useEffect(() => {
+		return () => {
+			apiContext.data.data._id && employeesRefetch();
+		};
+	}, [apiContext.data.data._id]);
 
-  const getEmployeesAndServices = (employeeArr, serviceArr) => {
-    if (employeeArr && serviceArr) {
-      return employeeArr.map((emp) => {
-        const service = serviceArr.filter((serv) =>
-          serv.employees.includes(emp._id)
-        );
-        return {
-          firstName: emp.firstName,
-          lastName: emp.lastName,
-          _id: emp._id,
-          service,
-        };
-      });
-    }
-  };
-  const printServices = (service) =>
-    service.map((serv) => serv.name).join(", ");
-  useEffect(() => {
-    if (employeesData && servicesData) {
-      setEmployees(employeesData.data);
-      setServices(servicesData.data);
-    }
-  }, [employeesData, servicesData]);
-  /***** delete service *****/
-  const deleteEmployee = useMutation(
-    (id) => {
-      return axios.put(`/employee/delete/${id}`);
-    },
-    {
-      enabled: false,
-      onError: (error) => console.error(error),
-      onSuccess: apiContext.refetch,
-    }
-  );
-  const deleteEmpleado = (id) => {
-    const remove = employees.filter((i) => i._id !== id);
-    deleteEmployee.mutate(id);
-    setEmployees(remove);
-  };
-  /********** edit services  ***********/
-  const editEmpleado = (id) => {
-    const filter = employees.filter((i) => i._id === id);
-    setEmployeeEdit(filter[0]);
-    setEdit(true);
-  };
-  // console.log("PROPS", props);
-  return (
-    <>
-      <div className="d-flex justify-content-between">
-        <div className="empleados-list">
-          {edit ? (
-            <EditarEmpleado employee2Edit={employeeEdit} props={props} />
-          ) : (
-            <ListGroup defaultActiveKey="#link1">
-              {getEmployeesAndServices(employees, services).map((i, index) => (
-                <ListGroup.Item
-                  key={index}
-                  className="py-3"
-                  // onClick={() => handleInfo(i.id)}
-                  action
-                >
-                  <div>
-                    <p>
-                      Nombre: {i.firstName} {i.lastName}
-                    </p>
-                    <p> Servicios: {printServices(i.service)}</p>
-                    <p> Horario: </p>
-                  </div>
-                  <div className="span-icons">
-                    <FaTrash
-                      className="mx-4 icon"
-                      data={i.id}
-                      onClick={() => deleteEmpleado(i._id)}
-                    />
-                    <FaEdit
-                      className="icon"
-                      onClick={() => editEmpleado(i._id)}
-                    />
-                  </div>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          )}
-        </div>
-        <div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>
-      </div>
-    </>
-  );
+	const getEmployeesAndServices = (employeeArr, serviceArr) => {
+		if (employeeArr && serviceArr) {
+			return employeeArr.map((emp) => {
+				const service = serviceArr.filter((serv) =>
+					serv.employees.includes(emp._id)
+				);
+				return {
+					firstName: emp.firstName,
+					lastName: emp.lastName,
+					_id: emp._id,
+					service,
+				};
+			});
+		}
+	};
+	const printServices = (service) =>
+		service.map((serv) => serv.name).join(", ");
+	useEffect(() => {
+		if (employeesData && servicesData) {
+			setEmployees(employeesData.data);
+			setServices(servicesData.data);
+		}
+	}, [employeesData, servicesData]);
+	/***** delete service *****/
+	const deleteEmployee = useMutation(
+		(id) => {
+			return axios.put(`/employee/delete/${id}`);
+		},
+		{
+			enabled: false,
+			onError: (error) => console.error(error),
+			onSuccess: apiContext.refetch,
+		}
+	);
+	const deleteEmpleado = (id) => {
+		const remove = employees.filter((i) => i._id !== id);
+		deleteEmployee.mutate(id);
+		setEmployees(remove);
+	};
+	/********** edit services  ***********/
+	const editEmpleado = (id) => {
+		const filter = employees.filter((i) => i._id === id);
+		setEmployeeEdit(filter[0]);
+		setEdit(true);
+	};
+	// console.log("PROPS", props);
+	return (
+		<>
+			<div className="d-flex justify-content-between">
+				<div className="empleados-list">
+					{edit ? (
+						<EditarEmpleado employee2Edit={employeeEdit} props={props}/>
+					) : (
+						<ListGroup defaultActiveKey="#link1">
+							{getEmployeesAndServices(employees, services).map((i, index) => (
+								<ListGroup.Item
+									key={index}
+									className="py-3"
+									// onClick={() => handleInfo(i.id)}
+									action
+								>
+									<div>
+										<p>
+											Nombre: {i.firstName} {i.lastName}
+										</p>
+										<p> Servicios: {printServices(i.service)}</p>
+										<p> Horario: </p>
+									</div>
+									<div className="span-icons">
+										<FaTrash
+											className="mx-4 icon"
+											data={i.id}
+											onClick={() => deleteEmpleado(i._id)}
+										/>
+										<FaEdit
+											className="icon"
+											onClick={() => editEmpleado(i._id)}
+										/>
+									</div>
+								</ListGroup.Item>
+							))}
+						</ListGroup>
+					)}
+				</div>
+				<div>{/* <InfoEmpleados empleado={employees} props={props} /> */}</div>
+			</div>
+		</>
+	);
 };
 export default Empleados;

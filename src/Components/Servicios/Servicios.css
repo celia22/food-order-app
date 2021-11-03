@@ -1,14 +1,14 @@
 
-.titulo-servicio{
+.titulo-servicio {
     /* margin-left: 8rem; */
     margin-bottom: 2rem !important;
 }
 
-.select-form{
+.select-form {
     margin-right: 1.5rem;
 }
 
-.btn-submit{
+.btn-submit {
     margin-right: 1rem;
     background-color: #FA676B;
     border: 1px solid #FA676B;
@@ -17,37 +17,37 @@
     color: white;
 }
 
-.listaServicios{
+.listaServicios {
     width: 700px;
 }
 
-.itemList span{
+.itemList span {
     margin-left: 60px;
 }
 
 .itemList:hover {
- border-bottom: 2px solid #FA676B;
+    border-bottom: 2px solid #FA676B;
 }
 
-.div-medio{
+.div-medio {
     width: 250px !important;
 }
 
-.icon{
+.icon {
     cursor: pointer;
 }
 
-.span-icons{
-display: flex;
-align-items: flex-end;
+.span-icons {
+    display: flex;
+    align-items: flex-end;
 }
 
-.nombreServicio{
+.nombreServicio {
     font-size: 20px;
     font-weight: bold;
 }
 
-.lista-empleados{
+.lista-empleados {
     overflow-y: auto;
     max-height: 150px;
 }
@@ -55,12 +55,14 @@ align-items: flex-end;
 .priceInput {
     position: relative;
 }
+
 .priceInput input {
-    padding-left:18px;
+    padding-left: 18px;
 }
+
 .priceInput:before {
     position: absolute;
     top: 10px;
-    content:"€";
+    content: "€";
     left: 8px;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useContext, useState} from "react";
 import auth from "../firebase";
 import firebase from "firebase";
 
@@ -6,7 +6,7 @@ export const AuthContext = React.createContext([]);
 
 export const useAuthContext = () => useContext(UserAuthProvider);
 
-const UserAuthProvider = ({ children }) => {
+const UserAuthProvider = ({children}) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -121,7 +121,7 @@ const UserAuthProvider = ({ children }) => {
 				sendPasswordReset,
 				resetPass,
 				setResetPass,
-				userLogged, 
+				userLogged,
 				setUserLogged
 			}}
 		>

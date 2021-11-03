@@ -1,99 +1,100 @@
 .titulo-empleados {
-  margin-top: 2rem !important;
-  margin-bottom: 2rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .empleados-list {
-  width: 70%;
-  height: 90vh;
-  overflow-y: auto;
+    width: 70%;
+    height: 90vh;
+    overflow-y: auto;
 }
 
 .container-empleados {
-  margin-left: 25%;
+    margin-left: 25%;
 }
 
 .container-info {
-  width: 40vw;
-  margin-right: 5rem;
+    width: 40vw;
+    margin-right: 5rem;
 }
 
 .btn-edit {
-  margin-right: 3rem;
-  background-color: transparent;
-  border: 2px solid #f5bc41;
-  padding: 8px 10px;
-  border-radius: 15px;
-  color: #f5bc41;
-  font-size: 14px;
+    margin-right: 3rem;
+    background-color: transparent;
+    border: 2px solid #f5bc41;
+    padding: 8px 10px;
+    border-radius: 15px;
+    color: #f5bc41;
+    font-size: 14px;
 }
 
 .nombre-profile {
-  margin-left: 20px;
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .img-profile {
-  width: 80px;
-  height: 80px;
+    width: 80px;
+    height: 80px;
 }
 
 .lista-servicios li {
-  list-style: none;
+    list-style: none;
 }
 
 .lista-servicios {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .lista-servicios li:hover {
-  border-bottom: 2px solid #fa676b;
-  transition: width 0.8s ease;
-  cursor: pointer;
+    border-bottom: 2px solid #fa676b;
+    transition: width 0.8s ease;
+    cursor: pointer;
 }
 
 .lista-servicios li.active {
-  border-bottom: 2px solid #fa676b;
+    border-bottom: 2px solid #fa676b;
 }
 
 .edit-name {
-  margin-left: 14px;
+    margin-left: 14px;
 }
 
 .edit-ph {
-  margin-right: 50px;
-  cursor: pointer;
-  font-size: 14px;
+    margin-right: 50px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .horario_title {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .add_employee_grid {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .add_employee_subgrid_1 {
-  width: 60%;
-  display: flex;
+    width: 60%;
+    display: flex;
 }
+
 .add_employee_subgrid_2 {
-  width: 40%;
-  margin-left: 0;
+    width: 40%;
+    margin-left: 0;
 }
 
 .add_employee_input {
-  width: 4rem;
-  margin: 0.3rem 0.5rem;
+    width: 4rem;
+    margin: 0.3rem 0.5rem;
 }
 
 .add_employee_label {
-  display: flex;
-  width: 60%;
+    display: flex;
+    width: 60%;
 }

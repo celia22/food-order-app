@@ -1,27 +1,26 @@
-
-  @media only screen and (max-width: 720px) {
+@media only screen and (max-width: 720px) {
     html {
-      overflow: hidden;
+        overflow: hidden;
     }
-  } 
+}
 
-  #header .closemenu {
+#header .closemenu {
     /* color: #F5BC41; */
     color: #6c757d;
     font-size: 20px;
     margin-bottom: 20px;
     padding-left: 37%;
     padding-top: 20px;
-  }
+}
 
 
-  #header .pro-sidebar {
+#header .pro-sidebar {
     height: 100vh;
     position: fixed;
     top: 0;
-  }
+}
 
-  #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
+#header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
     background-color: transparent;
     /* color: #F5BC41; */
     color: #6c757d;
@@ -29,59 +28,60 @@
     margin-top: 10px;
     font-size: 16px;
     margin-left: -4px;
-  }
+}
 
-  /* #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper .pro-item-content {
-    background-color: #c1c1c1 !important;;
-  } */
+/* #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper .pro-item-content {
+  background-color: #c1c1c1 !important;;
+} */
 
-  #header .pro-sidebar-inner .pro-sidebar-layout ul {
+#header .pro-sidebar-inner .pro-sidebar-layout ul {
     padding: 0 5px;
-  }
-  #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
+}
+
+#header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
     color: #6c757d;
     /* color: #F5BC41; */
     margin: 5px 0;
-  }
+}
 
-  
-  #header .pro-sidebar {
+
+#header .pro-sidebar {
     width: 15%;
     min-width: 15%;
-  }
- 
-  
-  #header .pro-sidebar.collapsed {
+}
+
+
+#header .pro-sidebar.collapsed {
     width: 80px;
     min-width: 80px;
-  } 
-  
-  #header .pro-sidebar-inner {
+}
+
+#header .pro-sidebar-inner {
     background-color: #f8f9fa;
     box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.15);
-  }
+}
 
-  #header .pro-sidebar-inner .pro-sidebar-layout {
+#header .pro-sidebar-inner .pro-sidebar-layout {
     overflow-y: hidden;
-  }
+}
 
-  #header .pro-sidebar-inner .pro-sidebar-layout .logotext p {
+#header .pro-sidebar-inner .pro-sidebar-layout .logotext p {
     font-size: 20px;
     padding: 0 20px;
     color: #000;
     font-weight: bold;
-  }
-  
-  .active-nav{
-    color: #F5BC41 !important
-  }
+}
 
-  .img-logo img{
+.active-nav {
+    color: #F5BC41 !important
+}
+
+.img-logo img {
     width: 80%;
     padding: 8px;
     margin-left: 10px;
-  }
+}
 
-  .hide{
+.hide {
     display: none;
-  }
+}
