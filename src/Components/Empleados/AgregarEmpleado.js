@@ -1,4 +1,3 @@
-import { Avatar } from "@material-ui/core";
 import axios from "../../axios/axios";
 import React, { useState, useContext } from "react";
 import { Col, Form, Row } from "react-bootstrap";

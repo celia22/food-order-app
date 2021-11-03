@@ -19,10 +19,7 @@ const ServiciosContainer = (props) => {
   const [servicios, setServicios] = useState([]);
 
   /***** get services for each center *****/
-  const getServices = async () => {
-    const data = await axios.get(`/center/services/${centerId}`);
-    return data;
-  };
+  const getServices = async () => await axios.get(`/center/services/${centerId}`);
 
   const { data, isLoading, isError, error } = useQuery(
     "getServices",
@@ -35,12 +32,7 @@ const ServiciosContainer = (props) => {
 
   /***** get employees for each center *****/
 
-  const getEmployee = async () => {
-    const employeeArr = await axios.get(
-      `/center/employees/${apiContext.data.data._id}`
-    );
-    return employeeArr;
-  };
+  const getEmployee = async () => await axios.get(`/center/employees/${apiContext.data.data._id}`);
 
   const { data: employeeArr } = useQuery("getEmployees", getEmployee, {
     onError: (error) => console.error(error),
@@ -118,8 +110,7 @@ const ServiciosContainer = (props) => {
           />
         ) : (
           <ListGroup className="listaServicios">
-            {servicios.length &&
-              servicios.map((item, index) => (
+            {servicios.map((item, index) => (
                 <ListGroupItem
                   key={index}
                   className="itemList d-flex justify-content-between align-items-center"

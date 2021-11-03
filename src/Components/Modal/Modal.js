@@ -120,7 +120,7 @@ const ModalReserva = ({
     if (startTime && endTime && servicioSeleccionado) {
       handleAvailableEmployee();
     }
-  }, [startTime && endTime && servicioSeleccionado]);
+  }, [startTime, endTime, servicioSeleccionado]);
 
   return (
     <div>

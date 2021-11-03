@@ -10,7 +10,7 @@ const UserAuthProvider = ({ children }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
-	const [userLogged, setUserLogged] = useState()
+	const [userLogged, setUserLogged] = useState(false)
 	//const [loading, setLoading] = useState(false)
 	const [hideSidebar, setHideSidebar] = useState(true);
 	const [resetPass, setResetPass] = useState(false);
@@ -62,7 +62,9 @@ const UserAuthProvider = ({ children }) => {
 			.signInWithEmailAndPassword(email, password)
 			.then((userCredential) => {
 				// Signed in
-				const user = userCredential.user;
+				setUserLogged(true);
+				setHideSidebar(false);
+				// const user = userCredential.user;
 				// console.log(`user logged in: ${user}`)
 			})
 			.catch((error) => {
@@ -73,7 +75,6 @@ const UserAuthProvider = ({ children }) => {
 		setUsername("");
 		setPassword("");
 		setEmail("");
-		setHideSidebar(false);
 	};
 
 	const logOut = () => {
@@ -121,8 +122,7 @@ const UserAuthProvider = ({ children }) => {
 				resetPass,
 				setResetPass,
 				userLogged, 
-				setUserLogged,
-				setHideSidebar
+				setUserLogged
 			}}
 		>
 			{children}

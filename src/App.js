@@ -17,60 +17,50 @@ import { AuthContext } from "./Context/UserAuthContext";
 function App() {
   const [user] = useAuthState(auth);
 
-  const { hideSidebar, setHideSidebar, userLogged, setUserLogged } =
-    useContext(AuthContext);
+  const { hideSidebar, userLogged } = useContext(AuthContext);
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        //let uid = user.uid;
-        // console.log(user.email);
-        setUserLogged(true);
-        setHideSidebar(false);
-        //console.log(userLogged);
-      } else {
-        // User is signed out
-        // ...
-        //console.log("user is not logged");
-        //console.log(userLogged);
-      }
-    });
-  }, [user]);
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       //let uid = user.uid;
+  //       // console.log(user.email);
+  //       console.log(user);
+  //       // setUserLogged(true);
+  //       // setHideSidebar(false);
+  //       //console.log(userLogged);
+  //     } else {
+  //       // User is signed out
+  //       // ...
+  //       //console.log("user is not logged");
+  //       //console.log(userLogged);
+  //     }
+  //   });
+  // }, [user]);
 
   return (
     <div className="App">
       <div>
         {!hideSidebar && <Sidebar />}
         <Switch>
-          <Route exact path="/login" render={(props) => <Login {...props} />}>
-            {userLogged && <Redirect to="/" />}
+          <Route exact path="/login">
+            {userLogged ? <Redirect to="/" /> : <Login />}
           </Route>
-          <Route
-            exact
-            path="/servicios"
-            render={(props) => <ServiciosContainer {...props} />}
-          >
-            {!userLogged && <Redirect to="/login" />}
+          <Route exact path="/servicios">
+            {!userLogged ? <Redirect to="/login" /> : <ServiciosContainer />}
           </Route>
-          <Route
-            exact
-            path="/imagenes"
-            render={(props) => <FotosCentroContainer {...props} />}
-          >
-            {!userLogged && <Redirect to="/login" />}
+          <Route exact path="/imagenes">
+            {!userLogged ? <Redirect to="/login" /> : <FotosCentroContainer />}
           </Route>
-          <Route
-            exact
-            path="/empleados"
-            render={(props) => <EmpleadosContainer {...props} />}
-          />
-          <Route exact path="/perfil" render={(props) => <Perfil {...props} />}>
-            {!userLogged && <Redirect to="/login" />}
+          <Route exact path="/empleados">
+            {!userLogged ? <Redirect to="/login" /> : <EmpleadosContainer />}
           </Route>
-          <Route exact path="/" render={(props) => <Home {...props} />}>
-            {!userLogged && <Redirect to="/login" />}
+          <Route exact path="/perfil" >
+            {!userLogged ? <Redirect to="/login" /> : <Perfil />}
           </Route>
-          <Route exact path="/*">
+          <Route exact path="/">
+            {!userLogged ? <Redirect to="/login" /> : <Home />}
+          </Route>
+          <Route path="/">
             {!userLogged && <Redirect to="/login" />}
           </Route>
         </Switch>

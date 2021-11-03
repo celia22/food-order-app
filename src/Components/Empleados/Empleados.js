@@ -55,13 +55,12 @@ const Empleados = (props) => {
         const service = serviceArr.filter((serv) =>
           serv.employees.includes(emp._id)
         );
-        const newEmployee = {
+        return {
           firstName: emp.firstName,
           lastName: emp.lastName,
           _id: emp._id,
           service,
         };
-        return newEmployee;
       });
     }
   };
