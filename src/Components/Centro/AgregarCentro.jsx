@@ -23,7 +23,7 @@ const dictionary = {
 	"sun-aft": "domingo tarde",
 };
 
-const AgregarCentro = () => {
+const AgregarCentro = (props) => {
 	const apiContext = useContext(context);
 	// const centerId = apiContext.data.data._id;
 	const [email, setEmail] = useState("");
@@ -66,6 +66,7 @@ const AgregarCentro = () => {
 		}
 	);
 
+	console.log("props", props)
 
 	const createCenterHandler = (e) => {
 
@@ -84,6 +85,7 @@ const AgregarCentro = () => {
 			openingHours
 		};
 		createNewCenter.mutate(newCenterData);
+		props.button(false)
 
 	};
 
@@ -106,7 +108,9 @@ const AgregarCentro = () => {
 			<button className="btn-newform" onClick={createCenterHandler}>
 				Guardar cambios
 			</button>
+			<h2>Agregar Centro </h2>
 			<Form className="form-profile">
+			
 				<Row className="my-4">
 
 					<Col>
