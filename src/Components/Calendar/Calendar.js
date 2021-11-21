@@ -251,7 +251,7 @@ class Calendar extends React.PureComponent {
             <AppointmentTooltip
               showCloseButton
               showDeleteButton
-              showOpenButton
+              // showOpenButton
               // onOpenButtonClick={this.handleEdit} // comentado para cuando se vuelva a añadir la opcion de editar reservas
             />
             <AppointmentForm />

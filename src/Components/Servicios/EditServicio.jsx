@@ -152,7 +152,7 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 
 
 					<Form.Group controlId="">
-						<Form.Label>Tiempo después del servicio</Form.Label>
+						<Form.Label>Estructura del servicio</Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								type="number"
