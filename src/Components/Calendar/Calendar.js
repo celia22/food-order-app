@@ -60,7 +60,6 @@ class Calendar extends React.PureComponent {
         dataServices: this.props.dataServices,
       });
     }
-    console.log("dataEmployees", this.dataEmployees);
   }
 
   deleteBooking = async (id) => {

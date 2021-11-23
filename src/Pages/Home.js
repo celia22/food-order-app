@@ -40,9 +40,11 @@ const Home = () => {
   const bookingsArray = [];
 
   const bookingsTranslator = () => {
+    const activeBookings = data[0].data.data.filter((x) => x.active);
+
     /*********** loop each booking and compares with employees id array ********/
     let employeeName = [];
-    data[0].data.data.forEach((item) => {
+    activeBookings.forEach((item) => {
       data[2].data.data.forEach((x) => {
         if (item.employee.includes(x._id)) {
           employeeName.push(x.firstName + " " + x.lastName);
@@ -53,15 +55,13 @@ const Home = () => {
     /*********** loop each booking and compares with service id array ********/
     let serviceName = [];
 
-    data[0].data.data.forEach((item) => {
+    activeBookings.forEach((item) => {
       data[1].data.data.forEach((x) => {
         if (item.service.includes(x._id)) {
           serviceName.push(x.name);
         }
       });
     });
-
-    const activeBookings = data[0].data.data.filter((x) => x.active);
 
     activeBookings.forEach((item, index) => {
       bookingsArray.push({
@@ -83,8 +83,6 @@ const Home = () => {
       bookingsTranslator();
     }
   }, []);
-
-  console.log("dataEmployees", data[2].data);
 
   return (
     <Calendar
