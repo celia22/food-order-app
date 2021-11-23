@@ -97,7 +97,7 @@ const ModalReserva = ({
     console.log("startTime", startTime);
     console.log("endTime", endTime);
 
-    let filtered = empleados;
+    let filtered = [...empleados];
 
     bookings.map((item) => {
       const bookingStartTime = parseInt(
@@ -107,19 +107,14 @@ const ModalReserva = ({
         (new Date(item.endTime).getTime() / 1000).toFixed(0)
       );
 
-      // console.log("appointEntime", appointmentEndTime);
-      // console.log("bookingStartTime", bookingStartTime);
-      // console.log("appointmentStartTime", appointmentStartTime);
-      // console.log("bookingEndTime", bookingEndTime);
       if (
         appointmentEndTime < bookingStartTime ||
         appointmentStartTime > bookingEndTime
       ) {
         console.log("available", item.employee);
       } else {
-        console.log("empleados", empleados);
-        console.log("busy", item, item.employee);
-        filtered = empleados.filter((x) => x._id !== item.employee);
+        let available = filtered.filter((x) => x._id !== item.employee);
+        filtered = available;
         console.log("filtered", filtered);
       }
     });
