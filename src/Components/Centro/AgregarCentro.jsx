@@ -1,5 +1,6 @@
 import axios from "../../axios/axios";
 import React, {useContext, useState} from "react";
+import { useHistory } from "react-router";
 import {Col, Form, Row} from "react-bootstrap";
 import "./Agregarcentro.css";
 import {context} from "../../Context/apiProvider";
@@ -25,7 +26,8 @@ const dictionary = {
 
 const AgregarCentro = (props) => {
 	const apiContext = useContext(context);
-	// const centerId = apiContext.data.data._id;
+	let history = useHistory();
+
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	const [legalName, setLegalName] = useState("");
@@ -69,23 +71,28 @@ const AgregarCentro = (props) => {
 	console.log("props", props)
 
 	const createCenterHandler = (e) => {
+try{
+	e.preventDefault();
+	const newCenterData = {
+		name,
+		email,
+		legalName,
+		address,
+		cp,
+		city,
+		country,
+		loc,
+		phone,
+		clientsChooseEmployee,
+		openingHours
+	};
+	createNewCenter.mutate(newCenterData);
 
-		e.preventDefault();
-		const newCenterData = {
-			name,
-			email,
-			legalName,
-			address,
-			cp,
-			city,
-			country,
-			loc,
-			phone,
-			clientsChooseEmployee,
-			openingHours
-		};
-		createNewCenter.mutate(newCenterData);
-		props.button(false)
+}finally {
+	history.push("/");
+}
+
+		
 
 	};
 

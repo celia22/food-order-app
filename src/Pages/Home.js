@@ -84,6 +84,8 @@ const Home = () => {
     }
   }, []);
 
+  console.log("dataEmployees", data[2].data);
+
   return (
     <Calendar
       appointments={bookings}

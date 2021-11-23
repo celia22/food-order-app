@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
+import { useHistory } from "react-router";
 import axios from "../../axios/axios";
 import Form from "react-bootstrap/Form";
 import "./Servicios.css";
@@ -10,6 +11,8 @@ import {context} from "../../Context/apiProvider";
 const EditServicio = ({servicioEdit, empleados, props}) => {
 	console.log(servicioEdit);
 	const apiContext = useContext(context);
+
+	let history = useHistory();
 
 	const [name, setName] = useState(servicioEdit[0].name);
 	const [duration, setDuration] = useState(servicioEdit[0].duration);
@@ -29,6 +32,8 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 
 	const handleOnChange = (id) => {
 		let selected = checked;
+		
+
 		let find = checked.findIndex((item) => item._id === id);
 
 		if (find > -1) {
@@ -83,7 +88,7 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 			};
 			editService.mutate(updateService);
 		} finally {
-			props.history.push("/")
+			history.push("/")
 		}
 
 	};

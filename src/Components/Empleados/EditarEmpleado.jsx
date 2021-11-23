@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-
+import { useHistory } from "react-router";
 import {useMutation} from "react-query";
 import axios from "../../axios/axios";
 import {context} from "../../Context/apiProvider";
@@ -26,6 +26,8 @@ const dictionary = {
 
 const EditarEmpleado = ({employee2Edit, props}) => {
 	const apiContext = useContext(context);
+	let history = useHistory();
+
 	const [center, setCenter] = useState("");
 	const [firstName, setFirstName] = useState(employee2Edit.firstName);
 	const [lastName, setLastName] = useState(employee2Edit.lastName);
@@ -83,7 +85,7 @@ const EditarEmpleado = ({employee2Edit, props}) => {
 			};
 			editEmployee.mutate(updateEmployee);
 		} finally {
-			props.props.history.push("/");
+			history.push("/");
 		}
 	};
 

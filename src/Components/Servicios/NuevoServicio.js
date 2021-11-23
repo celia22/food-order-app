@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import axios from "../../axios/axios";
 import Form from "react-bootstrap/Form";
 import "./Servicios.css";
@@ -9,6 +10,8 @@ import { context } from "../../Context/apiProvider";
 
 const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
   const apiContext = useContext(context);
+  let history = useHistory();
+
   const centerId = apiContext.data.data._id;
   const [name, setName] = useState(servicioEdit ? servicioEdit.name : "");
   const [duration, setDuration] = useState(
@@ -87,7 +90,7 @@ const NuevoServicio = ({ titulo, servicioEdit, empleados, props }) => {
       };
       createNewService.mutate(newServiceData);
     } finally {
-      props.history.push("/");
+      history.push("/");
     }
   };
 
