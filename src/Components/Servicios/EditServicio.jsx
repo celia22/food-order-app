@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import {useMutation} from "react-query";
 import {context} from "../../Context/apiProvider";
+import ReactTooltip from "react-tooltip";
+import {FaInfoCircle} from "react-icons/fa";
 
 const EditServicio = ({servicioEdit, empleados, props}) => {
 	console.log(servicioEdit);
@@ -116,7 +118,7 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 					<hr className="my-4"/>
 
 					<Form.Group controlId="">
-						<Form.Label>Duración del servicio (en minutos) </Form.Label>
+						<Form.Label>Duración del servicio (en minutos) <FaInfoCircle data-tip data-for="infoDuracion" />{" "}</Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								className="select-form"
@@ -125,12 +127,15 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 								onChange={(e) => setDuration(e.target.value)}
 							/>
 						</div>
+						<ReactTooltip id="infoDuracion" place="top" effect="solid">
+              TEXTO A AÑADIR
+            </ReactTooltip>
 					</Form.Group>
 
 					<hr className="my-4"/>
 
 					<Form.Group controlId="">
-						<Form.Label>Intervalo (en minutos):</Form.Label>
+						<Form.Label>Intervalo (en minutos):  <FaInfoCircle data-tip data-for="infoIntervalo" /></Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								type="number"
@@ -138,11 +143,14 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 								value={interval}
 								onChange={(e) => setInterval(e.target.value)}
 							/>
+							             <ReactTooltip id="infoIntervalo" place="top" effect="solid">
+                TEXTO A AÑADIR
+              </ReactTooltip>
 						</div>
 					</Form.Group>
 					<hr className="my-4"/>
 
-					<p> Tiempo de tratamiento de un servicio </p>
+					<p> Tiempo de tratamiento de un servicio  <FaInfoCircle data-tip data-for="infoTiempoTratamiento" /> </p>
 					{/* // IDLTE TIME */}
 					<ListGroup className="d-flex justify-content-center">
 						<input
@@ -151,13 +159,16 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 							checked={hasIdleTime}
 							onClick={() => setHasIdleTime(!hasIdleTime)}
 						/>
+						           <ReactTooltip id="infoTiempoTratamiento" place="top" effect="solid">
+              TEXTO A AÑADIR
+            </ReactTooltip>
 					</ListGroup>
 
 					<hr className="my-4"/>
 
 
 					<Form.Group controlId="">
-						<Form.Label>Estructura del servicio</Form.Label>
+						<Form.Label>Estructura del servicio   <FaInfoCircle data-tip data-for="infoEstructura" /></Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								type="number"
@@ -178,12 +189,15 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 								onChange={(e) => setServiceStructure3(e.target.value)}
 							/>
 						</div>
+						<ReactTooltip id="infoEstructura" place="top" effect="solid">
+              TEXTO A AÑADIR
+            </ReactTooltip>
 					</Form.Group>
 
 					<hr className="my-4"/>
 
 					<Form.Group controlId="">
-						<Form.Label>Tiempo de relleno</Form.Label>
+						<Form.Label>Tiempo de relleno  <FaInfoCircle data-tip data-for="infoTiempoRelleno" /></Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								as="select"
@@ -197,12 +211,15 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 								<option value="45">20 mins</option>
 							</Form.Control>
 						</div>
+						<ReactTooltip id="infoTiempoRelleno" place="top" effect="solid">
+              TEXTO A AÑADIR
+            </ReactTooltip>
 					</Form.Group>
 
 					<hr className="my-4"/>
 
 					<Form.Group controlId="">
-						<Form.Label>Precio y tipo de precio</Form.Label>
+						<Form.Label>Precio y tipo de precio  <FaInfoCircle data-tip data-for="infoPrecio" /></Form.Label>
 						<div className="d-flex justify-content-center">
 							<Form.Control
 								as="select"
@@ -225,6 +242,9 @@ const EditServicio = ({servicioEdit, empleados, props}) => {
 					placeholder="0€"
 				/>
               </span>
+							<ReactTooltip id="infoPrecio" place="top" effect="solid">
+                TEXTO A AÑADIR
+              </ReactTooltip>
 						</div>
 					</Form.Group>
 
